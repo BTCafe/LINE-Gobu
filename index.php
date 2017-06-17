@@ -23,6 +23,13 @@
 
 	                	// Explode The Message So We Can Get The First Words
 	               		$exploded_Message = explode(" ", trim($message['text']));
+
+	               		$counter = 1 ;
+	               		$join_input = "";
+	               		while ($counter < count($exploded_Message)) {
+	               			$join_input .= $exploded_Message[$counter] . " ";
+	               			$counter ++ ;
+	               		}
 						
 						try {
 
@@ -33,7 +40,7 @@
 							switch ($exploded_Message[0]) {
 								
 								case '..flair':
-									$response = get_similar_card ($exploded_Message[1], $exploded_Message[0]);
+									$response = get_similar_card (trim($join_input), $exploded_Message[0]);
 									$client->replyMessage(array(
 					                        'replyToken' => $event['replyToken'],
 					                        'messages' => array(
@@ -46,13 +53,81 @@
 									break;
 
 								case '..find':
-									$response = get_similar_card ($exploded_Message[1], $exploded_Message[0]);
+									$response = get_similar_card (trim($join_input), $exploded_Message[0]);
 									$client->replyMessage(array(
 					                        'replyToken' => $event['replyToken'],
 					                        'messages' => array(
 					                            array(
 					                                'type' => 'text',
 					                                'text' => $response
+					                            )
+					                        )
+					                ));
+									break;
+
+								case '..img':
+									$response = get_similar_card (trim($join_input), $exploded_Message[0]);
+									if (count($response) == 2) {
+										$ori = $response[0] ;
+										$ori_preview = $response[1] ;
+										$client->replyMessage(array(
+						                        'replyToken' => $event['replyToken'],
+						                        'messages' => array(
+						                            array(
+						                                'type' => 'image',
+						                                'originalContentUrl' => $ori,
+						                                'previewImageUrl' => $ori_preview
+						                            )
+						                        )
+						                ));
+									} else {
+										$client->replyMessage(array(
+					                        'replyToken' => $event['replyToken'],
+					                        'messages' => array(
+					                            array(
+					                                'type' => 'text',
+					                                'text' => $response
+					                            )
+					                        )
+					                	));
+									}
+									break;
+
+								case '..imgevo':
+									$response = get_similar_card (trim($join_input), $exploded_Message[0]);
+									if (count($response) == 2) {
+										$ori = $response[0] ;
+										$ori_preview = $response[1] ;
+										$client->replyMessage(array(
+						                        'replyToken' => $event['replyToken'],
+						                        'messages' => array(
+						                            array(
+						                                'type' => 'image',
+						                                'originalContentUrl' => $ori,
+						                                'previewImageUrl' => $ori_preview
+						                            )
+						                        )
+						                ));
+									} else {
+										$client->replyMessage(array(
+					                        'replyToken' => $event['replyToken'],
+					                        'messages' => array(
+					                            array(
+					                                'type' => 'text',
+					                                'text' => $response
+					                            )
+					                        )
+					                	));
+									}
+									break;
+
+								case '..':
+									$client->replyMessage(array(
+					                        'replyToken' => $event['replyToken'],
+					                        'messages' => array(
+					                            array(
+					                                'type' => 'text',
+					                                'text' => $join_input . " - " . $counter
 					                            )
 					                        )
 					                ));

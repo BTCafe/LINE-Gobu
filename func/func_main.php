@@ -52,6 +52,18 @@
 					$result .= $specific_card_info["evoData"]["flair"] . "\n" ;
 				}
 				break;
+
+			case '..img':
+				$image_url = $specific_card_info["baseData"]["img"] ;
+				$image_resized = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=$image_url&container=focus&resize_w=184&resize_h=240&refresh=2592000";
+				$result = array ($image_url, $image_resized) ;
+				break;
+
+			case '..imgevo':
+				$image_url = $specific_card_info["evoData"]["img"] ;
+				$image_resized = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=$image_url&container=focus&resize_w=184&resize_h=240&refresh=2592000";
+				$result = array ($image_url, $image_resized) ;
+				break;
 		}
 
 		return $result ; 
@@ -76,16 +88,14 @@
 
 		if ($found > 10) {
 			$result = "Found " . $found .  " cards with " . $desc . " in it. That's too many~";	
-		} 
-		elseif ($found == 1) {
-			$result = get_specific_card_info($card_name[$found_counter], $card_list, $parameter);
-		} 
-		elseif ($found == 0) {
-			$result = "No card found with that description" ;
-		} else {
+		} elseif ($found > 1 && $found <= 9) {
 			$result = "Found " . $found . " cards with " . $desc . " in it.\n\n" . $name_stack;
 			$result = rtrim($result, " , ");
-		}
+		} elseif ($found == 1) {
+			$result = get_specific_card_info($card_name[$found_counter], $card_list, $parameter);
+		} elseif ($found == 0) {
+			$result = "No card found with that description" ;
+		} 
 
 		return $result ;
 	}
