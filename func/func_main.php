@@ -11,7 +11,7 @@
 	}
 
 	// Replacing <br> into \n
-	function replacer ($words){
+	function replace_br ($words){
 	    $replaced_string = str_ireplace("<br>", "\n", $words);
 	    return $replaced_string ;
 	}
@@ -37,11 +37,15 @@
 				$rarity = $specific_card_info["rarity"];
 				$expansion_origin = $specific_card_info["expansion"];
 				$base_stats = "Base : " . $specific_card_info["manaCost"] . " PP " . $specific_card_info["baseData"]["attack"] . "/" . $specific_card_info["baseData"]["defense"] ;
-				$base_description = replacer($specific_card_info["baseData"]["description"]) ;
-				$evo_stats = "Evolved : " . $specific_card_info["manaCost"] . " PP " . $specific_card_info["evoData"]["attack"] . "/" . $specific_card_info["evoData"]["defense"] ;
-				$evo_description = replacer($specific_card_info["evoData"]["description"]) ;
-
-				$result = $name . "\n" . $faction . "\n" . $expansion_origin . " -- " . $rarity . "\n\n" . $base_stats . "\n" . $base_description . "\n\n" . $evo_stats . "\n" . $evo_description ;
+				$base_description = replace_br($specific_card_info["baseData"]["description"]) ;
+				if ($specific_card_info["evoData"]["description"] != "") {
+					$evo_stats = "Evolved : " . $specific_card_info["manaCost"] . " PP " . $specific_card_info["evoData"]["attack"] . "/" . $specific_card_info["evoData"]["defense"] ;
+					$evo_description = replace_br($specific_card_info["evoData"]["description"]) ;
+					$result = $name . "\n" . $faction . "\n" . $expansion_origin . " -- " . $rarity . "\n\n" . $base_stats . "\n" . $base_description ;
+				} else {
+					$result = $name . "\n" . $faction . "\n" . $expansion_origin . " -- " . $rarity . "\n\n" . $base_stats . "\n" . $base_description . "\n\n" . $evo_stats . "\n" . $evo_description ;
+				}
+				$result = trim($result);
 				break;
 			
 			case '..flair':
@@ -51,18 +55,27 @@
 				if ($specific_card_info["evoData"]["flair"] != "") {
 					$result .= $specific_card_info["evoData"]["flair"] . "\n" ;
 				}
+				$result = trim($result);
 				break;
 
 			case '..img':
 				$image_url = $specific_card_info["baseData"]["img"] ;
-				$image_resized = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=$image_url&container=focus&resize_w=184&resize_h=240&refresh=2592000";
-				$result = array ($image_url, $image_resized) ;
+				if ($image_url != "") {
+					$image_resized = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=$image_url&container=focus&resize_w=184&resize_h=240&refresh=2592000";
+					$result = array ($image_url, $image_resized) ;
+				} else {
+					$result = "No image found / available" ;
+				}
 				break;
 
 			case '..imgevo':
 				$image_url = $specific_card_info["evoData"]["img"] ;
-				$image_resized = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=$image_url&container=focus&resize_w=184&resize_h=240&refresh=2592000";
-				$result = array ($image_url, $image_resized) ;
+				if ($image_url != "") {
+					$image_resized = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=$image_url&container=focus&resize_w=184&resize_h=240&refresh=2592000";
+					$result = array ($image_url, $image_resized) ;
+				} else {
+					$result = "No image found / available" ;
+				}
 				break;
 		}
 
@@ -86,9 +99,9 @@
 			$counter++ ;
 		}
 
-		if ($found > 10) {
+		if ($found > 8) {
 			$result = "Found " . $found .  " cards with " . $desc . " in it. That's too many~";	
-		} elseif ($found > 1 && $found <= 9) {
+		} elseif ($found > 1 && $found <= 8) {
 			$result = "Found " . $found . " cards with " . $desc . " in it.\n\n" . $name_stack;
 			$result = rtrim($result, " , ");
 		} elseif ($found == 1) {
