@@ -41,9 +41,9 @@
 				if ($specific_card_info["evoData"]["description"] != "") {
 					$evo_stats = "Evolved : " . $specific_card_info["manaCost"] . " PP " . $specific_card_info["evoData"]["attack"] . "/" . $specific_card_info["evoData"]["defense"] ;
 					$evo_description = replace_br($specific_card_info["evoData"]["description"]) ;
-					$result = $name . "\n" . $faction . "\n" . $expansion_origin . " -- " . $rarity . "\n\n" . $base_stats . "\n" . $base_description ;
-				} else {
 					$result = $name . "\n" . $faction . "\n" . $expansion_origin . " -- " . $rarity . "\n\n" . $base_stats . "\n" . $base_description . "\n\n" . $evo_stats . "\n" . $evo_description ;
+				} else {
+					$result = $name . "\n" . $faction . "\n" . $expansion_origin . " -- " . $rarity . "\n\n" . $base_stats . "\n" . $base_description ;
 				}
 				$result = trim($result);
 				break;
