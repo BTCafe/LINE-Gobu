@@ -3,8 +3,36 @@
 	require_once( __DIR__ . '/src/LINEBotTiny.php');
 
 	require_once( __DIR__ . '/conf/channel_key.php');
+	require_once( __DIR__ . '/conf/db_connection.php');
 
 	require_once( __DIR__ . '/func/func_main.php');
+
+	function single_text_response ($client, $event, $response){
+		$client->replyMessage(array(
+	        'replyToken' => $event['replyToken'],
+	        'messages' => array(
+	            array(
+	                'type' => 'text',
+	                'text' => $response
+	            )
+	        )
+        ));
+	}
+
+	function single_image_response ($client, $event, $response) {
+		$ori = $response[0] ;
+		$ori_preview = $response[1] ;
+		$client->replyMessage(array(
+                'replyToken' => $event['replyToken'],
+                'messages' => array(
+                    array(
+                        'type' => 'image',
+                        'originalContentUrl' => $ori,
+                        'previewImageUrl' => $ori_preview
+                    )
+                )
+        ));
+	}
 	
 	set_error_handler('exceptions_error_handler');
 	
@@ -40,97 +68,38 @@
 							switch ($exploded_Message[0]) {
 								
 								case '..flair':
-									$response = get_similar_card (trim($join_input), $exploded_Message[0]);
-									$client->replyMessage(array(
-					                        'replyToken' => $event['replyToken'],
-					                        'messages' => array(
-					                            array(
-					                                'type' => 'text',
-					                                'text' => $response
-					                            )
-					                        )
-					                ));
+									$response = search_card (trim($join_input), $exploded_Message[0]);
+									single_text_response($client, $event, $response);
 									break;
 
 								case '..find':
-									$response = get_similar_card (trim($join_input), $exploded_Message[0]);
-									$client->replyMessage(array(
-					                        'replyToken' => $event['replyToken'],
-					                        'messages' => array(
-					                            array(
-					                                'type' => 'text',
-					                                'text' => $response
-					                            )
-					                        )
-					                ));
+									$response = search_card (trim($join_input), $exploded_Message[0]);
+									single_text_response($client, $event, $response);
 									break;
 
 								case '..img':
-									$response = get_similar_card (trim($join_input), $exploded_Message[0]);
+									$response = search_card (trim($join_input), $exploded_Message[0]);
 									if (count($response) == 2) {
-										$ori = $response[0] ;
-										$ori_preview = $response[1] ;
-										$client->replyMessage(array(
-						                        'replyToken' => $event['replyToken'],
-						                        'messages' => array(
-						                            array(
-						                                'type' => 'image',
-						                                'originalContentUrl' => $ori,
-						                                'previewImageUrl' => $ori_preview
-						                            )
-						                        )
-						                ));
+										single_image_response($client, $event, $response);
 									} else {
-										$client->replyMessage(array(
-					                        'replyToken' => $event['replyToken'],
-					                        'messages' => array(
-					                            array(
-					                                'type' => 'text',
-					                                'text' => $response
-					                            )
-					                        )
-					                	));
+										single_text_response($client, $event, $response);
 									}
 									break;
 
 								case '..imgevo':
-									$response = get_similar_card (trim($join_input), $exploded_Message[0]);
+									$response = search_card (trim($join_input), $exploded_Message[0]);
 									if (count($response) == 2) {
-										$ori = $response[0] ;
-										$ori_preview = $response[1] ;
-										$client->replyMessage(array(
-						                        'replyToken' => $event['replyToken'],
-						                        'messages' => array(
-						                            array(
-						                                'type' => 'image',
-						                                'originalContentUrl' => $ori,
-						                                'previewImageUrl' => $ori_preview
-						                            )
-						                        )
-						                ));
+										single_image_response($client, $event, $response);
 									} else {
-										$client->replyMessage(array(
-					                        'replyToken' => $event['replyToken'],
-					                        'messages' => array(
-					                            array(
-					                                'type' => 'text',
-					                                'text' => $response
-					                            )
-					                        )
-					                	));
+										single_text_response($client, $event, $response);
 									}
 									break;
 
-								case '..':
-									$client->replyMessage(array(
-					                        'replyToken' => $event['replyToken'],
-					                        'messages' => array(
-					                            array(
-					                                'type' => 'text',
-					                                'text' => $join_input . " - " . $counter
-					                            )
-					                        )
-					                ));
+								// Experimental
+								case '..finds':
+									$search_array = explode (" ",trim($join_input)) ;
+									$response = find_card ($search_array);
+									single_text_response($client, $event, $response);
 									break;
 
 							}
@@ -139,21 +108,16 @@
 							// Log Function //
 							/////////////////
 							
-							// if (substr($message['text'], 0, 2) === "..") {
-							// 	fm_create_log_data($event['source'], $message['text']);		
-							// }
-
-							// if (substr($message['text'], 0, 1) === "@") {
-							// 	fm_create_log_data($event['source'], $message['text']);		
-							// }
-
-							// Double Check For Closing Database Connection
+							// create_log_data($event['source'], $message['text'], $db);		
+							
+							// Closing Database Connection
 							if (is_resource($db) && get_resource_type($db) === 'mysql link') {
 								mysqli_close($db);
 							}
 
 						} catch (Exception $e) {
-	                		$text_response = "Sorry, An Error Just Occured" . PHP_EOL . $e->getMessage();	
+	                		$response = "Sorry, An Error Just Occured" . PHP_EOL . $e->getMessage();
+	                		single_text_response($client, $event, $response);	
 						}
 	                    break;
 	           
