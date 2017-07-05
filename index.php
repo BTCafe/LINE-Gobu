@@ -4,6 +4,7 @@
 
 	require_once( __DIR__ . '/conf/channel_key.php');
 	require_once( __DIR__ . '/conf/db_connection.php');
+	require_once( __DIR__ . '/conf/bot_setup.php');	
 
 	require_once( __DIR__ . '/func/func_main.php');
 	require_once( __DIR__ . '/func/func_display.php');
@@ -44,11 +45,19 @@
 								case '..flair':
 									$response = search_card (trim($join_input), $exploded_Message[0]);
 									single_text_response($client, $event, $response);
+									
+									if ($function_log == 1) {
+										create_function_log_data($event['source'], $message['text'], $db);
+									}
 									break;
 
 								case '..find':
 									$response = search_card (trim($join_input), $exploded_Message[0]);
 									single_text_response($client, $event, $response);
+									
+									if ($function_log == 1) {
+										create_function_log_data($event['source'], $message['text'], $db);
+									}
 									break;
 
 								case '..img':
@@ -57,6 +66,11 @@
 										single_image_response($client, $event, $response);
 									} else {
 										single_text_response($client, $event, $response);
+									}
+									
+
+									if ($function_log == 1) {
+										create_function_log_data($event['source'], $message['text'], $db);
 									}
 									break;
 
@@ -67,16 +81,12 @@
 									} else {
 										single_text_response($client, $event, $response);
 									}
+									
+									if ($function_log == 1) {
+										create_function_log_data($event['source'], $message['text'], $db);
+									}
 									break;
 
-								// Experimental
-								case '..finds':
-									$search_array = explode (" ",trim($join_input)) ;
-									$response = find_card ($search_array);
-									single_text_response($client, $event, $response);
-									break;
-
-								// For Debug
 								case '..name':
 									$search_result = search_card_v2 (trim($join_input), "..find");
 									if ($search_result['found'] > 1 && $search_result['found'] < 6) {
@@ -93,6 +103,32 @@
 									} else {
 										single_text_response($client, $event, "Found " . $search_result['found'] . " card with that criteria. That's too many~");
 									}
+									
+									if ($function_log == 1) {
+										create_function_log_data($event['source'], $message['text'], $db);
+									}
+									break;
+
+								case '..set':
+									if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0') {
+										switch ($exploded_Message[1]) {
+											case 'funclog':
+												$function_log = $exploded_Message[2];
+												break;
+
+											case 'unilog':
+												$universal_log = $exploded_Message[2];
+												break;
+										}
+										$result = update_log_setting (trim($function_log), trim($universal_log));
+										single_text_response($client, $event, $result);
+									} else {
+										single_text_response($client, $event, "Sorry, you don't have permission to do that~");
+									}
+									break;
+
+								case '..status':
+									single_text_response($client, $event, "Gobu Status\n\nFunction Log : " . $function_log . "Universal Log : " . $universal_log);
 									break;
 
 							}
@@ -101,7 +137,9 @@
 							// Log Function //
 							/////////////////
 							
-							// create_log_data($event['source'], $message['text'], $db);		
+							if ($universal_log == 1) {
+								create_universal_log_data($event['source'], $message['text'], $db);		
+							}
 							
 							// Closing Database Connection
 							if (is_resource($db) && get_resource_type($db) === 'mysql link') {

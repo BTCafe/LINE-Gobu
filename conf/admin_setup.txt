@@ -1,0 +1,2 @@
+function_log=1
+universal_log=1

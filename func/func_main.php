@@ -202,7 +202,7 @@
 	}
 
 	// Log function to store any transaction data to the database
-	function create_log_data ($source, $command, $db_conf) {
+	function create_universal_log_data ($source, $command, $db_conf) {
 		if (!isset($source['userId'])) {
 			$choosenID = 'groupId' ;
 			if (!isset($source['groupId'])) {
@@ -216,5 +216,32 @@
 			date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "','" . $command . "')"; ;  
 
 		mysqli_query($db_conf, $query);
+	}
+
+	// Log function to store any transaction data to the database
+	function create_function_log_data ($source, $command, $db_conf) {
+		if (!isset($source['userId'])) {
+			$choosenID = 'groupId' ;
+			if (!isset($source['groupId'])) {
+				$choosenID = 'roomId' ;
+			} 
+		} else {
+			$choosenID = 'userId' ;
+		}
+
+    	$query = "INSERT INTO `USED_FUNCTION` (`DATE`, `USER_ID`, `COMMAND`) VALUES ('" .
+			date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "','" . $command . "')"; ;  
+
+		mysqli_query($db_conf, $query);
+	}
+
+	function update_log_setting ($function_log, $universal_log){
+		if ($function_log == " " || $universal_log == " ") {
+			return "An error occured, setting unchanged" ;
+		} else {
+			$new_setting = "function_log=" . $function_log . "\nuniversal_log=" . $universal_log ;
+			file_put_contents('./conf/admin_setup.txt', $new_setting, LOCK_EX);
+			return "Setting changed" ;
+		}
 	}
 ?>
