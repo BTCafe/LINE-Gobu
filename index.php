@@ -6,34 +6,8 @@
 	require_once( __DIR__ . '/conf/db_connection.php');
 
 	require_once( __DIR__ . '/func/func_main.php');
+	require_once( __DIR__ . '/func/func_display.php');
 
-	function single_text_response ($client, $event, $response){
-		$client->replyMessage(array(
-	        'replyToken' => $event['replyToken'],
-	        'messages' => array(
-	            array(
-	                'type' => 'text',
-	                'text' => $response
-	            )
-	        )
-        ));
-	}
-
-	function single_image_response ($client, $event, $response) {
-		$ori = $response[0] ;
-		$ori_preview = $response[1] ;
-		$client->replyMessage(array(
-                'replyToken' => $event['replyToken'],
-                'messages' => array(
-                    array(
-                        'type' => 'image',
-                        'originalContentUrl' => $ori,
-                        'previewImageUrl' => $ori_preview
-                    )
-                )
-        ));
-	}
-	
 	set_error_handler('exceptions_error_handler');
 	
 	$client = new LINEBotTiny($channelAccessToken, $channelSecret);
@@ -100,6 +74,25 @@
 									$search_array = explode (" ",trim($join_input)) ;
 									$response = find_card ($search_array);
 									single_text_response($client, $event, $response);
+									break;
+
+								// For Debug
+								case '..name':
+									$search_result = search_card_v2 (trim($join_input), "..find");
+									if ($search_result['found'] > 1 && $search_result['found'] < 6) {
+										confirm_response($client, $event, $search_result, "..find");
+									} 
+									if ($search_result['found'] == 1) {
+										single_text_response($client, $event, get_specific_card_info_v2($search_result['name'], "..find"));
+									}
+									if ($search_result['found'] == 0) {
+										single_text_response($client, $event, "No card found with that criteria");
+									}
+									if ($search_result['found'] > 5 && $search_result['found'] <= 10) {
+										single_text_response($client, $event, "Found " . $search_result['found'] . " card with that criteria.\n\n" . $search_result['name']);
+									} else {
+										single_text_response($client, $event, "Found " . $search_result['found'] . " card with that criteria. That's too many~");
+									}
 									break;
 
 							}
