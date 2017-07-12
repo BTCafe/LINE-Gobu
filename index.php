@@ -8,6 +8,7 @@
 
 	require_once( __DIR__ . '/func/func_main.php');
 	require_once( __DIR__ . '/func/func_display.php');
+	require_once( __DIR__ . '/func/func_db.php');
 
 	set_error_handler('exceptions_error_handler');
 	
@@ -52,8 +53,56 @@
 									break;
 
 								case '..find':
-									$response = search_card (trim($join_input), $exploded_Message[0]);
-									single_text_response($client, $event, $response);
+									// $response = search_card (trim($join_input), $exploded_Message[0]);
+									// single_text_response($client, $event, $response);
+									
+									// if ($function_log == 1) {
+									// 	create_function_log_data($event['source'], $message['text'], $db);
+									// }
+									single_text_response($client, $event, "Currently in maintenance, use ..name instead\n\nExample :\n..name Spawn");
+									if ($function_log == 1) {
+										create_function_log_data($event['source'], $message['text'], $db);
+									}
+									break;
+
+								case '..ani':
+									$search_result = search_card_v2 (trim($join_input));
+									if ($search_result['found'] > 1 && $search_result['found'] < 6) {
+										confirm_response($client, $event, $search_result, "..ani");
+									} 
+									if ($search_result['found'] == 1) {
+										single_text_response($client, $event, get_animated_url($search_result['name'], 0, $db));
+									}
+									if ($search_result['found'] == 0) {
+										single_text_response($client, $event, "No card found with that criteria");
+									}
+									if ($search_result['found'] > 5 && $search_result['found'] <= 10) {
+										single_text_response($client, $event, "Found " . $search_result['found'] . " card with that criteria.\n\n" . $search_result['name']);
+									} else {
+										single_text_response($client, $event, "Found " . $search_result['found'] . " card with that criteria. That's too many~");
+									}
+									
+									if ($function_log == 1) {
+										create_function_log_data($event['source'], $message['text'], $db);
+									}
+									break;
+
+								case '..anievo':
+									$search_result = search_card_v2 (trim($join_input));
+									if ($search_result['found'] > 1 && $search_result['found'] < 6) {
+										confirm_response($client, $event, $search_result, "..ani");
+									} 
+									if ($search_result['found'] == 1) {
+										single_text_response($client, $event, get_animated_url($search_result['name'], 1, $db));
+									}
+									if ($search_result['found'] == 0) {
+										single_text_response($client, $event, "No card found with that criteria");
+									}
+									if ($search_result['found'] > 5 && $search_result['found'] <= 10) {
+										single_text_response($client, $event, "Found " . $search_result['found'] . " card with that criteria.\n\n" . $search_result['name']);
+									} else {
+										single_text_response($client, $event, "Found " . $search_result['found'] . " card with that criteria. That's too many~");
+									}
 									
 									if ($function_log == 1) {
 										create_function_log_data($event['source'], $message['text'], $db);
@@ -88,7 +137,7 @@
 									break;
 
 								case '..name':
-									$search_result = search_card_v2 (trim($join_input), "..find");
+									$search_result = search_card_v2 (trim($join_input));
 									if ($search_result['found'] > 1 && $search_result['found'] < 6) {
 										confirm_response($client, $event, $search_result, "..find");
 									} 

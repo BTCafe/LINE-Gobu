@@ -166,7 +166,7 @@
 		elseif ($found > 1 && $found <= 8) {
 			$result = "Found " . $found . " cards with " . $desc . " in it.\n\n" . $name_stack;
 			// Used to get rid of the last , on $name_stack 
-			$result = rtrim($result, " , ");
+			$result = rtrim($result, ",");
 		} 
 		// Finding exactly 1 similar card, return the data about that card based on the parameter
 		elseif ($found == 1) {
@@ -177,7 +177,7 @@
 		return $result ;
 	}
 
-	function search_card_v2 ($criteria, $parameter){
+	function search_card_v2 ($criteria){
 		// Get all the card
 		$card_list = fetch_all_card();
 		// Create a new array from $card_list using their keys (the card name) for easier search
@@ -199,49 +199,5 @@
 
 		$search_result = array('found'=>$found, 'name'=>$name_stack);
 		return $search_result;
-	}
-
-	// Log function to store any transaction data to the database
-	function create_universal_log_data ($source, $command, $db_conf) {
-		if (!isset($source['userId'])) {
-			$choosenID = 'groupId' ;
-			if (!isset($source['groupId'])) {
-				$choosenID = 'roomId' ;
-			} 
-		} else {
-			$choosenID = 'userId' ;
-		}
-
-    	$query = "INSERT INTO `GOBU_DIARY` (`DATE`, `USER_ID`, `COMMAND`) VALUES ('" .
-			date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "','" . $command . "')"; ;  
-
-		mysqli_query($db_conf, $query);
-	}
-
-	// Log function to store any transaction data to the database
-	function create_function_log_data ($source, $command, $db_conf) {
-		if (!isset($source['userId'])) {
-			$choosenID = 'groupId' ;
-			if (!isset($source['groupId'])) {
-				$choosenID = 'roomId' ;
-			} 
-		} else {
-			$choosenID = 'userId' ;
-		}
-
-    	$query = "INSERT INTO `USED_FUNCTION` (`DATE`, `USER_ID`, `COMMAND`) VALUES ('" .
-			date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "','" . $command . "')"; ;  
-
-		mysqli_query($db_conf, $query);
-	}
-
-	function update_log_setting ($function_log, $universal_log){
-		if ($function_log == " " || $universal_log == " ") {
-			return "An error occured, setting unchanged" ;
-		} else {
-			$new_setting = "function_log=" . $function_log . "\nuniversal_log=" . $universal_log ;
-			file_put_contents('./conf/admin_setup.txt', $new_setting, LOCK_EX);
-			return "Setting changed" ;
-		}
 	}
 ?>
