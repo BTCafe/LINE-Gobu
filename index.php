@@ -30,6 +30,8 @@
 	                	// Explode The Message So We Can Get The First Words
 	               		$exploded_Message = explode(" ", trim($message['text']));
 
+	               		$command = $exploded_Message[0];
+
 	               		$counter = 1 ;
 	               		$join_input = "";
 	               		while ($counter < count($exploded_Message)) {
@@ -45,106 +47,60 @@
 
 							$gobu_logic = new bot_logic ($client, $event, $display);
 
-							switch ($exploded_Message[0]) {
+							switch ($command) {
 								
 								// Return Text Based Only To User
 
-									// Disabled
+								// Disabled
 								case '..find':
 									$display->single_text_response($client, $event, "Currently in maintenance, use ..name instead\n\nExample :\n..name Spawn");
 									break;
 
-									// using New Search
-										// Connecting to Bagoum
-								
+								// Active
 								case '..flair':
 									$search_result = search_card_v2 (trim($join_input));
-									$gobu_logic->logic_controller_for_bagoum($search_result, $exploded_Message[0]);
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
 									break;
 
 								case '..name':
 									$search_result = search_card_v2 (trim($join_input));
-									$gobu_logic->logic_controller_for_bagoum($search_result, $exploded_Message[0]);
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
 									break;
 
 										// Connecting to Database
 								
 								case '..ani':
 									$search_result = search_card_v2 (trim($join_input));
-									$gobu_logic->logic_controller_for_database($search_result, $exploded_Message[0], $database, $db);
+									$gobu_logic->logic_controller_for_database($search_result, $command, $database, $db);
 									break;
 
 								case '..anievo':
 									$search_result = search_card_v2 (trim($join_input));
-									$gobu_logic->logic_controller_for_database($search_result, $exploded_Message[0], $database, $db);
+									$gobu_logic->logic_controller_for_database($search_result, $command, $database, $db);
 									break;
 
 								// Return Either Text or Image
 
-									// Using Old Search
+								// Using Old Search
 								case '..img':
-									$response = search_card (trim($join_input), $exploded_Message[0]);
-									if (count($response) == 2) {
-										$display->single_image_response($client, $event, $response);
-									} else {
-										$display->single_text_response($client, $event, $response);
-									}
+									$search_result = search_card_v2 (trim($join_input));
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
 									break;
 
 								case '..imgevo':
-									$response = search_card (trim($join_input), $exploded_Message[0]);
-									if (count($response) == 2) {
-										$display->single_image_response($client, $event, $response);
-									} else {
-										$display->single_text_response($client, $event, $response);
-									}
+									$search_result = search_card_v2 (trim($join_input));
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
 									break;
 
-									// Using New Search
+								// Using New Search
 								case '..alt':
 									$search_result = search_card_v2 (trim($join_input));
-									if ($search_result['found'] > 1 && $search_result['found'] < 6) {
-										$display->confirm_response($client, $event, $search_result, "..alt");
-									} 
-									if ($search_result['found'] == 1) {
-										$response = get_specific_card_info_v2($search_result['name'], "..alt");
-										if (count($response) == 2) {
-											$display->single_image_response($client, $event, $response);
-										} else {
-											$display->single_text_response($client, $event, $response);
-										}										
-									}
-									if ($search_result['found'] == 0) {
-										$display->single_text_response($client, $event, "No card found with that criteria");
-									}
-									if ($search_result['found'] > 5 && $search_result['found'] <= 10) {
-										$display->single_text_response($client, $event, "Found " . $search_result['found'] . " card with that criteria.\n\n" . $search_result['name']);
-									} else {
-										$display->single_text_response($client, $event, "Found " . $search_result['found'] . " card with that criteria. That's too many~");
-									}
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
 									break;
 
 								case '..altevo':
 									$search_result = search_card_v2 (trim($join_input));
-									if ($search_result['found'] > 1 && $search_result['found'] < 6) {
-										$display->confirm_response($client, $event, $search_result, "..altevo");
-									} 
-									if ($search_result['found'] == 1) {
-										$response = get_specific_card_info_v2($search_result['name'], "..altevo");
-										if (count($response) == 2) {
-											$display->single_image_response($client, $event, $response);
-										} else {
-											$display->single_text_response($client, $event, $response);
-										}	
-									}
-									if ($search_result['found'] == 0) {
-										$display->single_text_response($client, $event, "No card found with that criteria");
-									}
-									if ($search_result['found'] > 5 && $search_result['found'] <= 10) {
-										$display->single_text_response($client, $event, "Found " . $search_result['found'] . " card with that criteria.\n\n" . $search_result['name']);
-									} else {
-										$display->single_text_response($client, $event, "Found " . $search_result['found'] . " card with that criteria. That's too many~");
-									}
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
 									break;
 
 								// Admin Function
@@ -173,7 +129,7 @@
 								// Debug
 								case '..bagoum':
 									$search_result = search_card_v2 (trim($join_input));
-									$gobu_logic->logic_controller_for_bagoum($search_result, "..flair");
+									$gobu_logic->logic_controller_for_bagoum($search_result, "..flair", "text");
 									break;
 
 								case '..database':

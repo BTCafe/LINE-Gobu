@@ -172,44 +172,6 @@
 	}
 
 	// Searching the word, return the result to the caller
-	function search_card ($desc, $parameter){
-		$card_list = fetch_all_card();
-		// Create a new array from $card_list using their keys (the card name) for easier search
-		$card_name = array_keys($card_list);
-
-		$counter = 0 ;
-		$found = 0 ;
-		$name_stack = "" ;
-		// Looping to find any card that match $desc on their name
-		while (count($card_name) > $counter) {
-			$compare = stripos($card_name[$counter], $desc) ; 
-			if ($compare !== false) {
-				$found++ ;
-				$name_stack = $name_stack . $card_name[$counter] . ",\n" ;
-				$found_counter = $counter ;
-			}
-			$counter++ ;
-		}
-
-		// Finding too many result, doesn't return their name to avoid spamming the room
-		if ($found > 8) {
-			$result = "Found " . $found .  " cards with " . $desc . " in it. That's too many~";	
-		} 
-		// Finding 2 to 8 similar card, shows the name of each card
-		elseif ($found > 1 && $found <= 8) {
-			$result = "Found " . $found . " cards with " . $desc . " in it.\n\n" . $name_stack;
-			// Used to get rid of the last , on $name_stack 
-			$result = rtrim($result, ",");
-		} 
-		// Finding exactly 1 similar card, return the data about that card based on the parameter
-		elseif ($found == 1) {
-			$result = get_specific_card_info($card_name[$found_counter], $card_list, $parameter);
-		} elseif ($found == 0) {
-			$result = "No card found with that description" ;
-		} 
-		return $result ;
-	}
-
 	function search_card_v2 ($criteria){
 		// Get all the card
 		$card_list = fetch_all_card();
@@ -226,6 +188,12 @@
 				$found++ ;
 				$name_stack = $name_stack . $card_name[$counter] . "\n" ;
 				$found_counter = $counter ;
+				// In case an exact name found, immediately pick that one by resetting the name stack and found number
+				if (strlen($criteria) == strlen($card_name[$counter])) {
+					$found = 1 ;
+					$name_stack = $card_name[$counter];
+					$counter = count($card_name);
+				}
 			}
 			$counter++ ;
 		}
@@ -263,10 +231,23 @@
 			}
 		}
 
-		function logic_controller_for_bagoum ($search_result, $inputted_command)
+		function logic_controller_for_bagoum ($search_result, $inputted_command, $preferred_return_type)
 		{
 			if ($search_result['found'] == 1) {
-				$this->display->single_text_response($this->client, $this->event, get_specific_card_info_v2($search_result['name'], $inputted_command));
+				switch ($preferred_return_type) {
+					case 'text':
+						$this->display->single_text_response($this->client, $this->event, get_specific_card_info_v2($search_result['name'], $inputted_command));
+						break;
+					
+					case 'image':
+						$image_result_status = get_specific_card_info_v2($search_result['name'], $inputted_command);
+						if (count($image_result_status) == 2) {
+							$this->display->single_image_response($this->client, $this->event, $image_result_status);
+						} else {
+							$this->display->single_text_response($this->client, $this->event, $image_result_status);
+						}
+						break;
+				}
 			} else {
 				$this->basic_logic($search_result, $inputted_command);
 			}
