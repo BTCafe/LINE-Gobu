@@ -1,30 +1,113 @@
-<?php	
-	
-	function single_text_response ($client, $event, $response){
-		$client->replyMessage(array(
-	        'replyToken' => $event['replyToken'],
-	        'messages' => array(
-	            array(
-	                'type' => 'text',
-	                'text' => $response
-	            )
-	        )
-        ));
-	}
+<?php
 
-	function single_image_response ($client, $event, $response) {
-		$ori = $response[0] ;
-		$ori_preview = $response[1] ;
-		$client->replyMessage(array(
-                'replyToken' => $event['replyToken'],
-                'messages' => array(
-                    array(
-                        'type' => 'image',
-                        'originalContentUrl' => $ori,
-                        'previewImageUrl' => $ori_preview
-                    )
-                )
-        ));
+	class display 
+	{
+		function __construct()
+		{
+			
+		}
+
+		static function single_text_response ($client, $event, $response){
+			$client->replyMessage(array(
+		        'replyToken' => $event['replyToken'],
+		        'messages' => array(
+		            array(
+		                'type' => 'text',
+		                'text' => $response
+		            )
+		        )
+	        ));
+		}
+
+		static function single_image_response ($client, $event, $response) {
+			$ori = $response[0] ;
+			$ori_preview = $response[1] ;
+			$client->replyMessage(array(
+	                'replyToken' => $event['replyToken'],
+	                'messages' => array(
+	                    array(
+	                        'type' => 'image',
+	                        'originalContentUrl' => $ori,
+	                        'previewImageUrl' => $ori_preview
+	                    )
+	                )
+	        ));
+		}
+
+		static function confirm_response ($client, $event, $search_result, $command){
+			$splitted_name_stack = explode ("\n", $search_result['name']);
+			$formatted_stack = array();
+			for ($i=0; $i < $search_result['found']; $i++) {
+				$formatted_stack[$i] = array('name'=> $splitted_name_stack[$i], 'command'=> $command . " " . $splitted_name_stack[$i]);
+			}
+
+			switch (count($formatted_stack)) {
+				case 2:
+					carousel_response_two($client, $event, $search_result, $formatted_stack);
+					break;
+
+				case 3:
+					carousel_response_three($client, $event, $search_result, $formatted_stack);
+					break;
+
+				case 4:
+					carousel_response_four($client, $event, $search_result, $formatted_stack);
+					break;
+
+				case 5:
+					carousel_response_five($client, $event, $search_result, $formatted_stack);
+					break;
+			}
+		}
+
+		static function show_maintenance_message ($client, $event){
+			$client->replyMessage(array(
+		        'replyToken' => $event['replyToken'],
+		        'messages' => array(
+		            array(
+		                'type' => 'text',
+		                'text' => "This command is currently disabled"
+		            )
+		        )
+	        ));
+		}
+
+		static function show_too_many_result ($client, $event, $total_result_found){
+			$client->replyMessage(array(
+		        'replyToken' => $event['replyToken'],
+		        'messages' => array(
+		            array(
+		                'type' => 'text',
+		                'text' => "Found " . $total_result_found . " card with that criteria. That's too many for me~"
+		            )
+		        )
+	        ));
+		}		
+
+		static function show_result_more_than_5 ($client, $event, $total_result_found, $list_card_name){
+			$client->replyMessage(array(
+		        'replyToken' => $event['replyToken'],
+		        'messages' => array(
+		            array(
+		                'type' => 'text',
+		                'text' => "Found " . $total_result_found . " card with that criteria.\n\n" . $list_card_name
+		            )
+		        )
+	        ));
+		}	
+
+		static function show_no_result ($client, $event){
+			$client->replyMessage(array(
+		        'replyToken' => $event['replyToken'],
+		        'messages' => array(
+		            array(
+		                'type' => 'text',
+		                'text' => "No card found with that criteria"
+		            )
+		        )
+	        ));
+		}
+
 	}
 
 	function carousel_response_two ($client, $event, $search_result, $formatted_stack){
@@ -351,32 +434,6 @@
 	            )
 	        )
 	    ));
-	}
-
-	function confirm_response ($client, $event, $search_result, $command){
-		$splitted_name_stack = explode ("\n", $search_result['name']);
-		$formatted_stack = array();
-		for ($i=0; $i < $search_result['found']; $i++) {
-			$formatted_stack[$i] = array('name'=> $splitted_name_stack[$i], 'command'=> $command . " " . $splitted_name_stack[$i]);
-		}
-
-		switch (count($formatted_stack)) {
-			case 2:
-				carousel_response_two($client, $event, $search_result, $formatted_stack);
-				break;
-
-			case 3:
-				carousel_response_three($client, $event, $search_result, $formatted_stack);
-				break;
-
-			case 4:
-				carousel_response_four($client, $event, $search_result, $formatted_stack);
-				break;
-
-			case 5:
-				carousel_response_five($client, $event, $search_result, $formatted_stack);
-				break;
-		}
 	}
 	
 ?>

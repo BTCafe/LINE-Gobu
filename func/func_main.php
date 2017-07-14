@@ -162,6 +162,10 @@
 				$result = get_alt_evolved_image($specific_card_info);				
 				break;
 
+			case '..name':
+				$result = get_stats_based_on_name($specific_card_info);
+				break;
+
 		}
 
 		return $result ; 
@@ -228,5 +232,59 @@
 
 		$search_result = array('found'=>$found, 'name'=>$name_stack);
 		return $search_result;
+	}
+
+	class bot_logic 
+	{
+		protected $client ;
+		protected $event ;
+		protected $display ;
+		
+		function __construct($client_data, $event_data, $display)
+		{
+			$this->client = $client_data ;
+			$this->event = $event_data ;
+			$this->display = $display ;
+		}
+
+		function basic_logic ($search_result, $inputted_command)
+		{
+			if ($search_result['found'] > 1 && $search_result['found'] < 6) {
+				$this->display->confirm_response($this->client, $this->event, $search_result, $inputted_command);
+			} 
+			if ($search_result['found'] == 0) {
+				$this->display->show_no_result($this->client, $this->event);
+			}
+			if ($search_result['found'] > 5 && $search_result['found'] <= 10) {
+				$this->display->show_result_more_than_5 ($this->client, $this->event, $search_result['found'], $search_result['name']);
+			} 
+			if ($search_result['found'] > 10) {
+				$this->display->show_too_many_result ($this->client, $this->event, $search_result['found']);
+			}
+		}
+
+		function logic_controller_for_bagoum ($search_result, $inputted_command)
+		{
+			if ($search_result['found'] == 1) {
+				$this->display->single_text_response($this->client, $this->event, get_specific_card_info_v2($search_result['name'], $inputted_command));
+			} else {
+				$this->basic_logic($search_result, $inputted_command);
+			}
+		}
+
+		function logic_controller_for_database ($search_result, $inputted_command, $database, $db)
+		{
+			if ($search_result['found'] == 1) {
+				if ($inputted_command == "..ani") {
+					$is_evo = 0 ;
+				}
+				if ($inputted_command == "..anievo") {
+					$is_evo = 1 ;
+				}
+				$this->display->single_text_response($this->client, $this->event, $database->get_animated_url($search_result['name'], $is_evo, $db));
+			} else {
+				$this->basic_logic($search_result, $inputted_command);
+			}
+		}
 	}
 ?>
