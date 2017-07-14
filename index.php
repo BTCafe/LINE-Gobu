@@ -136,6 +136,60 @@
 									}
 									break;
 
+								case '..alt':
+									$search_result = search_card_v2 (trim($join_input));
+									if ($search_result['found'] > 1 && $search_result['found'] < 6) {
+										confirm_response($client, $event, $search_result, "..alt");
+									} 
+									if ($search_result['found'] == 1) {
+										$response = get_specific_card_info_v2($search_result['name'], "..alt");
+										if (count($response) == 2) {
+											single_image_response($client, $event, $response);
+										} else {
+											single_text_response($client, $event, $response);
+										}										
+									}
+									if ($search_result['found'] == 0) {
+										single_text_response($client, $event, "No card found with that criteria");
+									}
+									if ($search_result['found'] > 5 && $search_result['found'] <= 10) {
+										single_text_response($client, $event, "Found " . $search_result['found'] . " card with that criteria.\n\n" . $search_result['name']);
+									} else {
+										single_text_response($client, $event, "Found " . $search_result['found'] . " card with that criteria. That's too many~");
+									}
+									
+									if ($function_log == 1) {
+										create_function_log_data($event['source'], $message['text'], $db);
+									}
+									break;
+
+								case '..altevo':
+									$search_result = search_card_v2 (trim($join_input));
+									if ($search_result['found'] > 1 && $search_result['found'] < 6) {
+										confirm_response($client, $event, $search_result, "..altevo");
+									} 
+									if ($search_result['found'] == 1) {
+										$response = get_specific_card_info_v2($search_result['name'], "..altevo");
+										if (count($response) == 2) {
+											single_image_response($client, $event, $response);
+										} else {
+											single_text_response($client, $event, $response);
+										}	
+									}
+									if ($search_result['found'] == 0) {
+										single_text_response($client, $event, "No card found with that criteria");
+									}
+									if ($search_result['found'] > 5 && $search_result['found'] <= 10) {
+										single_text_response($client, $event, "Found " . $search_result['found'] . " card with that criteria.\n\n" . $search_result['name']);
+									} else {
+										single_text_response($client, $event, "Found " . $search_result['found'] . " card with that criteria. That's too many~");
+									}
+									
+									if ($function_log == 1) {
+										create_function_log_data($event['source'], $message['text'], $db);
+									}
+									break;
+
 								case '..name':
 									$search_result = search_card_v2 (trim($join_input));
 									if ($search_result['found'] > 1 && $search_result['found'] < 6) {

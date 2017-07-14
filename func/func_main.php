@@ -69,12 +69,32 @@
 		return $result ;
 	}
 
+	function get_alt_image ($card_data){
+		if ($card_data["hasAlt"] == true) {
+			$image_url = $card_data["baseData"]["altimg"] ;
+			$result = resize_image($image_url) ;
+		} else {
+			$result = "No alternate image found" ;
+		}
+		return $result ;
+	}
+
 	function get_evolved_image ($card_data){
 		$image_url = $card_data["evoData"]["img"] ;
 		if ($image_url != "") {
 			$result = resize_image($image_url) ;
 		} else {
 			$result = "No image found / available" ;
+		}
+		return $result ;
+	}
+
+	function get_alt_evolved_image ($card_data){
+		if ($card_data["hasAlt"] == true) {
+			$image_url = $card_data["evoData"]["altimg"] ;
+			$result = resize_image($image_url) ;
+		} else {
+			$result = "No alternate evolve image found" ;
 		}
 		return $result ;
 	}
@@ -133,6 +153,15 @@
 			case '..imgevo':
 				$result = get_evolved_image($specific_card_info);
 				break;
+
+			case '..alt':
+				$result = get_alt_image($specific_card_info);				
+				break;
+
+			case '..altevo':
+				$result = get_alt_evolved_image($specific_card_info);				
+				break;
+
 		}
 
 		return $result ; 
