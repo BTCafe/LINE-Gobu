@@ -34,6 +34,21 @@
 	        ));
 		}
 
+		static function single_video_response ($client, $event, $response) {
+			$video_url = $response[0] ;
+			$video_preview = $response[1] ;
+			$client->replyMessage(array(
+	                'replyToken' => $event['replyToken'],
+	                'messages' => array(
+	                    array(
+	                        'type' => 'video',
+	                        'originalContentUrl' => $video_url,
+	                        'previewImageUrl' => $video_preview
+	                    )
+	                )
+	        ));
+		}
+
 		static function confirm_response ($client, $event, $search_result, $command){
 			$splitted_name_stack = explode ("\n", $search_result['name']);
 			$formatted_stack = array();

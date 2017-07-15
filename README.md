@@ -6,11 +6,17 @@ Before you can invite the bot to your room, you need to add friend first via thi
 
 ### Command List
 All command started with `..` followed by what you want to do. The full list of command is as follows :
-* `..find [name]` - to search for a card using their name. Will be changed soon to be able to search for any criteria. 
-* `..flair [name]` - to search for a flair of a card using their name. 
-* `..img [name]` - to search for card image using their name. 
-* `..imgevo [name]` - to search for evolved card image using their name.
+* `..find [name]` - IN MAINTENANCE. 
 * `..name [name]` - to search for a card using their name. Will be replacing `..find` in the near future. Using carousel template to make it easier to choose from multiple result
+* `..flair [name]` - to search for a flair of a card using their name. 
+* `..img [name]` - to search for card art using their name. 
+* `..imgevo [name]` - to search for evolved card art using their name.
+* `..alt [name]` - to search for an alternate card art using their name if available.
+* `..altevo [name]` - to search for an alternate evolved card art using their name if available.
+* `..ani [name]` - to search for an animated card using their name. Currently using URL data stored in database because no known API yet that could provide animated card list 
+* `..anievo [name]` - to search for an animated evolved card using their name. Currently using URL data stored in database because no known API yet that could provide animated card list
+
 
 <br>Notes : 
 <br>- When multiple result found, all command will return the list of possible card and not their respective command.
+<br>- The list of possible card will be returned in carousel type message when possible (between 2 - 5) for easier search.

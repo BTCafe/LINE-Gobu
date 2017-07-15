@@ -33,9 +33,9 @@
 	               		$command = $exploded_Message[0];
 
 	               		$counter = 1 ;
-	               		$join_input = "";
+	               		$criteria = "";
 	               		while ($counter < count($exploded_Message)) {
-	               			$join_input .= $exploded_Message[$counter] . " ";
+	               			$criteria .= $exploded_Message[$counter] . " ";
 	               			$counter ++ ;
 	               		}
 						
@@ -50,7 +50,6 @@
 							switch ($command) {
 								
 								// Return Text Based Only To User
-
 								// Disabled
 								case '..find':
 									$display->single_text_response($client, $event, "Currently in maintenance, use ..name instead\n\nExample :\n..name Spawn");
@@ -58,49 +57,69 @@
 
 								// Active
 								case '..flair':
-									$search_result = search_card_v2 (trim($join_input));
+									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
+									if ($function_log == 1) {
+										$database->create_function_log_data($event['source'], $message['text'], $db);
+									}
 									break;
 
 								case '..name':
-									$search_result = search_card_v2 (trim($join_input));
+									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
+									if ($function_log == 1) {
+										$database->create_function_log_data($event['source'], $message['text'], $db);
+									}
 									break;
 
-										// Connecting to Database
-								
+								// Connecting to Database
 								case '..ani':
-									$search_result = search_card_v2 (trim($join_input));
+									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_database($search_result, $command, $database, $db);
+									if ($function_log == 1) {
+										$database->create_function_log_data($event['source'], $message['text'], $db);
+									}
 									break;
 
 								case '..anievo':
-									$search_result = search_card_v2 (trim($join_input));
+									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_database($search_result, $command, $database, $db);
+									if ($function_log == 1) {
+										$database->create_function_log_data($event['source'], $message['text'], $db);
+									}
 									break;
 
 								// Return Either Text or Image
-
-								// Using Old Search
 								case '..img':
-									$search_result = search_card_v2 (trim($join_input));
+									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1) {
+										$database->create_function_log_data($event['source'], $message['text'], $db);
+									}
 									break;
 
 								case '..imgevo':
-									$search_result = search_card_v2 (trim($join_input));
+									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1) {
+										$database->create_function_log_data($event['source'], $message['text'], $db);
+									}
 									break;
 
-								// Using New Search
 								case '..alt':
-									$search_result = search_card_v2 (trim($join_input));
+									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1) {
+										$database->create_function_log_data($event['source'], $message['text'], $db);
+									}
 									break;
 
 								case '..altevo':
-									$search_result = search_card_v2 (trim($join_input));
+									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1) {
+										$database->create_function_log_data($event['source'], $message['text'], $db);
+									}
 									break;
 
 								// Admin Function
@@ -128,13 +147,13 @@
 
 								// Debug
 								case '..bagoum':
-									$search_result = search_card_v2 (trim($join_input));
+									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, "..flair", "text");
 									break;
 
 								case '..database':
-									$search_result = search_card_v2 (trim($join_input));
-									$gobu_logic->logic_controller_for_database($search_result, "..ani", $database, $db);
+									$search_result = search_card_v2 (trim($criteria));
+									$gobu_logic->logic_controller_for_database($search_result, "..debugdb", $database, $db);
 									break;
 
 							}
@@ -142,10 +161,6 @@
 							///////////////////
 							// Log Function //
 							/////////////////
-							if ($function_log == 1) {
-								$database->create_function_log_data($event['source'], $message['text'], $db);
-							}
-
 							if ($universal_log == 1) {
 								$database->create_universal_log_data($event['source'], $message['text'], $db);		
 							}

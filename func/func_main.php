@@ -106,32 +106,6 @@
 		return $image_array ;
 	} 
 
-	// The Controller In Deciding Response
-	function get_specific_card_info ($card_array_name, $card_array_list, $parameter){
-		// Selecting the specific array that contains the required data 
-		$specific_card_info = $card_array_list[$card_array_name];
-
-		switch ($parameter) {
-			case '..find':
-				$result = get_stats_based_on_name($specific_card_info);
-				break;
-			
-			case '..flair':
-				$result = get_flair($specific_card_info);
-				break;
-
-			case '..img':
-				$result = get_image($specific_card_info);
-				break;
-
-			case '..imgevo':
-				$result = get_evolved_image($specific_card_info);
-				break;
-		}
-
-		return $result ; 
-	}
-
 	function get_specific_card_info_v2 ($card_name, $parameter){
 		$card_array_list = fetch_all_card();
 		// Selecting the specific array that contains the required data 
@@ -171,7 +145,6 @@
 		return $result ; 
 	}
 
-	// Searching the word, return the result to the caller
 	function search_card_v2 ($criteria){
 		// Get all the card
 		$card_list = fetch_all_card();
@@ -258,11 +231,20 @@
 			if ($search_result['found'] == 1) {
 				if ($inputted_command == "..ani") {
 					$is_evo = 0 ;
+					$image_type = "..img" ;
 				}
 				if ($inputted_command == "..anievo") {
 					$is_evo = 1 ;
+					$image_type = "..imgevo" ;
 				}
-				$this->display->single_text_response($this->client, $this->event, $database->get_animated_url($search_result['name'], $is_evo, $db));
+				$original_url = $database->get_animated_url($search_result['name'], $is_evo, $db);
+				$converted_url = str_ireplace('http:', 'https:', $original_url);
+				$converted_url = str_ireplace('.gifv', '.mp4', $converted_url);
+
+				$image_result_status = get_specific_card_info_v2($search_result['name'], $image_type);
+			
+				$formatted_video_response = array($converted_url, $image_result_status[1]);
+				$this->display->single_video_response($this->client, $this->event, $formatted_video_response);
 			} else {
 				$this->basic_logic($search_result, $inputted_command);
 			}
