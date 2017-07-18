@@ -99,6 +99,11 @@
 		return $result ;
 	}
 
+	function get_id ($card_data){
+		$card_id = $card_data['id'] ;
+		return $card_id ;
+	}
+
 	// Resizing image to 184x240 for LINE thumbnail using free resizing API from Google
 	function resize_image ($image_url) {
 		$image_resized = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=$image_url&container=focus&resize_w=184&resize_h=240&refresh=2592000";
@@ -138,6 +143,10 @@
 
 			case '..name':
 				$result = get_stats_based_on_name($specific_card_info);
+				break;
+
+			case 'id':
+				$result = get_id($specific_card_info);
 				break;
 
 		}
@@ -206,6 +215,41 @@
 
 		function logic_controller_for_bagoum ($search_result, $inputted_command, $preferred_return_type)
 		{
+			if ($inputted_command == "..voice") {
+				$input_correct = 0 ;
+				$lang = $search_result[1] ;
+				$voice_type = $search_result[2] ;
+
+				if ($lang == "eng" || $lang == "jpn" || $lang == "kor") {
+					$input_correct++ ;
+				}
+
+				if ($voice_type == "atk" || $voice_type == "play" || $voice_type == "evo" || $voice_type == "die") {
+					$input_correct++ ;	
+				}
+
+				switch ($input_correct) {
+					case 0:
+						$this->display->show_input_error($this->client, $this->event);
+						break;
+					
+					case 1:
+						$this->display->show_input_error($this->client, $this->event);
+						break;
+
+					case 2:
+						$new_criteria = "" ;
+						$index = 3 ;
+						while ($index < count($search_result)) {
+							$new_criteria .= " " . $search_result[$index] ;
+							$index++ ;
+						}
+						unset($search_result);
+						$search_result = search_card_v2 (trim($new_criteria));
+						break;
+				}
+			}
+
 			if ($search_result['found'] == 1) {
 				switch ($preferred_return_type) {
 					case 'text':
@@ -220,6 +264,41 @@
 							$this->display->single_text_response($this->client, $this->event, $image_result_status);
 						}
 						break;
+
+					case 'sound':
+						$card_id = get_specific_card_info_v2 ($search_result['name'], 'id');
+						switch ($lang) {
+							case 'eng':
+								$lang_par = 'e' ; 
+								break;
+							case 'jpn':
+								$lang_par = 'j' ;
+								break;
+							case 'kor':
+								$lang_par = 'k' ;
+								break;
+						}
+						switch ($voice_type) {
+							case 'play':
+								$sound_url = "http://sv.bagoum.com/voice/" . $lang_par . "/vo_" . $card_id . "_1.mp3" ;
+								$voice_description = "Play voice for " . $search_result['name'] ;
+								break;
+							case 'atk':
+								$sound_url = "http://sv.bagoum.com/voice/" . $lang_par . "/vo_" . $card_id . "_2.mp3" ;
+								$voice_description = "Attack voice for " . $search_result['name'] ;
+								break;
+							case 'evo':
+								$sound_url = "http://sv.bagoum.com/voice/" . $lang_par . "/vo_" . $card_id . "_3.mp3";
+								$voice_description = "Evolve voice for " . $search_result['name'] ;
+								break;
+							case 'die':
+								$sound_url = "http://sv.bagoum.com/voice/" . $lang_par . "/vo_" . $card_id . "_4.mp3";
+								$voice_description = "Death voice for " . $search_result['name'] ;
+								break;	
+						}
+						$this->display->single_text_response($this->client, $this->event, $voice_description . "\n\n" . $sound_url);
+						break;
+
 				}
 			} else {
 				$this->basic_logic($search_result, $inputted_command);

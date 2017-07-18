@@ -122,6 +122,11 @@
 									}
 									break;
 
+								// Return Sound and Text or Only Text
+								case '..voice':
+									$gobu_logic->logic_controller_for_bagoum($exploded_Message, $command, "sound");
+									break;
+
 								// Admin Function
 								case '..set':
 									if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0') {

@@ -49,6 +49,39 @@
 	        ));
 		}
 
+		static function double_text_audio_response ($client, $event, $voice_description, $audio_url){
+			$client->replyMessage(array(
+		        'replyToken' => $event['replyToken'],
+		        'messages' => array(
+		            array(
+		                'type' => 'text',
+		                'text' => $voice_description
+		            ),
+		            array(
+		                'type' => 'audio',
+		                'originalContentUrl' => $audio_url,
+		                'duration' => 30000
+		            )
+		        )
+	        ));
+		}
+
+		static function double_text_response ($client, $event, $voice_description, $audio_url){
+			$client->replyMessage(array(
+		        'replyToken' => $event['replyToken'],
+		        'messages' => array(
+		            array(
+		                'type' => 'text',
+		                'text' => $voice_description
+		            ),
+		            array(
+		                'type' => 'text',
+		                'text' => $audio_url
+		            )
+		        )
+	        ));
+		}
+
 		static function confirm_response ($client, $event, $search_result, $command){
 			$splitted_name_stack = explode ("\n", $search_result['name']);
 			$formatted_stack = array();
@@ -121,6 +154,18 @@
 		            )
 		        )
 	        ));
+		}
+
+		static function show_input_error ($client, $event){
+			$client->replyMessage(array(
+		        'replyToken' => $event['replyToken'],
+		        'messages' => array(
+		            array(
+		                'type' => 'text',
+		                'text' => "Sorry, i can't understand your input"
+		            )
+		        )
+		    ));
 		}
 
 	}
