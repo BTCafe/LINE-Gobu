@@ -154,6 +154,9 @@
 		return $result ; 
 	}
 
+	/**
+	* Look for a card that has specific name
+	*/
 	function search_card_v2 ($criteria){
 		// Get all the card
 		$card_list = fetch_all_card();
@@ -184,6 +187,55 @@
 		return $search_result;
 	}
 
+	/**
+	* Look for a card that has specific criteria associated with it
+	*/
+	function find_card ($search_array){
+		$card_list = fetch_all_card();
+		$card_list = array_values($card_list);
+
+		$number_of_word_to_search = count($search_array); // How many criteria inputted
+		$terminate_early_status = false ; // For faster comparing when any criteria doesn't meet
+		$word_search_counter = 0 ; // Counter for switching criteria
+		$found_word_status = 0 ; // Indicator to monitor how many criteria meet
+		$match_counter = 0 ; // Indicator on how many card found
+		$card_counter = 0 ; // Counter for switching card to analyze
+		$name_stack = "" ; // Holds all card name that match criteria
+
+		while ($card_counter < count($card_list)) {
+
+			while ($word_search_counter < $number_of_word_to_search && $terminate_early_status == false) {
+				$compare = stripos(replace_br($card_list[$card_counter]["searchableText"]), $search_array[$word_search_counter]);
+				if ($compare !== false) {
+					$word_search_counter++ ;
+					$found_word_status++ ;
+				} else {
+					$terminate_early_status = true ;
+				}
+
+				// Only happen when all criteria meet on the card. Add it to the stack
+				if ($found_word_status == $number_of_word_to_search) {
+					$match_counter++ ;
+					$name_stack = $name_stack . $card_list[$card_counter]['name'] . "\n" ;
+				}
+
+			}
+
+			// Reset all condition before doing another search
+			$terminate_early_status = false ;
+			$found_word_status = $word_search_counter = 0 ;
+			// Increase counter to switch to other card
+			$card_counter++ ;
+
+		}
+		$find_result = array('found'=>$match_counter, 'name'=>$name_stack);
+		return $find_result ;
+
+	}
+
+	/**
+	* The main class that form the BOT logic
+	*/
 	class bot_logic 
 	{
 		protected $client ;

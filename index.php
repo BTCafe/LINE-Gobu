@@ -49,13 +49,15 @@
 
 							switch ($command) {
 								
-								// Return Text Based Only To User
-								// Disabled
+								// Return Text Based Only To User //
 								case '..find':
-									$display->single_text_response($client, $event, "Currently in maintenance, use ..name instead\n\nExample :\n..name Spawn");
+									$search_result = find_card (explode(" ", trim($criteria))); // Explode the criteria to make it into array
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
+									if ($function_log == 1) {
+										$database->create_function_log_data($event['source'], $message['text'], $db);
+									}
 									break;
 
-								// Active
 								case '..flair':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
@@ -72,7 +74,7 @@
 									}
 									break;
 
-								// Connecting to Database
+									// Connecting to Database
 								case '..ani':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_database($search_result, $command, $database, $db);
@@ -89,7 +91,7 @@
 									}
 									break;
 
-								// Return Either Text or Image
+								// Return Either Text or Image //
 								case '..img':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
@@ -122,12 +124,12 @@
 									}
 									break;
 
-								// Return Sound and Text or Only Text
+								// Return Sound and Text or Only Text //
 								case '..voice':
 									$gobu_logic->logic_controller_for_bagoum($exploded_Message, $command, "sound");
 									break;
 
-								// Admin Function
+								// Admin Function //
 								case '..set':
 									if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0') {
 										switch ($exploded_Message[1]) {
