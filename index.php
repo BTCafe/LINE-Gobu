@@ -52,7 +52,7 @@
 								// Return Text Based Only To User //
 								case '..find':
 									$search_result = find_card (explode(" ", trim($criteria))); // Explode the criteria to make it into array
-									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
+									$gobu_logic->logic_controller_for_bagoum($search_result, '..name', "text");
 									if ($function_log == 1) {
 										$database->create_function_log_data($event['source'], $message['text'], $db);
 									}
