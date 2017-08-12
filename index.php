@@ -54,7 +54,7 @@
 									$search_result = find_card (explode(" ", trim($criteria))); // Explode the criteria to make it into array
 									$gobu_logic->logic_controller_for_bagoum($search_result, '..name', "text");
 									if ($function_log == 1) {
-										$database->create_function_log_data($event['source'], $message['text'], $db);
+										$database->create_log_data($event['source'], $command, $criteria, $db);
 									}
 									break;
 
@@ -62,7 +62,7 @@
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
 									if ($function_log == 1) {
-										$database->create_function_log_data($event['source'], $message['text'], $db);
+										$database->create_log_data($event['source'], $command, $criteria, $db);
 									}
 									break;
 
@@ -70,7 +70,7 @@
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
 									if ($function_log == 1) {
-										$database->create_function_log_data($event['source'], $message['text'], $db);
+										$database->create_log_data($event['source'], $command, $criteria, $db);
 									}
 									break;
 
@@ -79,7 +79,7 @@
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_database($search_result, $command, $database, $db);
 									if ($function_log == 1) {
-										$database->create_function_log_data($event['source'], $message['text'], $db);
+										$database->create_log_data($event['source'], $command, $criteria, $db);
 									}
 									break;
 
@@ -87,7 +87,7 @@
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_database($search_result, $command, $database, $db);
 									if ($function_log == 1) {
-										$database->create_function_log_data($event['source'], $message['text'], $db);
+										$database->create_log_data($event['source'], $command, $criteria, $db);
 									}
 									break;
 
@@ -96,7 +96,7 @@
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
 									if ($function_log == 1) {
-										$database->create_function_log_data($event['source'], $message['text'], $db);
+										$database->create_log_data($event['source'], $command, $criteria, $db);
 									}
 									break;
 
@@ -104,7 +104,7 @@
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
 									if ($function_log == 1) {
-										$database->create_function_log_data($event['source'], $message['text'], $db);
+										$database->create_log_data($event['source'], $command, $criteria, $db);
 									}
 									break;
 
@@ -112,7 +112,7 @@
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
 									if ($function_log == 1) {
-										$database->create_function_log_data($event['source'], $message['text'], $db);
+										$database->create_log_data($event['source'], $command, $criteria, $db);
 									}
 									break;
 
@@ -120,13 +120,16 @@
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
 									if ($function_log == 1) {
-										$database->create_function_log_data($event['source'], $message['text'], $db);
+										$database->create_log_data($event['source'], $command, $criteria, $db);
 									}
 									break;
 
 								// Return Sound and Text or Only Text //
 								case '..voice':
 									$gobu_logic->logic_controller_for_bagoum($exploded_Message, $command, "sound");
+									if ($function_log == 1) {
+										$database->create_log_data($event['source'], $command, $criteria, $db);
+									}
 									break;
 
 								// Admin Function //

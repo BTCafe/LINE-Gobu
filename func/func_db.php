@@ -42,6 +42,23 @@
 			mysqli_query($db_conf, $query);
 		}
 
+		// New log function to store executed data to the database
+		static function create_log_data ($source, $command, $criteria, $db_conf) {
+			if (!isset($source['userId'])) {
+				$choosenID = 'groupId' ;
+				if (!isset($source['groupId'])) {
+					$choosenID = 'roomId' ;
+				} 
+			} else {
+				$choosenID = 'userId' ;
+			}
+
+	    	$query = "INSERT INTO `SUCCESS_LOG` (`DATE`, `USER_ID` , `COMMAND`, `CRITERIA`) VALUES ('" .
+				date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "','"  . $command .  "','" . $criteria . "')"; ;  
+
+			mysqli_query($db_conf, $query);
+		}
+
 		static function update_log_setting ($function_log, $universal_log){
 			if ($function_log == " " || $universal_log == " ") {
 				return "An error occured, setting unchanged" ;
