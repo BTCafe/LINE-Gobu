@@ -132,6 +132,12 @@
 									}
 									break;
 
+								// Help List
+								case '..help':
+									$gobu_logic->logic_controller_for_info($command);
+									break;
+
+
 								// Admin Function //
 								case '..set':
 									if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0') {
