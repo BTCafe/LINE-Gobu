@@ -7,7 +7,7 @@ Before you can invite the bot to your room, you need to add friend first via thi
 ### Command List
 All command started with `..` followed by what you want to do. The full list of command is as follows :
 * `..find [criteria to search]` - to search for a card based on the inputted criteria.  
-* `..name [name]` - to search for a card using their name. Will be replacing `..find` in the near future. Using carousel template to make it easier to choose from multiple result
+* `..name [name]` - to search for a card using their name. 
 * `..flair [name]` - to search for a flair of a card using their name. 
 * `..img [name]` - to search for card art using their name. 
 * `..imgevo [name]` - to search for evolved card art using their name.

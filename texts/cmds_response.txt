@@ -1,0 +1,23 @@
+All command started with `..` followed by what you want to do. The full list of command is as follows :
+
+`..find [criteria to search]` - to search for a card based on the inputted criteria.  
+
+`..name [card name]` - to search for a card using their name.
+
+`..flair [card name]` - to search for a flair of a card using their name. 
+
+`..img [card name]` - to search for card art using their name. 
+
+`..imgevo [card name]` - to search for evolved card art using their name.
+
+`..alt [card name]` - to search for an alternate card art using their name if available.
+
+`..altevo [card name]` - to search for an alternate evolved card art using their name if available.
+
+`..ani [card name]` - to search for an animated card using their name.
+
+`..anievo [card name]` - to search for an animated evolved card using their name. 
+
+Example : 
+..find 10pp neutral
+..name Dark Jeanne 

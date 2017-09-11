@@ -380,5 +380,17 @@
 				$this->basic_logic($search_result, $inputted_command);
 			}
 		}
+
+		function logic_controller_for_info ($inputted_command)
+		{
+			switch ($inputted_command) {
+				case '..help':
+					$message = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/texts/cmds_response.txt');
+					break;
+			}
+			if (isset($message)) {
+				$this->display->single_text_response($this->client, $this->event, $message);
+			}
+		}
 	}
 ?>
