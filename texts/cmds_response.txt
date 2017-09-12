@@ -18,6 +18,14 @@ All command started with `..` followed by what you want to do. The full list of 
 
 `..anievo [card name]` - to search for an animated evolved card using their name. 
 
+`..raw [card name]` - to search for borderless card art using their name.
+
+`..rawevo [card name]` - to search for borderless evolved card art using their name.
+
+`..rawalt [card name]` - to search for borderless alternate card art using their name. 
+
+`..rawaltevo [card name]` - to search for borderless alternate (evolved) card using their name.
+
 Example : 
 ..find 10pp neutral
 ..name Dark Jeanne 

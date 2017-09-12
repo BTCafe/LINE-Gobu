@@ -124,6 +124,38 @@
 									}
 									break;
 
+								case '..raw':
+									$search_result = search_card_v2 (trim($criteria));
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1) {
+										$database->create_log_data($event['source'], $command, $criteria, $db);
+									}
+									break;
+
+								case '..rawevo':
+									$search_result = search_card_v2 (trim($criteria));
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1) {
+										$database->create_log_data($event['source'], $command, $criteria, $db);
+									}
+									break;
+
+								case '..rawalt':
+									$search_result = search_card_v2 (trim($criteria));
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1) {
+										$database->create_log_data($event['source'], $command, $criteria, $db);
+									}
+									break;
+
+								case '..rawaltevo':
+									$search_result = search_card_v2 (trim($criteria));
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1) {
+										$database->create_log_data($event['source'], $command, $criteria, $db);
+									}
+									break;
+
 								// Return Sound and Text or Only Text //
 								case '..voice':
 									$gobu_logic->logic_controller_for_bagoum($exploded_Message, $command, "sound");

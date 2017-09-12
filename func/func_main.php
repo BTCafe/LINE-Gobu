@@ -104,11 +104,30 @@
 		return $card_id ;
 	}
 
+	function get_raw_image ($card_data, $evo, $alt){
+		$to_replace = array(',', ' ', '\'');
+		$card_name = str_ireplace($to_replace, '', $card_data['_name']) ;
+		$image_url = "http://sv.bagoum.com/getRawImage/$evo/$alt/$card_name" ;
+		if (file_get_contents($image_url)) {
+			$result = resize_image($image_url) ;
+			$result[0] = https_image_container($image_url) ;
+		} else {
+			$result = "No raw image found" ;
+		}
+		return $result ;
+	}
+
 	// Resizing image to 184x240 for LINE thumbnail using free resizing API from Google
 	function resize_image ($image_url) {
 		$image_resized = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=$image_url&container=focus&resize_w=184&resize_h=240&refresh=2592000";
 		$image_array = array ($image_url, $image_resized) ;
 		return $image_array ;
+	} 
+
+	// Created to help bypass HTTPS requirement from LINE API
+	function https_image_container ($image_url) { 
+		$image = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=$image_url&container=focus&refresh=2592000";
+		return $image ;
 	} 
 
 	function get_specific_card_info_v2 ($card_name, $parameter){
@@ -147,6 +166,22 @@
 
 			case 'id':
 				$result = get_id($specific_card_info);
+				break;
+
+			case '..raw':
+				$result = get_raw_image($specific_card_info, 0, 0);
+				break;
+
+			case '..rawevo':
+				$result = get_raw_image($specific_card_info, 1, 0);
+				break;
+
+			case '..rawalt':
+				$result = get_raw_image($specific_card_info, 0, 1);
+				break;
+
+			case '..rawaltevo':
+				$result = get_raw_image($specific_card_info, 1, 1);
 				break;
 
 		}
@@ -310,6 +345,7 @@
 					
 					case 'image':
 						$image_result_status = get_specific_card_info_v2($search_result['name'], $inputted_command);
+						// If an image found the result will be 2 because it will return an array by resize function
 						if (count($image_result_status) == 2) {
 							$this->display->single_image_response($this->client, $this->event, $image_result_status);
 						} else {
