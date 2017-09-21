@@ -44,13 +44,13 @@
 
 		// New log function to store executed data to the database
 		static function create_log_data ($source, $command, $criteria, $db_conf) {
-			if (!isset($source['userId'])) {
+			if (!isset($source['roomId'])) {
 				$choosenID = 'groupId' ;
 				if (!isset($source['groupId'])) {
-					$choosenID = 'roomId' ;
+					$choosenID = 'userId' ;
 				} 
 			} else {
-				$choosenID = 'userId' ;
+				$choosenID = 'roomId' ;
 			}
 
 	    	$query = "INSERT INTO `SUCCESS_LOG` (`DATE`, `USER_ID` , `COMMAND`, `CRITERIA`) VALUES ('" .

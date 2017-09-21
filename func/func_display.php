@@ -168,6 +168,18 @@
 		    ));
 		}
 
+		static function show_no_permission ($client, $event){
+			$client->replyMessage(array(
+		        'replyToken' => $event['replyToken'],
+		        'messages' => array(
+		            array(
+		                'type' => 'text',
+		                'text' => "Sorry, you don't have permission to do that~"
+		            )
+		        )
+		    ));
+		}
+
 	}
 
 	function carousel_response_two ($client, $event, $search_result, $formatted_stack){

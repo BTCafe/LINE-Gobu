@@ -124,6 +124,38 @@
 									}
 									break;
 
+								case '..raw':
+									$search_result = search_card_v2 (trim($criteria));
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1) {
+										$database->create_log_data($event['source'], $command, $criteria, $db);
+									}
+									break;
+
+								case '..rawevo':
+									$search_result = search_card_v2 (trim($criteria));
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1) {
+										$database->create_log_data($event['source'], $command, $criteria, $db);
+									}
+									break;
+
+								case '..rawalt':
+									$search_result = search_card_v2 (trim($criteria));
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1) {
+										$database->create_log_data($event['source'], $command, $criteria, $db);
+									}
+									break;
+
+								case '..rawaltevo':
+									$search_result = search_card_v2 (trim($criteria));
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1) {
+										$database->create_log_data($event['source'], $command, $criteria, $db);
+									}
+									break;
+
 								// Return Sound and Text or Only Text //
 								case '..voice':
 									$gobu_logic->logic_controller_for_bagoum($exploded_Message, $command, "sound");
@@ -153,7 +185,7 @@
 										$result = $database->update_log_setting (trim($function_log), trim($universal_log));
 										$display->single_text_response($client, $event, $result);
 									} else {
-										$display->single_text_response($client, $event, "Sorry, you don't have permission to do that~");
+										$display->show_no_permission($client, $event);
 									}
 									break;
 
