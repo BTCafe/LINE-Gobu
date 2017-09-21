@@ -185,7 +185,7 @@
 										$result = $database->update_log_setting (trim($function_log), trim($universal_log));
 										$display->single_text_response($client, $event, $result);
 									} else {
-										$display->single_text_response($client, $event, "Sorry, you don't have permission to do that~");
+										$display->show_no_permission($client, $event);
 									}
 									break;
 

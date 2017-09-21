@@ -1,30 +1,32 @@
-All command started with `..` followed by what you want to do. The full list of command is as follows :
+All command started with `..` followed by what you want to do. 
 
-`..find [criteria to search]` - to search for a card based on the inputted criteria.  
+The full list of command is as follows :
 
-`..name [card name]` - to search for a card using their name.
+`..find [criteria to search]` - search for a card based on criteria.  
 
-`..flair [card name]` - to search for a flair of a card using their name. 
+`..name [card name]` - search a card stats using their name.
 
-`..img [card name]` - to search for card art using their name. 
+`..flair [card name]` - flair of the card. 
 
-`..imgevo [card name]` - to search for evolved card art using their name.
+`..img [card name]` - card artwork. 
 
-`..alt [card name]` - to search for an alternate card art using their name if available.
+`..imgevo [card name]` - card artwork (evolved).
 
-`..altevo [card name]` - to search for an alternate evolved card art using their name if available.
+`..alt [card name]` - alternate card artwork.
 
-`..ani [card name]` - to search for an animated card using their name.
+`..altevo [card name]` - alternate card artwork (evolved).
 
-`..anievo [card name]` - to search for an animated evolved card using their name. 
+`..ani [card name]` - animated card artwork.
 
-`..raw [card name]` - to search for borderless card art using their name.
+`..anievo [card name]` - animated card artwork (evolved). 
 
-`..rawevo [card name]` - to search for borderless evolved card art using their name.
+`..raw [card name]` - borderless card artwork.
 
-`..rawalt [card name]` - to search for borderless alternate card art using their name. 
+`..rawevo [card name]` - borderless card artwork (evolved).
 
-`..rawaltevo [card name]` - to search for borderless alternate (evolved) card using their name.
+`..rawalt [card name]` - borderless alternate card artwork.
+
+`..rawaltevo [card name]` - borderless alternate card artwork (evolved). 
 
 Example : 
 ..find 10pp neutral

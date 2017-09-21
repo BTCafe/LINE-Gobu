@@ -326,9 +326,9 @@
 
 					case 2:
 						$new_criteria = "" ;
-						$index = 3 ;
+						$index = 0 ;
 						while ($index < count($search_result)) {
-							$new_criteria .= " " . $search_result[$index] ;
+							$new_criteria .= $search_result[$index] . " " ;
 							$index++ ;
 						}
 						unset($search_result);
