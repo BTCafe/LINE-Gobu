@@ -16,6 +16,8 @@ The full list of command is as follows :
 
 `..altevo [card name]` - alternate card artwork (evolved).
 
+*** Beta Function - Might not works sometimes ***
+
 `..ani [card name]` - animated card artwork.
 
 `..anievo [card name]` - animated card artwork (evolved). 

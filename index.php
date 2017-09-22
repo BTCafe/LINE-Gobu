@@ -190,7 +190,7 @@
 									break;
 
 								case '..status':
-									$display->single_text_response($client, $event, "Gobu Status\n\nFunction Log : " . $function_log . "Universal Log : " . $universal_log);
+									$display->single_text_response($client, $event, "Gobu Status\n\nFunction Log : " . $function_log);
 									break;
 
 								// Debug
@@ -209,9 +209,6 @@
 							///////////////////
 							// Log Function //
 							/////////////////
-							if ($universal_log == 1) {
-								$database->create_universal_log_data($event['source'], $message['text'], $db);		
-							}
 							
 							// Closing Database Connection
 							if (is_resource($db) && get_resource_type($db) === 'mysql link') {

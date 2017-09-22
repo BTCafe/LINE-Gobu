@@ -6,16 +6,22 @@ Before you can invite the bot to your room, you need to add friend first via thi
 
 ### Command List
 All command started with `..` followed by what you want to do. The full list of command is as follows :
-* `..find [criteria to search]` - to search for a card based on the inputted criteria.  
-* `..name [name]` - to search for a card using their name. 
-* `..flair [name]` - to search for a flair of a card using their name. 
-* `..img [name]` - to search for card art using their name. 
-* `..imgevo [name]` - to search for evolved card art using their name.
-* `..alt [name]` - to search for an alternate card art using their name if available.
-* `..altevo [name]` - to search for an alternate evolved card art using their name if available.
-* `..ani [name]` - to search for an animated card using their name. Currently using URL data stored in database because no known API yet that could provide animated card list 
-* `..anievo [name]` - to search for an animated evolved card using their name. Currently using URL data stored in database because no known API yet that could provide animated card list
 
+* `..find [criteria to search]` - to search for a card based on the inputted criteria.  
+* `..name [name]` - search a card stats using their name.
+* `..flair [name]` - flair of the card.  
+* `..img [name]` - card artwork. 
+* `..imgevo [name]` - card artwork (evolved). 
+* `..alt [name]` - alternate card artwork.
+* `..altevo [name]` - alternate card artwork (evolved).
+
+#### Beta Function - Might not works sometimes
+* `..ani [name]` - animated card artwork. 
+* `..anievo [name]` - animated card artwork (evolved).
+* `..raw [card name]` - borderless card artwork.
+* `..rawevo [card name]` - borderless card artwork (evolved).
+* `..rawalt [card name]` - borderless alternate card artwork.
+* `..rawaltevo [card name]` - borderless alternate card artwork (evolved). 
 
 <br>Notes : 
 <br>- When multiple result found, all command will return the list of possible card and not their respective command.
