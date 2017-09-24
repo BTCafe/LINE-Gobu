@@ -1,8 +1,11 @@
 # Shadowverse BOT for LINE
-This is the main page for Shadowverse BOT in LINE. 
 
-### Adding this bot
-Before you can invite the bot to your room, you need to add friend first via this ID : @cyz7687s <br>After that you can invite the bot to your room and all the members in that room will be able to use the bot 
+[![Video Image](https://i.imgur.com/wmtypkil.jpg)](https://www.youtube.com/watch?v=xLSZYfAyX3Q "LINE Gobu Trailer")
+
+"Gobu" is a bot that will help you get any information from the Shadowverse card. 
+
+### Getting Started
+Before you can invite the bot to your room, you need to add her as a friend first via this ID : @cyz7687s <br>After that you can invite the bot to your room and all the members in that room will be able to use the bot without being a friend first (although it would be great you do ^^)
 
 ### Command List
 All command started with `..` followed by what you want to do. The full list of command is as follows :
