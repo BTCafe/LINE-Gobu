@@ -108,18 +108,20 @@
 		$to_replace = array(',', ' ', '\'');
 		$card_name = str_ireplace($to_replace, '', $card_data['_name']) ;
 		$image_url = "http://sv.bagoum.com/getRawImage/$evo/$alt/$card_name" ;
-		if (file_get_contents($image_url)) {
+		$temp_file = file_get_contents($image_url);
+		$file_size = strlen($temp_file);
+		if ($file_size > 10000) {
 			$result = resize_image($image_url) ;
 			$result[0] = https_image_container($image_url) ;
 		} else {
-			$result = "No raw image found" ;
+			$result = "No raw image found / available yet" ;
 		}
 		return $result ;
 	}
 
 	// Resizing image to 184x240 for LINE thumbnail using free resizing API from Google
 	function resize_image ($image_url) {
-		$image_resized = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=$image_url&container=focus&resize_w=184&resize_h=240&refresh=2592000";
+		$image_resized = "https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?url=$image_url&container=focus&resize_h=240&refresh=2592000";
 		$image_array = array ($image_url, $image_resized) ;
 		return $image_array ;
 	} 
