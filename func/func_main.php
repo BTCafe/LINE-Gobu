@@ -105,15 +105,20 @@
 	}
 
 	function get_raw_image ($card_data, $evo, $alt){
-		$to_replace = array(',', ' ', '\'');
+		$to_replace = array(',', ' ', '\'', '.', '-');
 		$card_name = str_ireplace($to_replace, '', $card_data['_name']) ;
 		$image_url = "http://sv.bagoum.com/getRawImage/$evo/$alt/$card_name" ;
 		$temp_file = file_get_contents($image_url);
-		$file_size = strlen($temp_file);
-		if ($file_size > 10000) {
-			$result = resize_image($image_url) ;
-			$result[0] = https_image_container($image_url) ;
-		} else {
+		if ($temp_file) {
+			$file_size = strlen($temp_file);
+			if ($file_size > 10000) {
+				$result = resize_image($image_url) ;
+				$result[0] = https_image_container($image_url) ;
+			} else {
+				$result = "No raw image found / available yet" ;	
+			} 	
+		}
+		else {
 			$result = "No raw image found / available yet" ;
 		}
 		return $result ;
@@ -407,13 +412,17 @@
 					$image_type = "..imgevo" ;
 				}
 				$original_url = $database->get_animated_url($search_result['name'], $is_evo, $db);
-				$converted_url = str_ireplace('http:', 'https:', $original_url);
-				$converted_url = str_ireplace('.gifv', '.mp4', $converted_url);
+				if (strpos($original_url, 'gifv') !== false) {
+					$converted_url = str_ireplace('http:', 'https:', $original_url);
+					$converted_url = str_ireplace('.gifv', '.mp4', $converted_url);
 
-				$image_result_status = get_specific_card_info_v2($search_result['name'], $image_type);
-			
-				$formatted_video_response = array($converted_url, $image_result_status[1]);
-				$this->display->single_video_response($this->client, $this->event, $formatted_video_response);
+					$image_result_status = get_specific_card_info_v2($search_result['name'], $image_type);
+				
+					$formatted_video_response = array($converted_url, $image_result_status[1]);
+					$this->display->single_video_response($this->client, $this->event, $formatted_video_response);
+				} else {
+					$this->display->single_text_response($this->client, $this->event, $original_url);
+				}
 			} else {
 				$this->basic_logic($search_result, $inputted_command);
 			}
