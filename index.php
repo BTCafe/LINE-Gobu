@@ -164,11 +164,18 @@
 									}
 									break;
 
-								// Help List
+								// Utility Function
 								case '..help':
 									$gobu_logic->logic_controller_for_info($command);
 									break;
 
+								case '..contact':
+									$gobu_logic->logic_controller_for_info($command);
+									break;
+
+								case '..about':
+									$gobu_logic->logic_controller_for_info($command);
+									break;
 
 								// Admin Function //
 								case '..set':

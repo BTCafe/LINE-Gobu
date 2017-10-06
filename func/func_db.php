@@ -71,14 +71,18 @@
 
 		static function get_animated_url ($name, $is_evo, $db_conf){
 			$name = trim($name);
-			$query = "SELECT `ANI_URL` FROM `ANIMATED_TABLE` WHERE NAME='" . $name . "' AND EVOLVE='" . $is_evo . "'" ;
+			$query = "SELECT * FROM `ANIMATED_TABLE` WHERE NAME='" . $name . "' AND EVOLVE='" . $is_evo . "'" ;
 			$query_result = mysqli_query($db_conf, $query);
 			if ($query_result) {
 				if ( mysqli_num_rows($query_result) == 0 ) {
 					return "Not found / available yet, sorry~" ;
 				} else {
 					$query_fetch = mysqli_fetch_array($query_result);
-					$animated_url = $query_fetch['ANI_URL'] ;
+					if ($query_fetch['GOOGLE_URL'] != "") {
+						$animated_url = $query_fetch['GOOGLE_URL'] ;
+					} else {
+						$animated_url = $query_fetch['ANI_URL'] ;
+					}
 					return $animated_url ;
 				}
 			} else {

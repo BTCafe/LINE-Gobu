@@ -420,6 +420,11 @@
 				
 					$formatted_video_response = array($converted_url, $image_result_status[1]);
 					$this->display->single_video_response($this->client, $this->event, $formatted_video_response);
+				} elseif (strpos($original_url, 'mp4') !== false) {
+					$image_result_status = get_specific_card_info_v2($search_result['name'], $image_type);
+
+					$formatted_video_response = array($original_url, $image_result_status[1]);					
+					$this->display->single_video_response($this->client, $this->event, $formatted_video_response);
 				} else {
 					$this->display->single_text_response($this->client, $this->event, $original_url);
 				}
@@ -433,6 +438,12 @@
 			switch ($inputted_command) {
 				case '..help':
 					$message = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/texts/cmds_response.txt');
+					break;
+				case '..contact':
+					$this->display->show_contact_menu($this->client, $this->event);
+					break;
+				case '..about':
+					$message = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/texts/about_response.txt');
 					break;
 			}
 			if (isset($message)) {

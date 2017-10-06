@@ -180,33 +180,28 @@
 		    ));
 		}
 
-		static function show_help_menu ($client, $event){
+		static function show_contact_menu ($client, $event){
 			$client->replyMessage(array(
 	            'replyToken' => $event['replyToken'],
 	            'messages' => array(
 	                array(
 	                    'type' => 'template',
 
-	                    'altText' => "If you use LINE PC type '..help' to see all the available command",
+	                    'altText' => "Only viewable in LINE Mobile",
 
 	                    // The Button Content
 	                    'template' => array(
 
 	                    	'type' => "buttons",
-	                    	'title' => "Help Menu",
-	                    	'text' => "What can i help you with ?",
+	                    	'title' => "Contact Menu",
+	                    	'text' => "Feel free to suggest a new feature or any bug you find !",
 
 	                    	// Action to take between the three
 	                    	'actions' => array(
 	                    		array(
-	                    			'type' => 'message',
-	                    			'label' => 'Command List',
-	                    			'text' => '..help'				                                				
-	                    		),
-	                    		array(
 	                    			'type' => 'uri',
-	                    			'label' => 'Give Feedback',
-	                    			'uri' => "mailto:minerva.bot.developer@gmail.com?subject=Feedback%20For%20Minerva"	
+	                    			'label' => 'Feedbacks via Email',
+	                    			'uri' => "mailto:minerva.bot.developer@gmail.com?subject=Feedback%20For%20Gobu"	
 	                    		)
 	                    	)
 	                    )
@@ -214,6 +209,7 @@
 	            )
 	        ));
 		}
+
 	}
 
 	function carousel_response_two ($client, $event, $search_result, $formatted_stack){

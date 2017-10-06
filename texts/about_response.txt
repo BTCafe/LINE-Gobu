@@ -1,0 +1,6 @@
+Gobu is a BOT for Shadowverce CCG. 
+
+She can help you fetch any card information you need such as stats, flair and artwork. 
+
+Check out our trailer here :
+https://youtu.be/xLSZYfAyX3Q
