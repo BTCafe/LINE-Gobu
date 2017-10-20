@@ -311,15 +311,17 @@
 		{
 			if ($inputted_command == "..voice") {
 				$input_correct = 0 ;
-				$lang = $search_result[1] ;
-				$voice_type = $search_result[2] ;
+				if (count($search_result) > 3) {
+					$lang = $search_result[1] ;
+					$voice_type = $search_result[2] ;
 
-				if ($lang == "eng" || $lang == "jpn" || $lang == "kor") {
-					$input_correct++ ;
-				}
+					if ($lang == "eng" || $lang == "jpn" || $lang == "kor") {
+						$input_correct++ ;
+					}
 
-				if ($voice_type == "atk" || $voice_type == "play" || $voice_type == "evo" || $voice_type == "die") {
-					$input_correct++ ;	
+					if ($voice_type == "atk" || $voice_type == "play" || $voice_type == "evo" || $voice_type == "die") {
+						$input_correct++ ;	
+					}
 				}
 
 				switch ($input_correct) {
@@ -333,8 +335,8 @@
 
 					case 2:
 						$new_criteria = "" ;
-						$index = 0 ;
-						while ($index < count($search_result)) {
+						$index = 3 ;
+						while (count($search_result) > $index) {
 							$new_criteria .= $search_result[$index] . " " ;
 							$index++ ;
 						}
@@ -391,12 +393,16 @@
 								$voice_description = "Death voice for " . $search_result['name'] ;
 								break;	
 						}
-						$this->display->single_text_response($this->client, $this->event, $voice_description . "\n\n" . $sound_url);
+						$this->display->single_text_response($this->client, $this->event, $voice_description . "\n" . $sound_url);
 						break;
 
 				}
 			} else {
-				$this->basic_logic($search_result, $inputted_command);
+				if ($inputted_command == "..voice") {
+					$this->display->single_text_response($this->client, $this->event, "Multiple result found and this function doesn't support carousel yet. Please input the full name : " . "\n\n" . $search_result['name']);
+				} else {
+					$this->basic_logic($search_result, $inputted_command);
+				}
 			}
 		}
 

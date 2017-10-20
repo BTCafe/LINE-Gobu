@@ -162,7 +162,7 @@
 		        'messages' => array(
 		            array(
 		                'type' => 'text',
-		                'text' => "Sorry, i can't understand your input"
+		                'text' => "Something is missing ... try '..help' command to check"
 		            )
 		        )
 		    ));
@@ -201,7 +201,7 @@
 	                    		array(
 	                    			'type' => 'uri',
 	                    			'label' => 'Feedbacks via Email',
-	                    			'uri' => "mailto:minerva.bot.developer@gmail.com?subject=Feedback%20For%20Gobu"	
+	                    			'uri' => "mailto:minerva.bot.developer@gmail.com?subject=Feedback%20for%20Gobu"	
 	                    		)
 	                    	)
 	                    )

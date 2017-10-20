@@ -30,6 +30,9 @@ The full list of command is as follows :
 
 `..rawaltevo [card name]` - borderless alternate card artwork (evolved). 
 
+`..voice [eng/jpn/kor] [atk/play/evo/die] [card name] -` basic voice function, still needs a lot of improvement ! 
+
 Example : 
 ..find 10pp neutral
 ..name Dark Jeanne 
+..voice eng play Cinderella
