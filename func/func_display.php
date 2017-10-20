@@ -66,17 +66,17 @@
 	        ));
 		}
 
-		static function double_text_response ($client, $event, $voice_description, $audio_url){
+		static function double_text_response ($client, $event, $message1, $message2){
 			$client->replyMessage(array(
 		        'replyToken' => $event['replyToken'],
 		        'messages' => array(
 		            array(
 		                'type' => 'text',
-		                'text' => $voice_description
+		                'text' => $message1
 		            ),
 		            array(
 		                'type' => 'text',
-		                'text' => $audio_url
+		                'text' => $message2
 		            )
 		        )
 	        ));
