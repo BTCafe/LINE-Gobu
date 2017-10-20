@@ -25,7 +25,9 @@ All command started with `..` followed by what you want to do. The full list of 
 * `..rawevo [card name]` - borderless card artwork (evolved).
 * `..rawalt [card name]` - borderless alternate card artwork.
 * `..rawaltevo [card name]` - borderless alternate card artwork (evolved). 
+* `..voice [eng/jpn/kor] [atk/play/evo/die] [card name] -` basic voice function, still needs a lot of improvement !  
 
 <br>Notes : 
 <br>- When multiple result found, all command will return the list of possible card and not their respective command.
 <br>- The list of possible card will be returned in carousel type message when possible (between 2 - 5) for easier search.
+<br>- Type `..help` to see some examples of command function.
