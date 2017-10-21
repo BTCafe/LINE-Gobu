@@ -2,6 +2,8 @@ All command started with `..` followed by what you want to do.
 
 The full list of command is as follows :
 
+# Main Modules 
+
 `..find [criteria to search]` - search for a card based on criteria.  
 
 `..name [card name]` - search a card stats using their name.
@@ -30,9 +32,21 @@ The full list of command is as follows :
 
 `..rawaltevo [card name]` - borderless alternate card artwork (evolved). 
 
-`..voice [eng/jpn/kor] [atk/play/evo/die] [card name] -` basic voice function, still needs a lot of improvement ! 
+`..voice [eng/jpn/kor] [atk/play/evo/die] [card name]` - basic voice function, still needs a lot of improvement ! 
 
 Example : 
 ..find 10pp neutral
 ..name Dark Jeanne 
 ..voice eng play Cinderella
+
+# Additional Modules
+
+*** Modules #1 : Urban Dictionary ***
+
+This is the function that's used to access Urban Dictionary web via Gobu 
+
+`..ud [words]` - Returns explanation of that words
+
+`..explain [words]` - Same as `..ud`
+
+`..random` - Returns a random explanation 

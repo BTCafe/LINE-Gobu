@@ -32,8 +32,9 @@
 		$definition_format = "> " . $term_array['list'][$chosen_array]['definition'];
 		$example_format = "Example :\n" . $term_array['list'][$chosen_array]['example'];
 		$variation_format = 'This is variation ' . ($chosen_array + 1) .  ' of ' . $variation_total ;
+		$source_format = "Source : https://www.urbandictionary.com" ;
 
-		$term_result_array = array ($word_format, $definition_format, $example_format, $variation_format);
+		$term_result_array = array ($word_format, $definition_format, $example_format, $variation_format, $source_format);
 		$text_return = implode("\n\n",$term_result_array) . "";
 		
 		return strip_tags($text_return) ;
