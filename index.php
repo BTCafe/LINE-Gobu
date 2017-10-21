@@ -1,5 +1,4 @@
 <?php
-
 	require_once( __DIR__ . '/src/LINEBotTiny.php');
 
 	require_once( __DIR__ . '/conf/channel_key.php');

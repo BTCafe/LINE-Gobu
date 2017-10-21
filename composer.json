@@ -1,5 +1,6 @@
 {
     "require": {
-        "linecorp/line-bot-sdk": "^2.2"
+        "linecorp/line-bot-sdk": "^2.2",
+        "consoletvs/profanity": "^1.0"
     }
 }
