@@ -195,6 +195,10 @@
 					$message = exact_term($criteria);
 					break;
 
+				case '..explain':
+					$message = exact_term($criteria);					
+					break;
+
 				case '..random':
 					$message = random_term();
 					break;

@@ -185,6 +185,13 @@
 									}
 									break;
 
+								case '..explain':
+									$gobu_logic->logic_controller_for_urbandictionary($command, $criteria);
+									if ($function_log == 1) {
+										$database->create_log_data_ud($event['source'], $command, $criteria, $db);
+									}
+									break;
+
 								case '..random':
 									$gobu_logic->logic_controller_for_urbandictionary($command, "");
 									if ($function_log == 1) {
