@@ -5,8 +5,12 @@
 		$term_url = 'http://api.urbandictionary.com/v0/define?term=' . str_replace(' ', '+', $term);
 		$term_json = file_get_contents($term_url);
 		$term_array = json_decode($term_json, true);
-		$random_array_number = rand(0,count($term_array['list'])-1);
-		$term_return = format_return_text($term_array, $random_array_number, count($term_array['list']));
+		if ($term_array['result_type'] == "no_results") {
+			$term_return = no_result_text();
+		} else {
+			$random_array_number = rand(0,count($term_array['list'])-1);
+			$term_return = format_return_text($term_array, $random_array_number, count($term_array['list']));
+		}
 		return $term_return ;
 	}
 
@@ -14,8 +18,12 @@
 		$term_url = 'http://api.urbandictionary.com/v0/random';
 		$term_json = file_get_contents($term_url);
 		$term_array = json_decode($term_json, true);
-		$random_array_number = rand(0,count($term_array['list'])-1);
-		$term_return = format_return_text($term_array, $random_array_number, count($term_array['list']));
+		if ($term_array['result_type'] == "no_results") {
+			$term_return = no_result_text();
+		} else {
+			$random_array_number = rand(0,count($term_array['list'])-1);
+			$term_return = format_return_text($term_array, $random_array_number, count($term_array['list']));
+		}
 		return $term_return ;	
 	}
 
@@ -28,6 +36,11 @@
 		$term_result_array = array ($word_format, $definition_format, $example_format, $variation_format);
 		$text_return = implode("\n\n",$term_result_array) . "";
 		
+		return strip_tags($text_return) ;
+	}
+
+	function no_result_text (){
+		$text_return = "No definition found" ;
 		return strip_tags($text_return) ;
 	}
 
