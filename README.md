@@ -5,10 +5,11 @@
 "Gobu" is a bot that will help you get any information from the Shadowverse card. 
 
 ## Getting Started
-***
-Before you can invite the bot to your room, you need to add her as a friend first via this ID : @cyz7687s <br>After that you can invite the bot to your room and all the members in that room will be able to use the bot without being a friend first (although it would be great you do ^^)
+
+Before you can invite the bot to your room, you need to add her as a friend first via this ID : @cyz7687s <br>After that you can invite the bot to your room and all the members in that room will be able to use the bot without being a friend first (although it would be great if you do ^^)
 
 ## Command List
+
 ***
 ### Main Modules : Shadowverse Database
 ***
