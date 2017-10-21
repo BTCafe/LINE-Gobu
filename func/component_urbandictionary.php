@@ -18,12 +18,8 @@
 		$term_url = 'http://api.urbandictionary.com/v0/random';
 		$term_json = file_get_contents($term_url);
 		$term_array = json_decode($term_json, true);
-		if ($term_array['result_type'] == "no_results") {
-			$term_return = no_result_text();
-		} else {
-			$random_array_number = rand(0,count($term_array['list'])-1);
-			$term_return = format_return_text($term_array, $random_array_number, count($term_array['list']));
-		}
+		$random_array_number = rand(0,count($term_array['list'])-1);
+		$term_return = format_return_text($term_array, $random_array_number, count($term_array['list']));
 		return $term_return ;	
 	}
 
