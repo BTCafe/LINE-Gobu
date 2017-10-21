@@ -59,6 +59,23 @@
 			mysqli_query($db_conf, $query);
 		}
 
+		// New log function to store Urban Dictionary Command
+		static function create_log_data_ud ($source, $command, $criteria, $db_conf) {
+			if (!isset($source['roomId'])) {
+				$choosenID = 'groupId' ;
+				if (!isset($source['groupId'])) {
+					$choosenID = 'userId' ;
+				} 
+			} else {
+				$choosenID = 'roomId' ;
+			}
+
+	    	$query = "INSERT INTO `URBAN_DICTIONARY` (`DATE`, `USER_ID` , `COMMAND`, `CRITERIA`) VALUES ('" .
+				date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "','"  . $command .  "','" . $criteria . "')"; ;  
+
+			mysqli_query($db_conf, $query);
+		}
+
 		static function update_log_setting ($function_log, $universal_log){
 			if ($function_log == " " || $universal_log == " ") {
 				return "An error occured, setting unchanged" ;

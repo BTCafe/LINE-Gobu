@@ -1,6 +1,7 @@
 <?php	
 	require_once( __DIR__ . '/component_general.php');
 	require_once( __DIR__ . '/component_bagoum.php');
+	require_once( __DIR__ . '/component_urbandictionary.php');
 
 	/**
 	* The main class that form the BOT logic
@@ -180,6 +181,22 @@
 					break;
 				case '..about':
 					$message = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/texts/about_response.txt');
+					break;
+			}
+			if (isset($message)) {
+				$this->display->single_text_response($this->client, $this->event, $message);
+			}
+		}
+
+		function logic_controller_for_urbandictionary ($inputted_command, $criteria)
+		{
+			switch ($inputted_command) {
+				case '..ud':
+					$message = $criteria;
+					break;
+
+				case '..random':
+					$message = random_term();
 					break;
 			}
 			if (isset($message)) {

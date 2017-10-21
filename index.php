@@ -177,6 +177,21 @@
 									$gobu_logic->logic_controller_for_info($command);
 									break;
 
+								// Urban Dictionary Function
+								case '..ud':
+									$gobu_logic->logic_controller_for_urbandictionary($command, $criteria);
+									if ($function_log == 1) {
+										$database->create_log_data_ud($event['source'], $command, $criteria, $db);
+									}
+									break;
+
+								case '..random':
+									$gobu_logic->logic_controller_for_urbandictionary($command, "");
+									if ($function_log == 1) {
+										$database->create_log_data_ud($event['source'], $command, "Random Stuff", $db);
+									}
+									break;
+
 								// Admin Function //
 								case '..set':
 									if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0') {
