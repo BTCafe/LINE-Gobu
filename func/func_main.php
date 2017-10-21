@@ -192,7 +192,7 @@
 		{
 			switch ($inputted_command) {
 				case '..ud':
-					$message = $criteria;
+					$message = exact_term($criteria);
 					break;
 
 				case '..random':
