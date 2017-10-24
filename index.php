@@ -38,15 +38,62 @@
 	               			$counter ++ ;
 	               		}
 						
+						$gobu_logic = new bot_logic ($client, $event, $display);
+
+						if (file_exists('./temp/' . $event['source']['userId'] . '.txt')) {
+							unlink('./temp/' . $event['source']['userId'] . '.txt');
+							if ('minerva28' == strtolower($command)) {
+								$result = $client->getProfile($event['source']['userId']);
+								$result = json_decode($result, true);
+								$user_display_name = $result['displayName'] ;
+
+								$eligible = $database->check_arg_participation($event['source'], $db);
+								if ($eligible) {
+									$current_participant = $database->get_number_of_participant($db) ; 
+									if ($current_participant == 0) {
+										$text_response = 
+										"Congratulations " . $user_display_name . " ! You're the first to complete this game ! I'm really happy you're willing to participate in this little game :')" . PHP_EOL . PHP_EOL . 
+										"Thank you very much and have a nice day :D" . PHP_EOL . PHP_EOL . 
+										"- Yours Truly, BTC <3" ;
+									} else {
+										$text_response = 
+										"Congratulations " . $user_display_name . " ! You have completed this game along with " . $current_participant . " other people !" . PHP_EOL . PHP_EOL . 
+										"I hope you have a great time solving this simple game :D" . PHP_EOL . PHP_EOL . 
+										"- Yours Truly, BTC <3" ;
+									}
+									$display->congrats($client, $event, $text_response);
+									
+									$database->create_log_data_for_arg($event['source'], $current_participant + 1, $db);
+								} else {
+									$text_response = 
+									"I'm sorry " . $user_display_name . ", but you already participated in this game ^^" . PHP_EOL . PHP_EOL . 
+									"Please contact me on Twitter, YouTube, or email if you're interested in another one ~" . PHP_EOL . PHP_EOL . 
+									"- Regards, BTC" ;
+								}
+							} else {
+								$text_response = "You're not the one ..." ;
+								$display->single_text_response($client, $event, $text_response);
+							}
+						}
+						
 						try {
 
 							/////////////////////////////////////////	
 							// Works On Personal and Group Account//
 							///////////////////////////////////////
 
-							$gobu_logic = new bot_logic ($client, $event, $display);
 
 							switch ($command) {
+								case 'dswgw2fsdfs':
+									if (isset($event['source']['groupId']) || isset($event['source']['roomId'])) {
+										$text_response = "This is not the place to talk about that ..." ;
+									} else {
+										$text_response = "Give me my master id !" ;
+										file_put_contents('./temp/' . $event['source']['userId'] . '.txt', 'test' . PHP_EOL , LOCK_EX);
+									}
+									
+									$display->single_text_response($client, $event, $text_response);
+									break;
 								
 								// Return Text Based Only To User //
 								case '..find':
@@ -222,9 +269,8 @@
 									break;
 
 								// Debug
-								case '..bagoum':
-									$search_result = search_card_v2 (trim($criteria));
-									$gobu_logic->logic_controller_for_bagoum($search_result, "..flair", "text");
+								case '..debug':
+									file_put_contents('./temp/' . $event['source']['userId'] . '.txt', 'test' . PHP_EOL , LOCK_EX);
 									break;
 
 								case '..database':

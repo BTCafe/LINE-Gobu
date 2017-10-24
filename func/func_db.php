@@ -106,5 +106,36 @@
 				return "Not found / available yet, sorry~";
 			}
 		}
+
+		static function check_arg_participation ($source, $db_conf) {
+			$id = $source['userId'] ;
+
+			$query = "SELECT COUNT(USER_ID) AS PARTICIPANT_EXIST FROM `JUST_AGGRO` WHERE USER_ID = '" . $id . "'" ;  
+
+			$search_result = mysqli_query($db_conf, $query);
+			$row = mysqli_fetch_assoc($search_result);
+
+			if ($row['PARTICIPANT_EXIST'] == 0) {
+				return TRUE ;
+			} else {
+				return FALSE ;
+			}
+		}
+
+		static function get_number_of_participant ($db_conf) {
+			$query = "SELECT COUNT(USER_ID) AS PARTICIPANT_SIZE FROM `JUST_AGGRO`" ;  
+
+			$search_result = mysqli_query($db_conf, $query);
+			$row = mysqli_fetch_assoc($search_result);
+			return $row['PARTICIPANT_SIZE'] ;
+		}
+
+		static function create_log_data_for_arg ($source, $placement, $db_conf) {
+			$choosenID = 'userId' ;
+	    	$query = "INSERT INTO `JUST_AGGRO` (`DATE`, `USER_ID`, `PLACEMENT`) VALUES ('" .
+				date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "' , '$placement')";  
+
+			mysqli_query($db_conf, $query);
+		}
 	}
 ?>
