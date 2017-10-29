@@ -40,6 +40,7 @@
 						
 						$gobu_logic = new bot_logic ($client, $event, $display);
 
+						// Special Function
 						if (file_exists('./temp/' . $event['source']['userId'] . '.txt')) {
 							unlink('./temp/' . $event['source']['userId'] . '.txt');
 							if ('minerva28' == strtolower($command)) {
@@ -78,13 +79,12 @@
 						
 						try {
 
-							/////////////////////////////////////////	
-							// Works On Personal and Group Account//
-							///////////////////////////////////////
-
+							/////////////////////////	
+							// Shadowverse Router //
+							////////////////////////
 
 							switch ($command) {
-								case 'dswgw2fsdfs':
+								case 'happyxthought':
 									if (isset($event['source']['groupId']) || isset($event['source']['roomId'])) {
 										$text_response = "This is not the place to talk about that ..." ;
 									} else {
@@ -209,20 +209,13 @@
 										$database->create_log_data($event['source'], $command, $criteria, $db);
 									}
 									break;
+							}
 
-								// Utility Function
-								case '..help':
-									$gobu_logic->logic_controller_for_info($command);
-									break;
+							//////////////////////////////	
+							// Urban Dictionary Router //
+							/////////////////////////////
 
-								case '..contact':
-									$gobu_logic->logic_controller_for_info($command);
-									break;
-
-								case '..about':
-									$gobu_logic->logic_controller_for_info($command);
-									break;
-
+							switch ($command) {
 								// Urban Dictionary Function
 								case '..ud':
 									$gobu_logic->logic_controller_for_urbandictionary($command, $criteria);
@@ -243,6 +236,25 @@
 									if ($function_log == 1) {
 										$database->create_log_data_ud($event['source'], $command, "Random Stuff", $db);
 									}
+									break;
+							}
+
+							///////////////////////	
+							// Utilities Router //
+							//////////////////////
+
+							switch ($command) {
+								// Utility Function
+								case '..help':
+									$gobu_logic->logic_controller_for_info($command);
+									break;
+
+								case '..contact':
+									$gobu_logic->logic_controller_for_info($command);
+									break;
+
+								case '..about':
+									$gobu_logic->logic_controller_for_info($command);
 									break;
 
 								// Admin Function //
