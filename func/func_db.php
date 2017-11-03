@@ -42,7 +42,7 @@
 			mysqli_query($db_conf, $query);
 		}
 
-		// New log function to store executed data to the database
+		// Log function to store executed data to the database
 		static function create_log_data ($source, $command, $criteria, $db_conf) {
 			if (!isset($source['roomId'])) {
 				$choosenID = 'groupId' ;
@@ -72,6 +72,25 @@
 
 	    	$query = "INSERT INTO `URBAN_DICTIONARY` (`DATE`, `USER_ID` , `COMMAND`, `CRITERIA`) VALUES ('" .
 				date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "','"  . $command .  "','" . $criteria . "')"; ;  
+
+			mysqli_query($db_conf, $query);
+		}
+
+		// New log function to store executed data to the database
+		static function create_log_data_specific ($source, $command, $criteria, $db_conf, $card_name) {
+			if (!isset($source['roomId'])) {
+				$choosenID = 'groupId' ;
+				if (!isset($source['groupId'])) {
+					$choosenID = 'userId' ;
+				} 
+			} else {
+				$choosenID = 'roomId' ;
+			}
+
+			$id = $source[$choosenID];
+
+	    	$query = "INSERT INTO `SUCCESS_LOG` (`DATE`, `USER_ID` , `COMMAND`, `CRITERIA`, `SPECIFIC_CARD`) VALUES ('" .
+				date('Y-m-d h:i:s e') . "','$id','$command','$criteria', '$card_name')"; ;  
 
 			mysqli_query($db_conf, $query);
 		}
