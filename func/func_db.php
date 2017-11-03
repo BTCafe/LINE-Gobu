@@ -20,7 +20,7 @@
 			}
 
 	    	$query = "INSERT INTO `GOBU_DIARY` (`DATE`, `USER_ID`, `COMMAND`) VALUES ('" .
-				date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "','" . $command . "')"; ;  
+				date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "','" . $command . "')"; 
 
 			mysqli_query($db_conf, $query);
 		}
@@ -37,7 +37,7 @@
 			}
 
 	    	$query = "INSERT INTO `USED_FUNCTION` (`DATE`, `USER_ID`, `COMMAND`) VALUES ('" .
-				date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "','" . $command . "')"; ;  
+				date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "','" . $command . "')";  
 
 			mysqli_query($db_conf, $query);
 		}
@@ -54,7 +54,7 @@
 			}
 
 	    	$query = "INSERT INTO `SUCCESS_LOG` (`DATE`, `USER_ID` , `COMMAND`, `CRITERIA`) VALUES ('" .
-				date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "','"  . $command .  "','" . $criteria . "')"; ;  
+				date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "','"  . $command .  "','" . $criteria . "')";  
 
 			mysqli_query($db_conf, $query);
 		}
@@ -71,7 +71,7 @@
 			}
 
 	    	$query = "INSERT INTO `URBAN_DICTIONARY` (`DATE`, `USER_ID` , `COMMAND`, `CRITERIA`) VALUES ('" .
-				date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "','"  . $command .  "','" . $criteria . "')"; ;  
+				date('Y-m-d h:i:s e') . "','" . $source[$choosenID] . "','"  . $command .  "','" . $criteria . "')";  
 
 			mysqli_query($db_conf, $query);
 		}
@@ -90,7 +90,7 @@
 			$id = $source[$choosenID];
 
 	    	$query = "INSERT INTO `SUCCESS_LOG` (`DATE`, `USER_ID` , `COMMAND`, `CRITERIA`, `SPECIFIC_CARD`) VALUES ('" .
-				date('Y-m-d h:i:s e') . "','$id','$command','$criteria', '$card_name')"; ;  
+				date('Y-m-d h:i:s e') . "','$id','$command','$criteria', '$card_name')";  
 
 			mysqli_query($db_conf, $query);
 		}
