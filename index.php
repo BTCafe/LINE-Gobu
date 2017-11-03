@@ -10,6 +10,14 @@
 	require_once( __DIR__ . '/func/func_db.php');
 
 	set_error_handler('exceptions_error_handler');
+
+	function log_wrapper ($event, $command, $criteria, $db, $search_result, $database){
+		if ($search_result['found'] == 1) {
+			$database->create_log_data_specific($event['source'], $command, $criteria, $db, $search_result['name']);
+		} else {
+			$database->create_log_data($event['source'], $command, $criteria, $db);
+		}
+	}
 	
 	$client = new LINEBotTiny($channelAccessToken, $channelSecret);
 	$display = new display();
@@ -99,115 +107,87 @@
 								case '..find':
 									$search_result = find_card (explode(" ", trim($criteria))); // Explode the criteria to make it into array
 									$gobu_logic->logic_controller_for_bagoum($search_result, '..name', "text");
-									if ($function_log == 1) {
-										$database->create_log_data($event['source'], $command, $criteria, $db);
-									}
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..flair':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
-									if ($function_log == 1) {
-										$database->create_log_data($event['source'], $command, $criteria, $db);
-									}
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..name':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
-									if ($function_log == 1) {
-										$database->create_log_data($event['source'], $command, $criteria, $db);
-									}
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 									// Connecting to Database
 								case '..ani':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_database($search_result, $command, $database, $db);
-									if ($function_log == 1) {
-										$database->create_log_data($event['source'], $command, $criteria, $db);
-									}
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..anievo':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_database($search_result, $command, $database, $db);
-									if ($function_log == 1) {
-										$database->create_log_data($event['source'], $command, $criteria, $db);
-									}
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								// Return Either Text or Image //
 								case '..img':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1) {
-										$database->create_log_data($event['source'], $command, $criteria, $db);
-									}
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..imgevo':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1) {
-										$database->create_log_data($event['source'], $command, $criteria, $db);
-									}
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..alt':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1) {
-										$database->create_log_data($event['source'], $command, $criteria, $db);
-									}
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..altevo':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1) {
-										$database->create_log_data($event['source'], $command, $criteria, $db);
-									}
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..raw':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1) {
-										$database->create_log_data($event['source'], $command, $criteria, $db);
-									}
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..rawevo':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1) {
-										$database->create_log_data($event['source'], $command, $criteria, $db);
-									}
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..rawalt':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1) {
-										$database->create_log_data($event['source'], $command, $criteria, $db);
-									}
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..rawaltevo':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1) {
-										$database->create_log_data($event['source'], $command, $criteria, $db);
-									}
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								// Return Sound and Text or Only Text //
 								case '..voice':
 									$gobu_logic->logic_controller_for_bagoum($exploded_Message, $command, "sound");
-									if ($function_log == 1) {
-										$database->create_log_data($event['source'], $command, $criteria, $db);
-									}
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 							}
 
