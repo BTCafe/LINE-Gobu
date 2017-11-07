@@ -44,12 +44,9 @@
 	}
 
 	function get_image ($card_data){
-		$image_url = $card_data["baseData"]["img"] ;
-		if ($image_url != "") {
-			$result = resize_image($image_url) ;
-		} else {
-			$result = "No image found / available" ;
-		}
+		$card_id = $card_data['id'];
+		$image_url = "https://shadowverse-portal.com/image/card/en/C_$card_id.png" ;
+		$result = resize_image($image_url) ;
 		return $result ;
 	}
 
@@ -64,11 +61,12 @@
 	}
 
 	function get_evolved_image ($card_data){
-		$image_url = $card_data["evoData"]["img"] ;
-		if ($image_url != "") {
+		if ($card_data['hasEvo']) {
+			$card_id = $card_data['id'];
+			$image_url = "https://shadowverse-portal.com/image/card/en/E_$card_id.png" ;
 			$result = resize_image($image_url) ;
 		} else {
-			$result = "No image found / available" ;
+			$result = "No evolve image found / available" ;
 		}
 		return $result ;
 	}

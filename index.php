@@ -80,7 +80,7 @@
 									"- Regards, BTC" ;
 								}
 							} else {
-								$text_response = "You're not the one ..." ;
+								$text_response = "That's not my master ID !" ;
 								$display->single_text_response($client, $event, $text_response);
 							}
 						}
