@@ -19,7 +19,7 @@
 			$this->display = $display ;
 		}
 
-		function basic_logic ($search_result, $inputted_command)
+		function multiple_result_handler ($search_result, $inputted_command)
 		{
 			if ($search_result['found'] > 1 && $search_result['found'] < 6) {
 				$this->display->confirm_response($this->client, $this->event, $search_result, $inputted_command);
@@ -132,7 +132,7 @@
 				if ($inputted_command == "..voice") {
 					$this->display->single_text_response($this->client, $this->event, "Multiple result found and this function doesn't support carousel yet. Please input the full name : " . "\n\n" . $search_result['name']);
 				} else {
-					$this->basic_logic($search_result, $inputted_command);
+					$this->multiple_result_handler($search_result, $inputted_command);
 				}
 			}
 		}
@@ -166,7 +166,7 @@
 					$this->display->single_text_response($this->client, $this->event, $original_url);
 				}
 			} else {
-				$this->basic_logic($search_result, $inputted_command);
+				$this->multiple_result_handler($search_result, $inputted_command);
 			}
 		}
 
