@@ -28,4 +28,13 @@
 		return $image ;
 	} 
 
+	// For the new database format
+	function log_wrapper ($event, $command, $criteria, $db, $search_result, $database){
+		if ($search_result['found'] == 1) {
+			$database->create_log_data_specific($event['source'], $command, $criteria, $db, $search_result['name']);
+		} else {
+			$database->create_log_data($event['source'], $command, $criteria, $db);
+		}
+	}
+
 ?>

@@ -10,14 +10,6 @@
 	require_once( __DIR__ . '/func/func_db.php');
 
 	set_error_handler('exceptions_error_handler');
-
-	function log_wrapper ($event, $command, $criteria, $db, $search_result, $database){
-		if ($search_result['found'] == 1) {
-			$database->create_log_data_specific($event['source'], $command, $criteria, $db, $search_result['name']);
-		} else {
-			$database->create_log_data($event['source'], $command, $criteria, $db);
-		}
-	}
 	
 	$client = new LINEBotTiny($channelAccessToken, $channelSecret);
 	$display = new display();
@@ -34,11 +26,11 @@
 	            switch ($message['type']) {
 	                case 'text':
 
-	                	// Explode The Message So We Can Get The First Words
+	                	// Separating Word To Get The Command (First Words)
 	               		$exploded_Message = explode(" ", trim($message['text']));
-
 	               		$command = $exploded_Message[0];
 
+	               		// Remake the exploded word so it will contain criteria only
 	               		$counter = 1 ;
 	               		$criteria = "";
 	               		while ($counter < count($exploded_Message)) {
@@ -48,42 +40,8 @@
 						
 						$gobu_logic = new bot_logic ($client, $event, $display);
 
-						// Special Function
-						if (file_exists('./temp/' . $event['source']['userId'] . '.txt')) {
-							unlink('./temp/' . $event['source']['userId'] . '.txt');
-							if ('minerva28' == strtolower($command)) {
-								$result = $client->getProfile($event['source']['userId']);
-								$result = json_decode($result, true);
-								$user_display_name = $result['displayName'] ;
-
-								$eligible = $database->check_arg_participation($event['source'], $db);
-								if ($eligible) {
-									$current_participant = $database->get_number_of_participant($db) ; 
-									if ($current_participant == 0) {
-										$text_response = 
-										"Congratulations " . $user_display_name . " ! You're the first to complete this game ! I'm really happy you're willing to participate in this little game :')" . PHP_EOL . PHP_EOL . 
-										"Thank you very much and have a nice day :D" . PHP_EOL . PHP_EOL . 
-										"- Yours Truly, BTC <3" ;
-									} else {
-										$text_response = 
-										"Congratulations " . $user_display_name . " ! You have completed this game along with " . $current_participant . " other people !" . PHP_EOL . PHP_EOL . 
-										"I hope you have a great time solving this simple game :D" . PHP_EOL . PHP_EOL . 
-										"- Yours Truly, BTC <3" ;
-									}
-									$display->congrats($client, $event, $text_response);
-									
-									$database->create_log_data_for_arg($event['source'], $current_participant + 1, $db);
-								} else {
-									$text_response = 
-									"I'm sorry " . $user_display_name . ", but you already participated in this game ^^" . PHP_EOL . PHP_EOL . 
-									"Please contact me on Twitter, YouTube, or email if you're interested in another one ~" . PHP_EOL . PHP_EOL . 
-									"- Regards, BTC" ;
-								}
-							} else {
-								$text_response = "That's not my master ID !" ;
-								$display->single_text_response($client, $event, $text_response);
-							}
-						}
+						// DO SPECIAL EVENT !
+						$gobu_logic->do_special_event();
 						
 						try {
 
@@ -98,8 +56,7 @@
 									} else {
 										$text_response = "Give me my master id !" ;
 										file_put_contents('./temp/' . $event['source']['userId'] . '.txt', 'test' . PHP_EOL , LOCK_EX);
-									}
-									
+									}									
 									$display->single_text_response($client, $event, $text_response);
 									break;
 								
