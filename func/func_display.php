@@ -174,7 +174,7 @@
 
 		            array(
                         'type' => 'image',
-                        'originalContentUrl' => "https://i.imgur.com/5K2k92B.jpg",
+                        'originalContentUrl' => "https://i.imgur.com/5K2k92B.jpg", // You might want to open this ^^
                         'previewImageUrl' => "https://i.imgur.com/5K2k92Bt.jpg"
                     ),
 

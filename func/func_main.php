@@ -208,41 +208,38 @@
 			}
 		}
 
-		function do_special_event (){
+		// You know, getting my mind examined by you is really scary ...
+		function do_special_event ($command, $database, $db){
 			// Special Function for Just Aggro Event - will be deleted on 1st Dec
-			if (file_exists('./temp/' . $this->event['source']['userId'] . '.txt')) {
-				unlink('./temp/' . $this->event['source']['userId'] . '.txt');
+			if (file_exists('./func/temp/' . $this->event['source']['userId'] . '.txt')) {
+				unlink('./func/temp/' . $this->event['source']['userId'] . '.txt');
 				if ('minerva28' == strtolower($command)) {
 					$result = $this->client->getProfile($this->event['source']['userId']);
 					$result = json_decode($result, true);
 					$user_display_name = $result['displayName'] ;
 
-					$eligible = $this->database->check_arg_participation($this->event['source'], $db);
+					$eligible = $database->check_arg_participation($this->event['source'], $db);
 					if ($eligible) {
-						$current_participant = $this->database->get_number_of_participant($db) ; 
-						if ($current_participant == 0) {
-							$text_response = 
-							"Congratulations " . $user_display_name . " ! You're the first to complete this game ! I'm really happy you're willing to participate in this little game :')" . PHP_EOL . PHP_EOL . 
-							"Thank you very much and have a nice day :D" . PHP_EOL . PHP_EOL . 
-							"- Yours Truly, BTC <3" ;
-						} else {
-							$text_response = 
-							"Congratulations " . $user_display_name . " ! You have completed this game along with " . $current_participant . " other people !" . PHP_EOL . PHP_EOL . 
-							"I hope you have a great time solving this simple game :D" . PHP_EOL . PHP_EOL . 
-							"- Yours Truly, BTC <3" ;
-						}
-						$this->display->congrats($client, $this->event, $text_response);
+						$current_participant = $database->get_number_of_participant($db) ; 
+						$text_response = 
+						"You're late " . $user_display_name . ", there's already " . $current_participant . " other people here !" . PHP_EOL . PHP_EOL . 
+						"Thank you for coming in though ^^" . PHP_EOL . PHP_EOL . 
+						"- Yours Truly, Happy Happy BTC <3" ;
+
+						// Here's your prize
+						$this->display->congrats($this->client, $this->event, $text_response);
 						
-						$this->database->create_log_data_for_arg($this->event['source'], $current_participant + 1, $db);
+						$database->create_log_data_for_arg($this->event['source'], $current_participant + 1, $db);
 					} else {
 						$text_response = 
 						"I'm sorry " . $user_display_name . ", but you already participated in this game ^^" . PHP_EOL . PHP_EOL . 
 						"Please contact me on Twitter, YouTube, or email if you're interested in another one ~" . PHP_EOL . PHP_EOL . 
 						"- Regards, BTC" ;
+						$this->display->single_text_response($this->client, $this->event, $text_response);
 					}
 				} else {
 					$text_response = "That's not my master ID !\nInput my thought again to progress ~" ;
-					$this->display->single_text_response($client, $this->event, $text_response);
+					$this->display->single_text_response($this->client, $this->event, $text_response);
 				}
 			}
 		}
