@@ -44,6 +44,9 @@
 						if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0') {
 							try {
 								// PATIENTS GOES HERE
+								if ($command == "test") {
+									$gobu_logic->logic_controller_for_bagoum_game();
+								}
 							} catch (Exception $e) {
 								// EVALUATION REPORT
 								$response = "Error Occured\n\n- Details -" . PHP_EOL . "File Location : " . $e->getFile() . PHP_EOL . "Line Number : " . $e->getLine() . PHP_EOL . "Type : " . $e->getMessage();

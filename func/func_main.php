@@ -208,6 +208,11 @@
 			}
 		}
 
+		function logic_controller_for_bagoum_game (){
+			$message = get_random_card();
+			$this->display->single_text_response($this->client, $this->event, $message);
+		}
+
 		// You know, getting my mind examined by you is really scary ...
 		function do_special_event ($command, $database, $db){
 			// Special Function for Just Aggro Event - will be deleted on 1st Dec
