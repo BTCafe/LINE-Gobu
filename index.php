@@ -10,7 +10,7 @@
 	require_once( __DIR__ . '/func/func_db.php');
 
 	set_error_handler('exceptions_error_handler');
-	
+
 	$client = new LINEBotTiny($channelAccessToken, $channelSecret);
 	$display = new display();
 	$database = new database();
@@ -40,24 +40,9 @@
 						
 						$gobu_logic = new bot_logic ($client, $event, $display);
 
-						// EXPERIMENT ROOM // 
-						if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0') {
-							try {
-								// PATIENTS GOES HERE
-								if ($command == "test") {
-									$gobu_logic->logic_controller_for_bagoum_game();
-								}
-							} catch (Exception $e) {
-								// EVALUATION REPORT
-								$response = "Error Occured\n\n- Details -" . PHP_EOL . "File Location : " . $e->getFile() . PHP_EOL . "Line Number : " . $e->getLine() . PHP_EOL . "Type : " . $e->getMessage();
-	                		$display->single_text_response($client, $event, $response);	
-							}
-						}
-
-						// DO SPECIAL EVENT !
-						$gobu_logic->do_special_event($command, $database, $db);
-						
 						try {
+							// DO SPECIAL EVENT !
+							$gobu_logic->do_special_event($command, $database, $db);
 
 							/////////////////////////	
 							// Shadowverse Router //
@@ -70,7 +55,8 @@
 									} else {
 										$text_response = "Give me my master id !" ;
 										file_put_contents('./func/temp/' . $event['source']['userId'] . '.txt', 'test' . PHP_EOL , LOCK_EX);
-									}									
+									}
+									
 									$display->single_text_response($client, $event, $text_response);
 									break;
 								
@@ -232,6 +218,10 @@
 									break;
 
 								// Debug
+								case 'test':
+									$gobu_logic->logic_controller_for_bagoum_game();
+									break;
+
 								case '..debug':
 									file_put_contents('./temp/' . $event['source']['userId'] . '.txt', 'test' . PHP_EOL , LOCK_EX);
 									break;
