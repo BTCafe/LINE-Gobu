@@ -448,6 +448,72 @@
 
 		}
 
+		static function show_flair_game_choices ($client, $event, $answer, $filler){
+			$filler[3] = $answer["name"];
+			shuffle($filler);
+
+			$client->replyMessage(array(
+
+	            'replyToken' => $event['replyToken'],
+
+	            'messages' => array(
+	            	array(
+	            		'type' => 'text',
+	            		'text' => $answer["flair"]
+	            	),
+
+	                array(
+
+	                    'type' => 'template',
+
+	                    'altText' => "Only viewable in LINE Mobile",
+
+	                    // The Button Content
+
+	                    'template' => array(
+
+	                    	'type' => "buttons",
+
+	                    	'title' => "Guess The Flair !",
+
+	                    	'text' => "Who has the above flair ?",
+
+	                    	// Action to take
+
+	                    	'actions' => array(
+
+	                    		array(
+	                    			'type' => 'message',
+	                    			'label' => trim_text_for_label($filler[0]),
+	                    			'text' => "Someone chooses " . $filler[0]	
+	                    		),
+	                    		array(
+	                    			'type' => 'message',
+	                    			'label' => trim_text_for_label($filler[1]),
+	                    			'text' => "Someone chooses " . $filler[1]	
+	                    		),
+	                    		array(
+	                    			'type' => 'message',
+	                    			'label' => trim_text_for_label($filler[2]),
+	                    			'text' => "Someone chooses " . $filler[2]
+	                    		),
+	                    		array(
+	                    			'type' => 'message',
+	                    			'label' => trim_text_for_label($filler[3]),
+	                    			'text' => "Someone chooses " . $filler[3]	
+	                    		)
+
+	                    	)
+
+	                    )
+
+	                )
+
+	            )
+
+	        ));
+
+		}
 
 
 	}
@@ -1104,6 +1170,23 @@
 
 	}
 
+	function trim_text_for_label ($input){		
+        $input = strip_tags($input);
+  
+	    //no need to trim, already shorter than trim length
+	    if (strlen($input) <= 20) {
+	        return $input;
+	    }
+	  
+	    //find last space within length
+	    $last_space = strrpos(substr($input, 0, 18), ' ');
+	    $trimmed_text = substr($input, 0, $last_space);
+	  
+    	//add ellipses (..)
+        $trimmed_text .= '..';
+	  
+	    return $trimmed_text;
+	}
 	
 
 ?>

@@ -247,4 +247,56 @@
 
 	}
 
+	function get_random_card (){
+		$card_list = array_values( fetch_all_card() );
+		$random_counter = rand(0, count($card_list) - 1 );
+		$answer = array() ;
+		$answer['name'] = $card_list[$random_counter]["name"] ;
+
+		if ($card_list[$random_counter]["hasEvo"]) {
+			$use_evo_flair = rand(0, 1);
+			switch ($use_evo_flair) {
+				case 0:		
+					$answer['flair'] = $card_list[$random_counter]["baseData"]["flair"] ;			
+					break;
+				
+				case 1:
+					$answer['flair'] = $card_list[$random_counter]["evoData"]["flair"] ;
+					break;
+			}
+		} else {
+			$answer['flair'] = $card_list[$random_counter]["baseData"]["flair"] ;	
+		}
+
+		$taken_counter = array() ;
+		$taken_counter[0] = $random_counter ;
+
+		$filler = array() ;
+
+		for ($i=0; $i < 3; $i++) { 			
+			$check_counter = 0 ;
+			$random_counter = rand(0, count($card_list) - 1 );
+			do {
+				if ($taken_counter[$check_counter] == $random_counter) {
+					$check_counter = 0 ;
+					$random_counter = rand(0, count($card_list) - 1 );	
+				} else {
+					$check_counter ++ ;
+				}
+			} while ($check_counter < count($taken_counter) );
+
+			$filler[$i] = $card_list[$random_counter]["name"];
+		}
+
+		$result = array(
+			'name' => $answer["name"], 
+			'flair' => $answer["flair"],
+			'filler1' => $filler[0],
+			'filler2' => $filler[1],
+			'filler3' => $filler[2],
+		);
+
+		return $result;
+	}
+
 ?>

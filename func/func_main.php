@@ -209,8 +209,15 @@
 		}
 
 		function logic_controller_for_bagoum_game (){
-			$message = get_random_card();
-			$this->display->single_text_response($this->client, $this->event, $message);
+			$result = get_random_card();
+			$answer = array(
+				'name' => $result["name"],
+				'flair' => $result["flair"], 
+			);
+
+			$filler = array($result["filler1"], $result["filler2"], $result["filler3"]);
+
+			$this->display->show_flair_game_choices ($this->client, $this->event, $answer, $filler);
 		}
 
 		// You know, getting my mind examined by you is really scary ...
