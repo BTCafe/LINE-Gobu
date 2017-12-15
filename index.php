@@ -1,9 +1,11 @@
 <?php
 	require_once( __DIR__ . '/src/LINEBotTiny.php');
+	require_once( __DIR__ . '/src/twitter-api-php-master/TwitterAPIExchange.php');
 
 	require_once( __DIR__ . '/conf/channel_key.php');
 	require_once( __DIR__ . '/conf/db_connection.php');
 	require_once( __DIR__ . '/conf/bot_setup.php');	
+	require_once( __DIR__ . '/conf/twitter_setup.php');	
 
 	require_once( __DIR__ . '/func/func_main.php');
 	require_once( __DIR__ . '/func/func_display.php');
@@ -26,11 +28,11 @@
 	            switch ($message['type']) {
 	                case 'text':
 
-	                	// Separating Word To Get The Command (First Words)
+	                	// Explode The Message So We Can Get The First Words
 	               		$exploded_Message = explode(" ", trim($message['text']));
+
 	               		$command = $exploded_Message[0];
 
-	               		// Remake the exploded word so it will contain criteria only
 	               		$counter = 1 ;
 	               		$criteria = "";
 	               		while ($counter < count($exploded_Message)) {
@@ -40,9 +42,47 @@
 						
 						$gobu_logic = new bot_logic ($client, $event, $display);
 
+						// DO SPECIAL EVENT !
+						$gobu_logic->do_special_event($command, $database, $db, $display, $event, $client);
 						try {
-							// DO SPECIAL EVENT !
-							$gobu_logic->do_special_event($command, $database, $db);
+
+							/////////////////////////	
+							// Social Media Router //
+							////////////////////////
+
+							if (filter_var($message['text'], FILTER_VALIDATE_URL)) {
+								$host = parse_url($message['text'], PHP_URL_HOST) ;
+								switch ($host) {
+									case 'twitter.com':
+										$splitted_url = explode("/" , parse_url($message['text'], PHP_URL_PATH));
+										$id_to_search = $splitted_url[3];
+
+										$url = 'https://api.twitter.com/1.1/statuses/show.json'; // API to use
+										$getfield = '?id=' . $id_to_search; // Query
+										$requestMethod = 'GET';
+
+										$twitter = new TwitterAPIExchange($twitter_settings);
+										$json = $twitter->setGetfield($getfield)
+										    ->buildOauth($url, $requestMethod)
+										    ->performRequest();
+
+										$data = json_decode($json);
+
+										$message = "@" . $data->user->name . "\n\n" . 
+											$data->text . "\n" ;
+
+										if (isset($data->extended_entities)) {
+											if (isset($data->extended_entities->media)) {
+												// $display->carousel_for_social_media($client, $event);
+												$display->single_text_response($client, $event, $message);
+											}
+										} else {
+											$display->single_text_response($client, $event, $message);
+										}
+										
+										break;
+								}
+							}
 
 							/////////////////////////	
 							// Shadowverse Router //
@@ -51,7 +91,7 @@
 							switch ($command) {
 								case 'happyxthought':
 									if (isset($event['source']['groupId']) || isset($event['source']['roomId'])) {
-										$text_response = "This is not the place to talk about that ..." ;
+										$text_response = "This is not the place to talk about that ... \nNeed to talk about that in private" ;
 									} else {
 										$text_response = "Give me my master id !" ;
 										file_put_contents('./func/temp/' . $event['source']['userId'] . '.txt', 'test' . PHP_EOL , LOCK_EX);

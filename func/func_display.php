@@ -1188,5 +1188,81 @@
 	    return $trimmed_text;
 	}
 	
+	function carousel_for_social_media ($client, $event){
+
+		$client->replyMessage(array(
+
+	        'replyToken' => $event['replyToken'],
+
+	        'messages' => array(
+
+	        	// First Message
+
+	        	array(
+
+	                'type' => 'template',
+
+	                'altText' => "Only viewable on LINE Mobile",
+
+	                // Carousel Header
+
+	                'template' => array(
+
+	                	'type' => "image_carousel",
+
+	                	// Carousel Object
+
+	                	'columns' => array(	                		
+
+	                		// 1
+
+	                		array(
+
+	                			'imageUrl' => "https://i.imgur.com/5K2k92Bt.jpg",
+
+	                			// Action inside of carousel 1
+
+	                        	'action' => array(
+	                        		array(
+	                        			'type' => 'uri',
+	                        			'uri' => 'https://pbs.twimg.com/media/DRD_jJ7V4AE7aTU.jpg'	
+	                        		)
+	                        	)
+
+	                		),
+
+	                		// 2
+
+	                		array(
+
+	                			'imageUrl' => "https://i.imgur.com/5K2k92Bt.jpg",
+
+	                			// Action inside of carousel 2 
+
+	                        	'action' => array(
+
+	                        		array(
+
+	                        			'type' => 'uri',
+	                        			'uri' => 'https://pbs.twimg.com/media/DRD_jJ7V4AE7aTU.jpg'	
+
+	                        		)
+
+	                        	)
+
+	                		)
+
+	                	)
+
+	                )
+
+	            )
+
+	        )
+
+	    ));
+
+	}
+	
 
 ?>
