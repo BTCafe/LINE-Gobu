@@ -485,22 +485,22 @@
 	                    		array(
 	                    			'type' => 'message',
 	                    			'label' => trim_text_for_label($filler[0]),
-	                    			'text' => "Someone chooses " . $filler[0]	
+	                    			'text' => "..flair " . $filler[0]	
 	                    		),
 	                    		array(
 	                    			'type' => 'message',
 	                    			'label' => trim_text_for_label($filler[1]),
-	                    			'text' => "Someone chooses " . $filler[1]	
+	                    			'text' => "..flair " . $filler[1]	
 	                    		),
 	                    		array(
 	                    			'type' => 'message',
 	                    			'label' => trim_text_for_label($filler[2]),
-	                    			'text' => "Someone chooses " . $filler[2]
+	                    			'text' => "..flair " . $filler[2]
 	                    		),
 	                    		array(
 	                    			'type' => 'message',
 	                    			'label' => trim_text_for_label($filler[3]),
-	                    			'text' => "Someone chooses " . $filler[3]	
+	                    			'text' => "..flair " . $filler[3]	
 	                    		)
 
 	                    	)
