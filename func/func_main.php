@@ -220,10 +220,14 @@
 			$this->display->show_flair_game_choices ($this->client, $this->event, $answer, $filler);
 		}
 
+		function logic_controller_for_social_media ($social_media_data){
+			$this->display->carousel_for_social_media($this->client, $this->event);
+		}
+
 		// You know, getting my mind examined by you is really scary ...
 		function do_special_event ($command, $database, $db, $display, $event, $client){
 			// Special Function for Just Aggro Event - will be deleted on 1st Dec
-			if (isset($event['source']['userId']) && !isset($event['source']['groupId']) && !isset($event['source']['roomId'])) {
+			if ( isset($event['source']['userId']) && !isset($event['source']['groupId']) && !isset($event['source']['roomId']) ) {
 				if (file_exists('./func/temp/' . $event['source']['userId'] . '.txt')) {
 					unlink('./func/temp/' . $event['source']['userId'] . '.txt');
 					if ('minerva28' == strtolower($command)) {

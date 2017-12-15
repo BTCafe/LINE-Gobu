@@ -263,7 +263,18 @@
 									break;
 
 								case '..debug':
-									file_put_contents('./temp/' . $event['source']['userId'] . '.txt', 'test' . PHP_EOL , LOCK_EX);
+									$url = 'https://api.twitter.com/1.1/statuses/show.json'; // API to use
+									$getfield = '?id=' . '941321928261885952'; // Query
+									$requestMethod = 'GET';
+
+									$twitter = new TwitterAPIExchange($twitter_settings);
+									$json = $twitter->setGetfield($getfield)
+									    ->buildOauth($url, $requestMethod)
+									    ->performRequest();
+
+									$data = json_decode($json);
+
+									$gobu_logic->logic_controller_for_social_media($data);
 									break;
 
 								case '..database':
