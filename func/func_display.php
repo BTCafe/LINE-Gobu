@@ -1288,8 +1288,7 @@
 	}
 
 	function carousel_response_for_twitter_with_picture ($client, $event, $tweets_data, $media_stack){
-		$posted_time = date("d M Y", strtotime($tweets_data->created_at));
-		$text_builder = "@" . $tweets_data->user->screen_name . " tweets ($posted_time)\n\n" . $tweets_data->text;
+		$text_builder = twitter_text_builder($tweets_data);
 		$number_of_picture = count($media_stack);
 
 		switch ($number_of_picture) {
@@ -1725,6 +1724,12 @@
 				break;
 		}
 
+	}
+
+	function twitter_text_builder ($tweets_data){
+		$posted_time = date("d M Y", strtotime($tweets_data->created_at));
+		$text_builder = "@" . $tweets_data->user->screen_name . " tweets \n> $posted_time\n\n" . $tweets_data->text;
+		return $text_builder;
 	}
 	
 

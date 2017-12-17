@@ -68,17 +68,18 @@
 
 										$data = json_decode($json);
 
-										$message = "@" . $data->user->name . "\n\n" . 
-											$data->text . "\n" ;
-
 										if (isset($data->extended_entities)) {
 											if (isset($data->extended_entities->media)) {
-												// $display->carousel_for_social_media($client, $event);
-												$display->single_text_response($client, $event, $message);
+												$tes = $data->extended_entities->media ;
+												foreach ($tes as $images) {
+													$media_stack[] = $images->media_url_https;
+												}
+												carousel_response_for_twitter_with_picture($client, $event, $data, $media_stack);
 											}
 										} else {
+											$message = twitter_text_builder($data);
 											$display->single_text_response($client, $event, $message);
-										}
+										} 
 										
 										break;
 								}
@@ -264,7 +265,7 @@
 
 								case '..debug':
 									$url = 'https://api.twitter.com/1.1/statuses/show.json'; // API to use
-									$getfield = '?id=' . '941321928261885952'; // Query
+									$getfield = '?id=' . '942161524092633088'; // Query
 									$requestMethod = 'GET';
 
 									$twitter = new TwitterAPIExchange($twitter_settings);
@@ -274,12 +275,19 @@
 
 									$data = json_decode($json);
 
-									// $gobu_logic->logic_controller_for_social_media($data);
-									$media_stack = array( 
-										"https://pbs.twimg.com/media/DRD_i4GV4AAdqWt.jpg",
-										"https://pbs.twimg.com/media/DRD_i4GV4AAdqWt.jpg");
+									if (isset($data->extended_entities)) {
+										if (isset($data->extended_entities->media)) {
+											$tes = $data->extended_entities->media ;
+											foreach ($tes as $images) {
+												$media_stack[] = $images->media_url_https;
+											}
+											carousel_response_for_twitter_with_picture($client, $event, $data, $media_stack);
+										}
+									} else {
+										$message = twitter_text_builder($data);
+										$display->single_text_response($client, $event, $message);
+									} 
 
-									carousel_response_for_twitter_with_picture($client, $event, $data, $media_stack);
 									break;
 
 								case '..database':
