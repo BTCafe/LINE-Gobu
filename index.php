@@ -52,6 +52,9 @@
 
 							if (filter_var($message['text'], FILTER_VALIDATE_URL)) {
 								$host = parse_url($message['text'], PHP_URL_HOST) ;
+								if ($host == "mobile.twitter.com") {
+									$host = "twitter.com" ;
+								}
 								switch ($host) {
 									case 'twitter.com':
 										$splitted_url = explode("/" , parse_url($message['text'], PHP_URL_PATH));
