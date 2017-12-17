@@ -274,7 +274,12 @@
 
 									$data = json_decode($json);
 
-									$gobu_logic->logic_controller_for_social_media($data);
+									// $gobu_logic->logic_controller_for_social_media($data);
+									$media_stack = array( 
+										"https://pbs.twimg.com/media/DRD_i4GV4AAdqWt.jpg",
+										"https://pbs.twimg.com/media/DRD_i4GV4AAdqWt.jpg");
+
+									carousel_response_for_twitter_with_picture($client, $event, $data, $media_stack);
 									break;
 
 								case '..database':

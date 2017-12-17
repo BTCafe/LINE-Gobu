@@ -1286,6 +1286,446 @@
 	  
 	    return $trimmed_text;
 	}
+
+	function carousel_response_for_twitter_with_picture ($client, $event, $tweets_data, $media_stack){
+		$posted_time = date("d M Y", strtotime($tweets_data->created_at));
+		$text_builder = "@" . $tweets_data->user->screen_name . " tweets ($posted_time)\n\n" . $tweets_data->text;
+		$number_of_picture = count($media_stack);
+
+		switch ($number_of_picture) {
+			case 1:
+				$client->replyMessage(array(
+
+			        'replyToken' => $event['replyToken'],
+
+			        'messages' => array(
+
+			        	// First Message
+
+			        	array(
+
+			                'type' => 'text',
+
+			                'text' => $text_builder
+
+			            ),
+
+			        	// Second Message
+
+			            array(
+
+			                'type' => 'template',
+
+			                'altText' => "Only viewable on LINE Mobile",
+
+			                // Carousel Header
+
+			                'template' => array(
+
+			                	'type' => "carousel",
+			                	
+			                	// Carousel Object
+
+			                	'columns' => array(	  
+
+			                		// Carousel First Object
+
+			                		array(
+
+			                			'text' => "Image (1 of $number_of_picture)",
+		                    			'thumbnailImageUrl' => $media_stack[0],
+
+			                			// Action inside of carousel 1
+
+			                        	'actions' => array(
+
+			                        		array(
+
+			                        			'type' => 'uri',
+
+			                        			'label' => 'View Full',
+
+			                        			'uri' => $media_stack[0]	
+
+			                        		)
+
+			                        	)
+
+			                		)
+
+			                	)
+
+			                )
+
+			            )
+
+			        )
+
+			    ));
+				break;
+			case 2:
+				$client->replyMessage(array(
+
+			        'replyToken' => $event['replyToken'],
+
+			        'messages' => array(
+
+			        	// First Message
+
+			        	array(
+
+			                'type' => 'text',
+
+			                'text' => $text_builder
+
+			            ),
+
+			        	// Second Message
+
+			            array(
+
+			                'type' => 'template',
+
+			                'altText' => "Only viewable on LINE Mobile",
+
+			                // Carousel Header
+
+			                'template' => array(
+
+			                	'type' => "carousel",
+			                	
+			                	// Carousel Object
+
+			                	'columns' => array(	  
+
+			                		// Carousel First Object
+
+			                		array(
+
+			                			'text' => "Image (1 of $number_of_picture)",
+		                    			'thumbnailImageUrl' => $media_stack[0],
+
+			                			// Action inside of carousel 1
+
+			                        	'actions' => array(
+
+			                        		array(
+
+			                        			'type' => 'uri',
+
+			                        			'label' => 'View Full',
+
+			                        			'uri' => $media_stack[0]	
+
+			                        		)
+
+			                        	)
+
+			                		),
+		              		
+			                		// Carousel Second Object
+
+			                		array(
+
+			                			'text' => "Image (2 of $number_of_picture)",
+		                    			'thumbnailImageUrl' => $media_stack[1],
+
+			                			// Action inside of carousel 2
+
+			                        	'actions' => array(
+
+			                        		array(
+
+			                        			'type' => 'uri',
+
+			                        			'label' => 'View Full',
+
+			                        			'uri' => $media_stack[1]
+
+			                        		)
+
+			                        	)
+
+			                		)
+
+			                	)
+
+			                )
+
+			            )
+
+			        )
+
+			    ));
+				break;
+			case 3:
+				$client->replyMessage(array(
+
+			        'replyToken' => $event['replyToken'],
+
+			        'messages' => array(
+
+			        	// First Message
+
+			        	array(
+
+			                'type' => 'text',
+
+			                'text' => $text_builder
+
+			            ),
+
+			        	// Second Message
+
+			            array(
+
+			                'type' => 'template',
+
+			                'altText' => "Only viewable on LINE Mobile",
+
+			                // Carousel Header
+
+			                'template' => array(
+
+			                	'type' => "carousel",
+			                	
+			                	// Carousel Object
+
+			                	'columns' => array(	  
+
+			                		// Carousel First Object
+
+			                		array(
+
+			                			'text' => "Image (1 of 3)",
+		                    			'thumbnailImageUrl' => $media_stack[0],
+
+			                			// Action inside of carousel 1
+
+			                        	'actions' => array(
+
+			                        		array(
+
+			                        			'type' => 'uri',
+
+			                        			'label' => 'View Full',
+
+			                        			'uri' => $media_stack[0]	
+
+			                        		)
+
+			                        	)
+
+			                		),
+		              		
+			                		// Carousel Second Object
+
+			                		array(
+
+			                			'text' => "Image (2 of 3)",
+		                    			'thumbnailImageUrl' => $media_stack[1],
+
+			                			// Action inside of carousel 2
+
+			                        	'actions' => array(
+
+			                        		array(
+
+			                        			'type' => 'uri',
+
+			                        			'label' => 'View Full',
+
+			                        			'uri' => $media_stack[1]
+
+			                        		)
+
+			                        	)
+
+			                		),
+		              		
+			                		// Carousel Third Object
+
+			                		array(
+
+			                			'text' => "Image (3 of 3)",
+		                    			'thumbnailImageUrl' => $media_stack[2],
+
+			                			// Action inside of carousel 2
+
+			                        	'actions' => array(
+
+			                        		array(
+
+			                        			'type' => 'uri',
+
+			                        			'label' => 'View Full',
+
+			                        			'uri' => $media_stack[2]
+
+			                        		)
+
+			                        	)
+
+			                		)
+
+			                	)
+
+			                )
+
+			            )
+
+			        )
+
+			    ));
+				break;
+			case 4:
+				$client->replyMessage(array(
+
+			        'replyToken' => $event['replyToken'],
+
+			        'messages' => array(
+
+			        	// First Message
+
+			        	array(
+
+			                'type' => 'text',
+
+			                'text' => $text_builder
+
+			            ),
+
+			        	// Second Message
+
+			            array(
+
+			                'type' => 'template',
+
+			                'altText' => "Only viewable on LINE Mobile",
+
+			                // Carousel Header
+
+			                'template' => array(
+
+			                	'type' => "carousel",
+			                	
+			                	// Carousel Object
+
+			                	'columns' => array(	  
+
+			                		// Carousel First Object
+
+			                		array(
+
+			                			'text' => "Image (1 of 4)",
+		                    			'thumbnailImageUrl' => $media_stack[0],
+
+			                			// Action inside of carousel 1
+
+			                        	'actions' => array(
+
+			                        		array(
+
+			                        			'type' => 'uri',
+
+			                        			'label' => 'View Full',
+
+			                        			'uri' => $media_stack[0]	
+
+			                        		)
+
+			                        	)
+
+			                		),
+		              		
+			                		// Carousel Second Object
+
+			                		array(
+
+			                			'text' => "Image (2 of 4)",
+		                    			'thumbnailImageUrl' => $media_stack[1],
+
+			                			// Action inside of carousel 2
+
+			                        	'actions' => array(
+
+			                        		array(
+
+			                        			'type' => 'uri',
+
+			                        			'label' => 'View Full',
+
+			                        			'uri' => $media_stack[1]
+
+			                        		)
+
+			                        	)
+
+			                		),
+		              		
+			                		// Carousel Third Object
+
+			                		array(
+
+			                			'text' => "Image (3 of 4)",
+		                    			'thumbnailImageUrl' => $media_stack[2],
+
+			                			// Action inside of carousel 2
+
+			                        	'actions' => array(
+
+			                        		array(
+
+			                        			'type' => 'uri',
+
+			                        			'label' => 'View Full',
+
+			                        			'uri' => $media_stack[2]
+
+			                        		)
+
+			                        	)
+
+			                		),
+		              		
+			                		// Carousel Fourth Object
+
+			                		array(
+
+			                			'text' => "Image (4 of 4)",
+		                    			'thumbnailImageUrl' => $media_stack[3],
+
+			                			// Action inside of carousel 2
+
+			                        	'actions' => array(
+
+			                        		array(
+
+			                        			'type' => 'uri',
+
+			                        			'label' => 'View Full',
+
+			                        			'uri' => $media_stack[3]
+
+			                        		)
+
+			                        	)
+
+			                		)
+
+			                	)
+
+			                )
+
+			            )
+
+			        )
+
+			    ));
+				break;
+		}
+
+	}
 	
 
 ?>
