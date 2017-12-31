@@ -52,7 +52,19 @@
 
 	function get_alt_image ($card_data){
 		if ($card_data["hasAlt"] == true) {
-			$image_url = $card_data["baseData"]["altimg"] ;
+			$card_id = $card_data['altid'];
+			$image_url = "https://shadowverse-portal.com/image/card/en/C_$card_id.png" ;
+			$result = resize_image($image_url) ;
+		} else {
+			$result = "No alternate image found" ;
+		}
+		return $result ;
+	}
+
+	function get_alt_image_2 ($card_data){
+		if ($card_data["hasAlt2"] == true) {
+			$card_id = $card_data['altid2'];
+			$image_url = "https://shadowverse-portal.com/image/card/en/C_$card_id.png" ;
 			$result = resize_image($image_url) ;
 		} else {
 			$result = "No alternate image found" ;
@@ -73,7 +85,19 @@
 
 	function get_alt_evolved_image ($card_data){
 		if ($card_data["hasAlt"] == true) {
-			$image_url = $card_data["evoData"]["altimg"] ;
+			$card_id = $card_data['altid'];
+			$image_url = "https://shadowverse-portal.com/image/card/en/E_$card_id.png" ;
+			$result = resize_image($image_url) ;
+		} else {
+			$result = "No alternate evolve image found" ;
+		}
+		return $result ;
+	}
+
+	function get_alt_evolved_image_2 ($card_data){
+		if ($card_data["hasAlt2"] == true) {
+			$card_id = $card_data['altid2'];
+			$image_url = "https://shadowverse-portal.com/image/card/en/E_$card_id.png" ;
 			$result = resize_image($image_url) ;
 		} else {
 			$result = "No alternate evolve image found" ;
@@ -139,8 +163,16 @@
 				$result = get_alt_image($specific_card_info);				
 				break;
 
+			case '..alt2':
+				$result = get_alt_image_2($specific_card_info);				
+				break;
+
 			case '..altevo':
 				$result = get_alt_evolved_image($specific_card_info);				
+				break;
+
+			case '..altevo2':
+				$result = get_alt_evolved_image_2($specific_card_info);				
 				break;
 
 			case '..name':
@@ -165,6 +197,14 @@
 
 			case '..rawaltevo':
 				$result = get_raw_image($specific_card_info, 1, 1);
+				break;
+
+			case '..rawalt2':
+				$result = get_raw_image($specific_card_info, 0, 2);
+				break;
+
+			case '..rawaltevo2':
+				$result = get_raw_image($specific_card_info, 1, 2);
 				break;
 
 			case 'expansion':

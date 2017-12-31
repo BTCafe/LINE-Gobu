@@ -155,7 +155,19 @@
 									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
+								case '..alt2':
+									$search_result = search_card_v2 (trim($criteria));
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									break;
+
 								case '..altevo':
+									$search_result = search_card_v2 (trim($criteria));
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									break;
+
+								case '..altevo2':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
 									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
@@ -179,7 +191,19 @@
 									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
+								case '..rawalt2':
+									$search_result = search_card_v2 (trim($criteria));
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									break;
+
 								case '..rawaltevo':
+									$search_result = search_card_v2 (trim($criteria));
+									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
+									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									break;
+
+								case '..rawaltevo2':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
 									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
