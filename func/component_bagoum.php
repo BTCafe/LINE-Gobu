@@ -106,6 +106,12 @@
 		return $result ;
 	}
 
+	function get_expansion ($card_data) {
+		$expansion_origin = $card_data["expansion"];
+		$result = trim($expansion_origin);
+		return $result ;
+	}
+
 	// This is the main hub for connecting all the other function here, kinda like a controller
 	function get_specific_card_info_v2 ($card_name, $parameter){
 		$card_array_list = fetch_all_card();
@@ -159,6 +165,10 @@
 
 			case '..rawaltevo':
 				$result = get_raw_image($specific_card_info, 1, 1);
+				break;
+
+			case 'expansion':
+				$result = get_expansion($specific_card_info);
 				break;
 
 		}

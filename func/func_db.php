@@ -77,7 +77,7 @@
 		}
 
 		// New log function to store executed data to the database
-		static function create_log_data_specific ($source, $command, $criteria, $db_conf, $card_name) {
+		static function create_log_data_specific ($source, $command, $criteria, $db_conf, $card_name, $expansion_origin) {
 			if (!isset($source['roomId'])) {
 				$choosenID = 'groupId' ;
 				if (!isset($source['groupId'])) {
@@ -89,8 +89,8 @@
 
 			$id = $source[$choosenID];
 
-	    	$query = "INSERT INTO `SUCCESS_LOG` (`DATE`, `USER_ID` , `COMMAND`, `CRITERIA`, `SPECIFIC_CARD`) VALUES ('" .
-				date('Y-m-d h:i:s e') . "','$id','$command','$criteria', '$card_name')";  
+	    	$query = "INSERT INTO `SUCCESS_LOG` (`DATE`, `USER_ID` , `COMMAND`, `CRITERIA`, `SPECIFIC_CARD`, `EXPANSION_ORIGINS`) VALUES ('" .
+				date('Y-m-d h:i:s e') . "','$id','$command','$criteria', '$card_name', '$expansion_origin')";  
 
 			mysqli_query($db_conf, $query);
 		}

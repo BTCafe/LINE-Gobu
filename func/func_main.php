@@ -35,7 +35,7 @@
 			}
 		}
 
-		function logic_controller_for_bagoum ($search_result, $inputted_command, $preferred_return_type)
+		function logic_controller_for_bagoum (&$search_result, $inputted_command, $preferred_return_type)
 		{
 			// Formating voice command to be correct 
 			if ($inputted_command == "..voice") {
@@ -128,6 +128,9 @@
 						break;
 
 				}
+
+				$search_result['expansion'] = get_specific_card_info_v2($search_result['name'], 'expansion');
+				 
 			} else {
 				if ($inputted_command == "..voice") {
 					$this->display->single_text_response($this->client, $this->event, "Multiple result found and this function doesn't support carousel yet. Please input the full name : " . "\n\n" . $search_result['name']);
