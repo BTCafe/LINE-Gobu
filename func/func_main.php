@@ -27,10 +27,10 @@
 			if ($search_result['found'] == 0) {
 				$this->display->show_no_result($this->client, $this->event);
 			}
-			if ($search_result['found'] > 5 && $search_result['found'] <= 10) {
+			if ($search_result['found'] > 5 && $search_result['found'] <= 20) {
 				$this->display->show_result_more_than_5 ($this->client, $this->event, $search_result['found'], $search_result['name']);
 			} 
-			if ($search_result['found'] > 10) {
+			if ($search_result['found'] > 20) {
 				$this->display->show_too_many_result ($this->client, $this->event, $search_result['found']);
 			}
 		}
