@@ -14,6 +14,30 @@
 
 		}
 
+		static function single_sticker_response ($client, $event){
+
+			$client->replyMessage(array(
+
+		        'replyToken' => $event['replyToken'],
+
+		        'messages' => array(
+
+		            array(
+
+		                'type' => 'sticker',
+
+		                'packageId' => 2, 
+
+		                'stickerId' => 45
+
+		            )
+
+		        )
+
+	        ));
+
+		}
+
 
 
 		static function single_text_response ($client, $event, $response){

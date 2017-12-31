@@ -291,30 +291,7 @@
 									break;
 
 								case '..debug':
-									$url = 'https://api.twitter.com/1.1/statuses/show.json'; // API to use
-									$getfield = '?id=' . '942161524092633088'; // Query
-									$requestMethod = 'GET';
-
-									$twitter = new TwitterAPIExchange($twitter_settings);
-									$json = $twitter->setGetfield($getfield)
-									    ->buildOauth($url, $requestMethod)
-									    ->performRequest();
-
-									$data = json_decode($json);
-
-									if (isset($data->extended_entities)) {
-										if (isset($data->extended_entities->media)) {
-											$tes = $data->extended_entities->media ;
-											foreach ($tes as $images) {
-												$media_stack[] = $images->media_url_https;
-											}
-											carousel_response_for_twitter_with_picture($client, $event, $data, $media_stack);
-										}
-									} else {
-										$message = twitter_text_builder($data);
-										$display->single_text_response($client, $event, $message);
-									} 
-
+									$display->single_text_response($client, $event, "Nothing to Debug ATM");
 									break;
 
 								case '..database':
