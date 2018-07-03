@@ -152,9 +152,9 @@
 					$image_type = "..imgevo" ;
 				}
 				$original_url = $database->get_animated_url($search_result['name'], $is_evo, $db);
-				if (strpos($original_url, 'gifv') !== false) {
+				if (strpos($original_url, 'gif') !== false) {
 					$converted_url = str_ireplace('http:', 'https:', $original_url);
-					$converted_url = str_ireplace('.gifv', '.mp4', $converted_url);
+					$converted_url = str_ireplace('.gif', '.mp4', $converted_url);
 
 					$image_result_status = get_specific_card_info_v2($search_result['name'], $image_type);
 				
@@ -211,16 +211,26 @@
 			}
 		}
 
-		function logic_controller_for_bagoum_game (){
-			$result = get_random_card();
-			$answer = array(
-				'name' => $result["name"],
-				'flair' => $result["flair"], 
-			);
+		function logic_controller_for_bagoum_game ($game_type){
+			
+			switch ($game_type) {
+				case 'waifu_game':
+					$result = get_one_random_follower_name();
+					$this->display->single_text_response($this->client, $this->event, "Your waifu / husbando is :\n" . $result . " !");
+					break;
+				
+				case 'guess_flair':
+					$result = get_random_card();
+					$answer = array(
+						'name' => $result["name"],
+						'flair' => $result["flair"], 
+					);
 
-			$filler = array($result["filler1"], $result["filler2"], $result["filler3"]);
+					$filler = array($result["filler1"], $result["filler2"], $result["filler3"]);
 
-			$this->display->show_flair_game_choices ($this->client, $this->event, $answer, $filler);
+					$this->display->show_flair_game_choices ($this->client, $this->event, $answer, $filler);
+					break;
+			}
 		}
 
 		function logic_controller_for_social_media ($social_media_data){

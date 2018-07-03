@@ -349,4 +349,16 @@
 		return $result;
 	}
 
+	function get_one_random_follower_name (){
+		$card_list = array_values( fetch_all_card() );
+
+		do {
+			$random_counter = rand(0, count($card_list) - 1 );
+		} while ($card_list[$random_counter]["type"] !== "Follower") ;
+
+		$result = $card_list[$random_counter]["name"];
+
+		return $result;
+	}
+
 ?>

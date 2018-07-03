@@ -106,9 +106,15 @@
 								
 								// Return Text Based Only To User //
 								case '..find':
-									$search_result = find_card (explode(" ", trim($criteria))); // Explode the criteria to make it into array
-									$gobu_logic->logic_controller_for_bagoum($search_result, '..name', "text");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									if (trim($criteria) === "waifu") {
+										$search_result = search_card_v2 (trim("Silva")); 
+										$gobu_logic->logic_controller_for_bagoum($search_result, '..raw', "image");
+										if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									} else {
+										$search_result = find_card (explode(" ", trim($criteria))); // Explode the criteria to make it into array
+										$gobu_logic->logic_controller_for_bagoum($search_result, '..name', "text");
+										if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									}
 									break;
 
 								case '..flair':
@@ -214,6 +220,10 @@
 									$gobu_logic->logic_controller_for_bagoum($exploded_Message, $command, "sound");
 									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
+
+								case '..mywaifu':
+									$gobu_logic->logic_controller_for_bagoum_game('waifu_game');
+									break;
 							}
 
 							//////////////////////////////	
@@ -287,11 +297,11 @@
 
 								// Debug
 								case 'test':
-									$gobu_logic->logic_controller_for_bagoum_game();
+									$gobu_logic->logic_controller_for_bagoum_game('guess_flair');
 									break;
 
 								case '..debug':
-									$display->single_text_response($client, $event, "Nothing to Debug ATM");
+									$display->single_sticker_response($client, $event);
 									break;
 
 								case '..database':
