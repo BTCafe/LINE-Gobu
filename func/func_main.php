@@ -215,8 +215,15 @@
 			
 			switch ($game_type) {
 				case 'waifu_game':
-					$result = get_one_random_follower_name();
-					$this->display->single_text_response($this->client, $this->event, "Your waifu / husbando is :\n" . $result . " !");
+					$name = get_one_random_follower_name();
+
+					$image_data = get_specific_card_info_v2($name, '..raw');
+
+					$text_response = "Your waifu / husbando is :\n" . $name . " !" ;
+
+					$this->display->double_text_and_image_response($this->client, $this->event, 
+						$text_response, $image_data);
+					
 					break;
 				
 				case 'guess_flair':

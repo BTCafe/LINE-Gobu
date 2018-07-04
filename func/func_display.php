@@ -188,6 +188,42 @@
 
 		}
 
+		static function double_text_and_image_response ($client, $event, $text_data, $image_data){
+
+			$ori = $image_data[0] ;
+
+			$ori_preview = $image_data[1] ;
+
+			$client->replyMessage(array(
+
+		        'replyToken' => $event['replyToken'],
+
+		        'messages' => array(
+
+		            array(
+
+		                'type' => 'text',
+
+		                'text' => $text_data
+
+		            ),
+
+		            array(
+
+		                'type' => 'image',
+
+                        'originalContentUrl' => $ori,
+
+                        'previewImageUrl' => $ori_preview
+
+		            )
+
+		        )
+
+	        ));
+
+		}
+
 		static function congrats ($client, $event, $message){
 
 			$client->replyMessage(array(
