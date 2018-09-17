@@ -244,6 +244,16 @@
 			$this->display->carousel_for_social_media($this->client, $this->event);
 		}
 
+		function logic_controller_for_general ($inputted_command, $database, $db, $source){
+			
+			switch ($inputted_command) {
+				case '..daily':
+					$response = $database->do_daily($source, $db);
+					$this->display->single_text_response($this->client, $this->event, $response);
+					break;
+			}
+		}
+
 		// You know, getting my mind examined by you is really scary ...
 		function do_special_event ($command, $database, $db, $display, $event, $client){
 			// Special Function for Just Aggro Event - will be deleted on 1st Dec

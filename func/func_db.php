@@ -156,5 +156,45 @@
 
 			mysqli_query($db_conf, $query);
 		}
+
+		static function do_daily ($source, $db_conf) {
+			$id_user = $source['userId'] ;
+
+			$query = "SELECT * FROM `USER_ECONOMY` WHERE ID_USER = '" . $id_user . "'";
+			$query_result = mysqli_query($db_conf, $query);
+
+			if ( mysqli_num_rows($query_result) == 0 ) {
+				$query = "INSERT INTO `USER_ECONOMY` (`ID_USER`, `LAST_DAILY` , `POINTS`) VALUES ('" .
+						$id_user . "','" .
+						date('Y-m-d H:i:s') . "','" .
+						1000 . "')";  
+
+				mysqli_query($db_conf, $query);
+				return "You have done your daily, 1000 points given" ;
+			} else {
+				$query_fetch = mysqli_fetch_array($query_result);
+				$current_datetime = date('Y-m-d H:i:s');
+				$last_daily_time = $query_fetch['LAST_DAILY'] ;
+
+				$date1 = new DateTime($current_datetime);
+				$date2 = new DateTime($last_daily_time);
+				$interval = $date1->diff($date2);
+				$hours_difference = $interval->h ;
+				$days_difference = $interval->d ;
+
+				if ($days_difference >= 1) {
+					$current_points = $query_fetch['POINTS'];
+			    	$query = "UPDATE USER_ECONOMY SET `POINTS`='" . $current_points + 100 . ", LAST_DAILY=" . $current_datetime . " WHERE ID_USER='" . $id_user . "'" ;
+
+					mysqli_query($db_conf, $query);
+					return "You have done your daily, 1000 points given" ;
+				} else {
+					$grace_period = 24 - $hours_difference ;
+					return "Can't do daily now, please come back again in " . $grace_period . " hours" ;
+				}
+			}
+
+		}
+
 	}
 ?>

@@ -224,6 +224,10 @@
 								case '..mywaifu':
 									$gobu_logic->logic_controller_for_bagoum_game('waifu_game');
 									break;
+
+								case '..daily':
+									$gobu_logic->logic_controller_for_general($command, $database, $db, $event['source']);
+									break;
 							}
 
 							//////////////////////////////	
