@@ -218,6 +218,10 @@
 				return "You don't have enough points!";
 			}
 
+			if ($value <= 0) {
+				return "You can't bet with that number!" ;
+			}
+
 			switch ($type) {
 				case 1:
 					$new_points = $current_points + $value;
