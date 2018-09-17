@@ -196,5 +196,15 @@
 
 		}
 
+		static function get_points ($source, $db_conf) {
+
+			$query = "SELECT POINTS FROM `USER_ECONOMY` WHERE ID_USER = '" . $source['userId'] . "'";
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result);
+			$current_points = $query_fetch['POINTS'] ;
+			return $current_points ;
+			
+		}
+
 	}
 ?>

@@ -225,7 +225,21 @@
 									$gobu_logic->logic_controller_for_bagoum_game('waifu_game');
 									break;
 
+								case '..claim':
+									$search_result = search_card_v2 (trim($criteria));
+									if ($search_result["found"] > 1 || $search_result["found"] == 0) {
+										$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
+									} else {
+										$gobu_logic->logic_controller_for_bagoum_game_with_data($search_result, "claim_waifu");
+									}
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									break;
+
 								case '..daily':
+									$gobu_logic->logic_controller_for_general($command, $database, $db, $event['source']);
+									break;
+
+								case '..points':
 									$gobu_logic->logic_controller_for_general($command, $database, $db, $event['source']);
 									break;
 							}

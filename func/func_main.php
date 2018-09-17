@@ -251,6 +251,14 @@
 					$response = $database->do_daily($source, $db);
 					$this->display->single_text_response($this->client, $this->event, $response);
 					break;
+				case '..points':
+					$result = $client->getProfile($event['source']['userId']);
+					$result = json_decode($result, true);
+					$user_display_name = $result['displayName'] ;
+					
+					$response = "You currently have " . $database->get_points($source, $db) . " points";
+					$this->display->single_text_response($this->client, $this->event, $response);
+					break;
 			}
 		}
 
