@@ -170,7 +170,7 @@
 						1000 . "')";  
 
 				mysqli_query($db_conf, $query);
-				return "here's your daily salary - 1000 points given" ;
+				return "Here's your daily salary - 1000 points given" ;
 			} else {
 				$query_fetch = mysqli_fetch_array($query_result);
 				$current_datetime = date('Y-m-d H:i:s');
@@ -187,10 +187,10 @@
 			    	$query = "UPDATE `USER_ECONOMY` SET `POINTS`=" . $new_points . ", `LAST_DAILY`='" . $current_datetime . "' WHERE ID_USER='" . $id_user . "'" ;
 
 					mysqli_query($db_conf, $query);
-					return "here's your daily salary - 1000 points given" ;
+					return "Here's your daily salary - 1000 points given" ;
 				} else {
 					$grace_period = 24 - $hours_difference ;
-					return "you can't do daily now, please come back again in " . $grace_period . " hours" ;
+					return "You can't do daily now, please come back again in " . $grace_period . " hours" ;
 				}
 			}
 
