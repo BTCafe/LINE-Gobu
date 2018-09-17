@@ -242,6 +242,14 @@
 								case '..points':
 									$gobu_logic->logic_controller_for_general($command, $database, $db, $event['source']);
 									break;
+
+								case '..slots':
+									if (isset($exploded_Message[1])) {
+										$value = (int)$exploded_Message[1] ;
+										$result = rand(1,2);
+										$gobu_logic->logic_controller_for_general_2($command, $database, $db, $event['source'], $value, $result);
+									} 
+									break;
 							}
 
 							//////////////////////////////	

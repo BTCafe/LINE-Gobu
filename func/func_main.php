@@ -267,6 +267,14 @@
 			}
 		}
 
+		function logic_controller_for_general_2 ($inputted_command, $database, $db, $source, $points_used, $result){
+
+			$response = $database->manage_points($source, $db, $points_used, $result);
+			$response .= "\n" . "(Current Points : " . $database->get_points($source, $db) . ")";
+			$this->display->single_text_response($this->client, $this->event, $response);
+
+		}
+
 		// You know, getting my mind examined by you is really scary ...
 		function do_special_event ($command, $database, $db, $display, $event, $client){
 			// Special Function for Just Aggro Event - will be deleted on 1st Dec

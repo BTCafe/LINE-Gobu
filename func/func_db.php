@@ -206,5 +206,35 @@
 			
 		}
 
+		static function manage_points ($source, $db_conf, $value, $type){
+			$query = "SELECT * FROM `USER_ECONOMY` WHERE ID_USER = '" . $source['userId'] . "'";
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result);
+			$current_points = (int)$query_fetch['POINTS'] ;
+			$new_points = 0 ;
+			$response = "" ;
+
+			if ($current_points < $value) {
+				return "You don't have enough points!";
+			}
+
+			switch ($type) {
+				case 1:
+					$new_points = $current_points + $value;
+					$response = "You won " . $value . " points!";
+					break;
+				
+				case 2:
+					$new_points = $current_points - $value;
+					$response = "You got scammed and lose " . $value . " points!";
+					break;
+			}
+
+	    	$query = "UPDATE `USER_ECONOMY` SET `POINTS`=" . $new_points . " WHERE ID_USER='" . $source['userId'] . "'" ;
+			mysqli_query($db_conf, $query);
+
+			return $response ;
+		}
+
 	}
 ?>
