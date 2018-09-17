@@ -248,15 +248,20 @@
 			
 			switch ($inputted_command) {
 				case '..daily':
-					$response = $database->do_daily($source, $db);
+					$result = $this->client->getProfile($this->event['source']['userId']);
+					$result = json_decode($result, true);
+					$user_display_name = $result['displayName'] ;
+
+					$response = $user_display_name . ", " . $database->do_daily($source, $db) ."\n" .
+						"(Current Points : " . $database->get_points($source, $db) . ")";
 					$this->display->single_text_response($this->client, $this->event, $response);
 					break;
 				case '..points':
-					$result = $client->getProfile($event['source']['userId']);
+					$result = $this->client->getProfile($this->event['source']['userId']);
 					$result = json_decode($result, true);
 					$user_display_name = $result['displayName'] ;
 					
-					$response = "You currently have " . $database->get_points($source, $db) . " points";
+					$response = $user_display_name . ", you currently have " . $database->get_points($source, $db) . " points";
 					$this->display->single_text_response($this->client, $this->event, $response);
 					break;
 			}
