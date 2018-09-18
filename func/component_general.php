@@ -43,37 +43,68 @@
 		$last_hunt_time = $database->get_last_hunt($source, $db);
 		$difference = compare_datetime($current_datetime, $last_hunt_time);
 
-		if ($difference['minutes'] > 0) {
+		if ($difference['minutes'] >= 5) {
 			$result = rand(1,100);
-			if ($result > 0 && $result <= 60) { // 60%
-				// Normal / Worthless Item : 0 - 50 point
+			if ($result > 0 && $result <= 60) { 
+				// Normal Item : 0 - 50 point (60% chances)
 				$item_list = $database->get_item($source, $db, 1);
 				$item_pick = rand(0,count($item_list)-1);
-			} elseif ($result > 60 && $result <= 85) { // 25%
-				// Rare : 100 - 500 point
+			} elseif ($result > 60 && $result <= 85) { 
+				// Rare : 100 - 500 point (25% chances)
 				$item_list = $database->get_item($source, $db, 2);
 				$item_pick = rand(0,count($item_list)-1);
-			} elseif ($result > 85 && $result <= 95) { // 10%
-				// Super Rare : 1000 - 2000 point
+			} elseif ($result > 85 && $result <= 95) { 
+				// Super Rare : 1000 - 2000 point (10% chances)
 				$item_list = $database->get_item($source, $db, 3);
 				$item_pick = rand(0,count($item_list)-1);
-			} elseif ($result > 95 && $result <= 99) { // 4%
-				// Super Super Rare : 5000 point
+			} elseif ($result > 95 && $result <= 99) {
+				// Super Super Rare : 5000 point (4% chances)
 				$item_list = $database->get_item($source, $db, 4);
 				$item_pick = rand(0,count($item_list)-1);
-			} elseif ($result == 100) { // 1%
-				// Legendary : 10000 point
+			} elseif ($result == 100) { 
+				// Legendary : 10000 point (1% chances)
 				$item_list = $database->get_item($source, $db, 5);
 				$item_pick = rand(0,count($item_list)-1);
 			}
 			$database->update_last_hunt($source, $db);
 			$database->modify_points($source, $db, $item_list[$item_pick]["ITEM_VALUES"], 1);
 
-			$hunt_response = "We found " . $item_list[$item_pick]["NAME"] . "!\n\n" . $item_list[$item_pick]["ITEM_DESC"] . "\n\n-- Sold and got " . $item_list[$item_pick]["ITEM_VALUES"] . " points --" ; 
+			switch ($item_list[$item_pick]["RARITY"]) {
+				case 1:
+					$rarity = "(Normal Item)" ;
+					break;
+				
+				case 2:
+					$rarity = "(Rare Item)" ;
+					break;
+
+				case 3:
+					$rarity = "(Super Rare Item)" ;
+					break;
+
+				case 4:
+					$rarity = "(Super Super Rare Item)" ;
+					break;
+
+				case 5:
+					$rarity = "(Legendary Item)" ;
+					break;
+			}
+
+			$hunt_response = 
+			"We found " . $item_list[$item_pick]["NAME"] . "!\n" . $rarity . "\n\n" . 
+			$item_list[$item_pick]["ITEM_DESC"] . 
+			"\n\n-- Sold and got " . $item_list[$item_pick]["ITEM_VALUES"] . " points --" ; 
+			
 			return $hunt_response ;
 		} else {
-			$seconds_left = 60 - $difference['seconds'];
-			return "Can hunt again in " . $seconds_left . " seconds" ;
+			$seconds_left = 300 - $difference['seconds'];
+			// if ($seconds_left < 60) {
+				return "Can hunt again in " . $seconds_left . " seconds" ;
+			// } else {
+			// 	$minutes = (int) ($seconds_left / 60) ;
+			// 	return "Can hunt again in " . $minutes . " minutes" ;
+			// }
 		}
 
 
