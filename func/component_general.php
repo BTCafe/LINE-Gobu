@@ -37,4 +37,31 @@
 		}
 	}
 
+	function hunt_games ($source, $database, $db){
+		$result = rand(1,100);
+		if ($result > 0 && $result <= 60) { // 60%
+			// Normal / Worthless Item : 0 - 50 point
+			$item_list = $database->get_item($source, $db, 1);
+			$item_pick = rand(0,count($item_list)-1);
+		} elseif ($result > 60 && $result <= 85) { // 25%
+			// Rare : 100 - 500 point
+			$item_list = $database->get_item($source, $db, 2);
+			$item_pick = rand(0,count($item_list)-1);
+		} elseif ($result > 85 && $result <= 95) { // 10%
+			// Super Rare : 1000 - 2000 point
+			$item_list = $database->get_item($source, $db, 3);
+			$item_pick = rand(0,count($item_list)-1);
+		} elseif ($result > 95 && $result <= 99) { // 4%
+			// Super Super Rare : 5000 point
+			$item_list = $database->get_item($source, $db, 4);
+			$item_pick = rand(0,count($item_list)-1);
+		} elseif ($result == 100) { // 1%
+			// Legendary : 10000 point
+			$item_list = $database->get_item($source, $db, 5);
+			$item_pick = rand(0,count($item_list)-1);
+		}
+		return $item_list[$item_pick]["NAME"] ;
+
+	}
+
 ?>

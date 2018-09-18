@@ -240,5 +240,18 @@
 			return $response ;
 		}
 
+		static function get_item ($source, $db_conf, $rarity) {
+
+			$query = "SELECT * FROM `ITEM_LIST` WHERE RARITY = '" . $rarity . "'";
+			$query_result = mysqli_query($db_conf, $query);
+			
+			while ($current_row = mysqli_fetch_assoc($query_result)) {
+				$item_list[] = $current_row ;
+			}
+
+			return $item_list ;
+			
+		}
+
 	}
 ?>

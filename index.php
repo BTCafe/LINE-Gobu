@@ -250,6 +250,11 @@
 										$gobu_logic->logic_controller_for_general_2($command, $database, $db, $event['source'], $value, $result);
 									} 
 									break;
+
+								case '..hunt':
+									$text_response = hunt_games($event['source'], $database, $db);
+									$display->single_text_response($client, $event, $text_response);
+									break;
 							}
 
 							//////////////////////////////	
