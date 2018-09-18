@@ -253,5 +253,45 @@
 			
 		}
 
+		static function get_last_hunt ($source, $db_conf){
+
+			$query = "SELECT LAST_HUNT FROM `USER_ECONOMY` WHERE ID_USER = '" . $source['userId'] . "'";
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result);
+			return $query_fetch['LAST_HUNT'] ;
+
+		}
+
+		static function update_last_hunt ($source, $db_conf){
+
+			$new_datetime = date('Y-m-d H:i:s');
+			$query = "UPDATE `USER_ECONOMY` SET `LAST_HUNT`='" . $new_datetime . "' WHERE ID_USER='" . $source['userId'] . "'" ;
+			mysqli_query($db_conf, $query);
+
+		}
+
+		static function modify_points ($source, $db_conf, $value, $type){
+			$query = "SELECT * FROM `USER_ECONOMY` WHERE ID_USER = '" . $source['userId'] . "'";
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result);
+			$current_points = (int)$query_fetch['POINTS'] ;
+			$new_points = 0 ;
+			$response = "" ;
+
+			switch ($type) {
+				case 0:
+					$new_points = $current_points - $value ;
+					break;
+				
+				case 1:
+					$new_points = $current_points + $value ;
+					break;
+			}
+			
+			$query = "UPDATE `USER_ECONOMY` SET `POINTS`=" . $new_points . " WHERE ID_USER='" . $source['userId'] . "'" ;
+			mysqli_query($db_conf, $query);
+
+		}
+
 	}
 ?>
