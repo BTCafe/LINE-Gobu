@@ -352,7 +352,7 @@
 							}
 
 						} catch (Exception $e) {
-	                		$response = "Error Occured\n\n- Details -" . PHP_EOL . "File Location : " . $e->getFile() . PHP_EOL . "Line Number : " . $e->getLine() . PHP_EOL . "Type : " . $e->getMessage();
+	                		$response = "Error Occured\n\n- Details -" . PHP_EOL . "File Location : " . $e->getFile() . PHP_EOL . "Line Number : " . $e->getLine() . PHP_EOL . "Type : " . $e->getMessage() . "\n\nMake sure you have added Gobu as friend to avoid future error";
 	                		$display->single_text_response($client, $event, $response);	
 						}
 	                    break;
