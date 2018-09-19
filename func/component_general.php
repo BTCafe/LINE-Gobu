@@ -39,6 +39,10 @@
 
 	function hunt_games ($source, $database, $db){
 
+		if ($database->check_economy_availabilty($source, $db) == 0) {
+			$database->create_new_user_economy($source, $db) ;
+		}
+
 		$current_datetime = date('Y-m-d H:i:s');
 		$last_hunt_time = $database->get_last_hunt($source, $db);
 		$difference = compare_datetime($current_datetime, $last_hunt_time);

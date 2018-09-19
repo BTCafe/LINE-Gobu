@@ -293,5 +293,24 @@
 
 		}
 
+		static function check_economy_availabilty ($source, $db_conf){
+
+			$id_user = $source['userId'] ;
+			$query = "SELECT * FROM `USER_ECONOMY` WHERE ID_USER = '" . $id_user . "'";
+			$query_result = mysqli_query($db_conf, $query);
+			$is_created = mysqli_num_rows($query_result); 
+			return $is_created ;
+
+		}
+
+		static function create_new_user_economy ($source, $db_conf){
+			$id_user = $source['userId'] ;
+			$query = "INSERT INTO `USER_ECONOMY` (`ID_USER`, `LAST_DAILY`, `POINTS`) VALUES ('" .
+						$id_user . "','" .
+						date('Y-m-d H:i:s') . "','" .
+						1000 . "')";  
+			mysqli_query($db_conf, $query);
+		}
+
 	}
 ?>
