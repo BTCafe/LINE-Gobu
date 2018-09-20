@@ -18,15 +18,21 @@
 		}
 
 		if ($type == "Follower") {
-			$base_stats = "Base : " . $card_data["manaCost"] . "PP " . $card_data["baseData"]["attack"] . "/" . $card_data["baseData"]["defense"] ;
+			$base_stats = sprintf("Base : %s PP %s/%s", 
+				$card_data["manaCost"], $card_data["baseData"]["attack"], $card_data["baseData"]["defense"] );
 			$base_description = replace_br($card_data["baseData"]["description"]) ;
-			$evo_stats = "Evolved : " . $card_data["manaCost"] . " PP " . $card_data["evoData"]["attack"] . "/" . $card_data["evoData"]["defense"] ;
+			$evo_stats = sprintf("Evolved : %s PP %s/%s", 
+				$card_data["manaCost"], $card_data["evoData"]["attack"], $card_data["evoData"]["defense"]);
 			$evo_description = replace_br($card_data["evoData"]["description"]) ;
-			$result = $name . "\n>" . $rarity . " " . $faction . " " . $type . "\n>" . $expansion_origin . "\n\n" . $base_stats . "\n" . $base_description . "\n\n" . $evo_stats . "\n" . $evo_description ;
+			$result = sprintf(
+				"%s\n> %s %s %s\n> %s\n\n%s\n%s\n\n%s\n%s", 
+				$name, $rarity, $faction, $type,$expansion_origin,$base_stats, $base_description,$evo_stats, $evo_description
+			) ;
 		} else {
 			$base_stats = "Base : " . $card_data["manaCost"] . "PP";
 			$base_description = replace_br($card_data["baseData"]["description"]) ;
-			$result = $name . "\n>" . $rarity . " " . $faction . " " . $type . "\n>" . $expansion_origin . "\n\n" . $base_stats . "\n" . $base_description ;	
+			$result = sprintf("%s\n> %s %s %s\n> %s\n\n%s\n%s", 
+				$name, $rarity, $faction, $type, $expansion_origin, $base_stats, $base_description);
 		}
 		$result = trim($result);
 		return $result ;
