@@ -51,25 +51,24 @@
 			$result = rand(1,100);
 			if ($result > 0 && $result <= 60) { 
 				// Normal Item : 0 - 50 point (60% chances)
-				$item_list = $database->get_item($source, $db, 1);
-				$item_pick = rand(0,count($item_list)-1);
+				$rarity_code = 1 ;
 			} elseif ($result > 60 && $result <= 85) { 
 				// Rare : 100 - 500 point (25% chances)
-				$item_list = $database->get_item($source, $db, 2);
-				$item_pick = rand(0,count($item_list)-1);
+				$rarity_code = 2 ;
 			} elseif ($result > 85 && $result <= 95) { 
 				// Super Rare : 1000 - 2000 point (10% chances)
-				$item_list = $database->get_item($source, $db, 3);
-				$item_pick = rand(0,count($item_list)-1);
+				$rarity_code = 3 ;
 			} elseif ($result > 95 && $result <= 99) {
 				// Super Super Rare : 5000 point (4% chances)
-				$item_list = $database->get_item($source, $db, 4);
-				$item_pick = rand(0,count($item_list)-1);
+				$rarity_code = 4 ;
 			} elseif ($result == 100) { 
 				// Legendary : 10000 point (1% chances)
-				$item_list = $database->get_item($source, $db, 5);
-				$item_pick = rand(0,count($item_list)-1);
+				$rarity_code = 5 ;
 			}
+			
+			$item_list = $database->get_item($source, $db, $rarity_code);
+			$item_pick = rand(0,count($item_list)-1);
+			
 			$database->update_last_hunt($source, $db);
 			$database->modify_points($source, $db, $item_list[$item_pick]["ITEM_VALUES"], 1);
 
@@ -96,10 +95,7 @@
 			}
 
 			$hunt_response = sprintf("We found %s !\n%s\n\n%s\n\n-- Sold and got %s points --",
-				$item_list[$item_pick]["NAME"], 
-				$rarity, 
-				$item_list[$item_pick]["ITEM_DESC"], 
-				$item_list[$item_pick]["ITEM_VALUES"]
+				$item_list[$item_pick]["NAME"], $rarity, $item_list[$item_pick]["ITEM_DESC"], $item_list[$item_pick]["ITEM_VALUES"]
 			); 
 			
 			return $hunt_response ;
