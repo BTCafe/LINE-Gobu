@@ -255,6 +255,11 @@
 									$text_response = hunt_games($event['source'], $database, $db);
 									$display->single_text_response($client, $event, $text_response);
 									break;
+
+								case '..rank':
+									$text_response = get_top_points($client, $event['source'], $db);
+									$display->single_text_response($client, $event, $text_response);
+									break;
 							}
 
 							//////////////////////////////	

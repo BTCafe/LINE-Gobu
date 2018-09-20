@@ -127,4 +127,25 @@
 
 	}
 
+	function get_top_points ($client, $source, $db_conf){
+
+		$query = "SELECT `ID_USER`, `POINTS` FROM `USER_ECONOMY` ORDER BY `POINTS` DESC LIMIT 5";
+		$query_result = mysqli_query($db_conf, $query);
+
+		$result = "TOP 5 USER\n\n" ;
+		$counter = 0 ;
+
+		while ($current_row = mysqli_fetch_array($query_result)){
+			$user_info = $client->getProfile($current_row['ID_USER']);
+			$user_info_decoded = json_decode($user_info, true);
+			
+			$name = $user_info_decoded['displayName'];
+			$points = $current_row['POINTS'];
+			$result .= sprintf("%d. %s - %s points\n", ++$counter, $name, $points);
+		}
+
+		return $result ;
+
+	}
+
 ?>
