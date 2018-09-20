@@ -95,20 +95,17 @@
 					break;
 			}
 
-			$hunt_response = 
-			"We found " . $item_list[$item_pick]["NAME"] . "!\n" . $rarity . "\n\n" . 
-			$item_list[$item_pick]["ITEM_DESC"] . 
-			"\n\n-- Sold and got " . $item_list[$item_pick]["ITEM_VALUES"] . " points --" ; 
+			$hunt_response = sprintf("We found %s !\n%s\n\n%s\n\n-- Sold and got %s points --",
+				$item_list[$item_pick]["NAME"], 
+				$rarity, 
+				$item_list[$item_pick]["ITEM_DESC"], 
+				$item_list[$item_pick]["ITEM_VALUES"]
+			); 
 			
 			return $hunt_response ;
 		} else {
 			$seconds_left = 300 - $difference['seconds'];
-			// if ($seconds_left < 60) {
-				return "Can hunt again in " . $seconds_left . " seconds" ;
-			// } else {
-			// 	$minutes = (int) ($seconds_left / 60) ;
-			// 	return "Can hunt again in " . $minutes . " minutes" ;
-			// }
+			return "Can hunt again in " . $seconds_left . " seconds" ;
 		}
 
 
