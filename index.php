@@ -252,8 +252,18 @@
 									break;
 
 								case '..hunt':
-									$text_response = hunt_games($event['source'], $database, $db);
-									$display->single_text_response($client, $event, $text_response);
+
+									$current_supply = $database->get_supply_points($event['source'], $db);
+
+									if ($current_supply == 0) {
+										$text_response = "We don't have any supplies. Let's buy some from the shops!\nExample : ..resupply 10";
+										$display->single_text_response($client, $event, $text_response);
+									} else {
+										$text_response = hunt_games($event['source'], $database, $db);
+										$display->single_text_response($client, $event, $text_response);
+										$database->modify_supply_points($event['source'], $db, 1, 0);
+									}
+
 									break;
 
 								case '..rank':
