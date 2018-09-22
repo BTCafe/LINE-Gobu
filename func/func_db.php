@@ -312,5 +312,39 @@
 			mysqli_query($db_conf, $query);
 		}
 
+		static function get_supply_points ($source, $db_conf){
+
+			$id_user = $source['userId'] ;
+			$query = "SELECT * FROM `USER_ECONOMY` WHERE ID_USER = '" . $id_user . "'";
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result);
+			$current_supply = (int)$query_fetch['SUPPLY_POINTS']; 
+			return $current_supply ;
+
+		}
+
+		static function modify_supply_points ($source, $db_conf, $value, $type){
+			$query = "SELECT * FROM `USER_ECONOMY` WHERE ID_USER = '" . $source['userId'] . "'";
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result);
+			$current_supply = (int)$query_fetch['SUPPLY_POINTS'] ;
+			$new_value = 0 ;
+			switch ($type) {
+				case 0:
+					$new_value = $current_supply - $value ;
+					break;
+				
+				case 1:
+					$new_value = $current_supply + $value ;
+					break;
+			}
+			
+			$query = sprintf("UPDATE `USER_ECONOMY` SET `SUPPLY_POINTS`= %d WHERE ID_USER = '%s'",
+				$new_value, $source['userId']);
+			mysqli_query($db_conf, $query);
+			// return $query ;
+
+		}
+
 	}
 ?>

@@ -260,6 +260,38 @@
 									$text_response = get_top_points($client, $event['source'], $db);
 									$display->single_text_response($client, $event, $text_response);
 									break;
+
+								case '..supply':
+									$current_supply = $database->get_supply_points($event['source'], $db);
+									$text_response = sprintf("You currently have %d supplies", 
+										$current_supply);
+									$display->single_text_response($client, $event, $text_response);
+									break;
+
+								case '..resupply':
+									if (isset($exploded_Message[1])) {
+										$value = (int)$exploded_Message[1] ;
+										$base_supply_cost = 25 ;
+
+										$total_cost = $value * $base_supply_cost ;
+										$current_points = $database->get_points($event['source'], $db);
+
+										if ($current_points <= $total_cost) {
+											$difference = $total_cost - $current_points ;
+											$text_response = sprintf("You don't have enough points to buy that many supplies\n(Need %d more)", $difference) ;
+											$display->single_text_response($client, $event, $text_response);
+										} else {
+											$database->modify_points($event['source'], $db, $total_cost, 0);
+											$database->modify_supply_points($event['source'], $db, $value, 1);
+
+											$current_supply = $database->get_supply_points($event['source'], $db);
+											$text_response = sprintf("Bought %d supplies\n(Current Supply : %d)",
+												$value, $current_supply);
+											$display->single_text_response($client, $event, $text_response);
+										}
+
+									} 
+									break;
 							}
 
 							//////////////////////////////	
