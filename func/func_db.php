@@ -162,15 +162,17 @@
 
 			$query = "SELECT * FROM `USER_ECONOMY` WHERE ID_USER = '" . $id_user . "'";
 			$query_result = mysqli_query($db_conf, $query);
+			$base_daily_rewards = 2500 ;
 
 			if ( mysqli_num_rows($query_result) == 0 ) {
+
 				$query = "INSERT INTO `USER_ECONOMY` (`ID_USER`, `LAST_DAILY` , `POINTS`) VALUES ('" .
 						$id_user . "','" .
 						date('Y-m-d H:i:s') . "','" .
-						1000 . "')";  
+						$base_daily_rewards . "')";  
 
 				mysqli_query($db_conf, $query);
-				return "Here's your daily salary - 1000 points given" ;
+				return sprintf("Here's your daily salary \n-- %d points given --", $base_daily_rewards) ;
 			} else {
 				$query_fetch = mysqli_fetch_array($query_result);
 				$current_datetime = date('Y-m-d H:i:s');
@@ -183,11 +185,11 @@
 				$days_difference = $interval->d ;
 
 				if ($days_difference >= 1) {
-					$new_points = $query_fetch['POINTS'] + 1000;
+					$new_points = $query_fetch['POINTS'] + $base_daily_rewards;
 			    	$query = "UPDATE `USER_ECONOMY` SET `POINTS`=" . $new_points . ", `LAST_DAILY`='" . $current_datetime . "' WHERE ID_USER='" . $id_user . "'" ;
 
 					mysqli_query($db_conf, $query);
-					return "Here's your daily salary - 1000 points given" ;
+					return sprintf("Here's your daily salary \n-- %d points given --", $base_daily_rewards) ;
 				} else {
 					$grace_period = 24 - $hours_difference ;
 					return "You can't do daily now, please come back again in " . $grace_period . " hours" ;
