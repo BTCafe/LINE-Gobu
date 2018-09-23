@@ -71,7 +71,7 @@
 			
 			$database->update_last_hunt($source, $db);
 			$database->modify_points($source, $db, $item_list[$item_pick]["ITEM_VALUES"], 1);
-			$database->modify_supply_points($event['source'], $db, 1, 0);
+			$database->modify_supply_points($source, $db, 1, 0);
 
 			switch ($item_list[$item_pick]["RARITY"]) {
 				case 1:
