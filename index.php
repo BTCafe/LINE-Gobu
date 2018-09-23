@@ -261,7 +261,6 @@
 									} else {
 										$text_response = hunt_games($event['source'], $database, $db);
 										$display->single_text_response($client, $event, $text_response);
-										$database->modify_supply_points($event['source'], $db, 1, 0);
 									}
 
 									break;
