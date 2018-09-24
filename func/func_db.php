@@ -348,5 +348,62 @@
 
 		}
 
+		static function get_plant_counts ($source, $db_conf){
+
+			$id_group = $source['groupId'] ;
+			$query = "SELECT * FROM `AREA_LIST` WHERE ID_GROUP = '" . $id_group . "'";
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result);
+			return (int)$query_fetch['PLANTS_COUNT']; 
+			
+		}
+
+		static function create_area ($source, $db_conf){
+
+			if (isset($source['groupId'])) {				
+				$id_group = $source['groupId'] ;
+				$query = "SELECT * FROM `AREA_LIST` WHERE ID_GROUP = '" . $id_group . "'";
+				$query_result = mysqli_query($db_conf, $query);
+				$is_created = mysqli_num_rows($query_result);
+				if ($is_created == 0) {
+					$query = sprintf("INSERT INTO `AREA_LIST` (`ID_GROUP`, `PLANTS_COUNT`) VALUES ('%s', 0)", 
+						$id_group);
+					mysqli_query($db_conf, $query);
+					return "Garden created" ;
+				} else {
+					return "There's already a garden here" ;
+				}
+			} else {
+				return "Can't create garden here (only in group room)" ;
+			}
+
+
+		}
+
+		static function modify_plants ($source, $db_conf, $value, $type){
+			$id_group = $source['groupId'] ;
+			$query = "SELECT * FROM `AREA_LIST` WHERE ID_GROUP = '" . $id_group . "'";
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result);
+			$current_value = $query_fetch['PLANTS_COUNT'];
+			$new_value = 0 ;
+			$response = "" ;
+
+			switch ($type) {
+				case 0:
+					$new_value = $current_value - $value ;
+					break;
+				
+				case 1:
+					$new_value = $current_value + $value ;
+					break;
+			}
+			
+			$query = sprintf("UPDATE `AREA_LIST` SET `PLANTS_COUNT` = %d WHERE ID_GROUP = '%s'",
+				$new_value, $source['groupId']);
+			mysqli_query($db_conf, $query);
+
+		}
+
 	}
 ?>
