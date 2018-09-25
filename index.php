@@ -43,7 +43,7 @@
 						$gobu_logic = new bot_logic ($client, $event, $display);
 
 						// DO SPECIAL EVENT !
-						$gobu_logic->do_special_event($command, $database, $db, $display, $event, $client);
+						// $gobu_logic->do_special_event($command, $database, $db, $display, $event, $client);
 						try {
 
 							/////////////////////////	
@@ -109,130 +109,120 @@
 									if (trim($criteria) === "waifu") {
 										$search_result = search_card_v2 (trim("Silva")); 
 										$gobu_logic->logic_controller_for_bagoum($search_result, '..raw', "image");
-										if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+										// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									} else {
 										$search_result = find_card (explode(" ", trim($criteria))); // Explode the criteria to make it into array
 										$gobu_logic->logic_controller_for_bagoum($search_result, '..name', "text");
-										if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+										// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									}
 									break;
 
 								case '..flair':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..name':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 									// Connecting to Database
-								case '..ani':
-									$search_result = search_card_v2 (trim($criteria));
-									$gobu_logic->logic_controller_for_database($search_result, $command, $database, $db);
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
-									break;
+								// case '..ani':
+								// 	$search_result = search_card_v2 (trim($criteria));
+								// 	$gobu_logic->logic_controller_for_database($search_result, $command, $database, $db);
+								// 	// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+								// 	break;
 
-								case '..anievo':
-									$search_result = search_card_v2 (trim($criteria));
-									$gobu_logic->logic_controller_for_database($search_result, $command, $database, $db);
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
-									break;
+								// case '..anievo':
+								// 	$search_result = search_card_v2 (trim($criteria));
+								// 	$gobu_logic->logic_controller_for_database($search_result, $command, $database, $db);
+								// 	// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+								// 	break;
 
 								// Return Either Text or Image //
 								case '..img':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..imgevo':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..alt':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..alt2':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..altevo':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..altevo2':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..raw':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..rawevo':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..rawalt':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..rawalt2':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..rawaltevo':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..rawaltevo2':
 									$search_result = search_card_v2 (trim($criteria));
 									$gobu_logic->logic_controller_for_bagoum($search_result, $command, "image");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								// Return Sound and Text or Only Text //
 								case '..voice':
 									$gobu_logic->logic_controller_for_bagoum($exploded_Message, $command, "sound");
-									if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
+									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..mywaifu':
 									$gobu_logic->logic_controller_for_bagoum_game('waifu_game');
-									break;
-
-								case '..claim':
-									$search_result = search_card_v2 (trim($criteria));
-									if ($search_result["found"] > 1 || $search_result["found"] == 0) {
-										$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
-									} else {
-										$gobu_logic->logic_controller_for_bagoum_game_with_data($search_result, "claim_waifu");
-									}
-									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
 
 								case '..daily':
@@ -314,10 +304,10 @@
 										} else {
 											$database->modify_points($event['source'], $db, $total_cost, 0);
 											$database->modify_plants($event['source'], $db, $total_cost, 1);
-											$database->get_plant_counts($event['source'], $db);
+											$current_flower = $database->get_plant_counts($event['source'], $db);
 
-											$text_response = sprintf("Plantes %d flower\n(Current Flower : %d)",
-												$total_cost, $current_supply);
+											$text_response = sprintf("Planted %d flower\n(Current Flower : %d)",
+												$total_cost, $current_flower);
 											$display->single_text_response($client, $event, $text_response);
 										}
 
@@ -343,6 +333,68 @@
 
 									$display->single_text_response($client, $event, $text_response);
 									break;
+
+								case '..claims':
+									$current_points = $database->get_points($event['source'], $db);
+									$search_result = search_card_v2 (trim($criteria));
+
+									if ($search_result["found"] > 1 || $search_result["found"] == 0) {
+										$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
+									} else {
+
+										$name = trim($search_result['name']);
+										$is_claimed = $database->get_waifu_status($name, $db);
+										if ($is_claimed == 0 && $current_points >= 10000) {
+											$database->register_claim($event['source'], $db, $name);
+											$database->modify_points($event['source'], $db, 10000, 0);
+											
+											$text_response = sprintf("You have claimed %s !\nDon't forget to treat them ~", $name);
+											$display->single_text_response($client, $event, $text_response);
+										} else {
+											$can_claim = $database->check_claim_status($name, $db);
+
+											if ($can_claim == 1 && $current_points >= 10000) {
+												$database->update_claim($event['source'], $db, $name, $database);
+												$database->modify_points($event['source'], $db, 10000, 0);
+												$text_response = sprintf("%s is now yours !\nNice steal there ~", $name);
+												$display->single_text_response($client, $event, $text_response);
+											} elseif ($current_points < 10000) {
+												$text_response = sprintf("You don't even have enough points to claim girl (10k needed)");
+												$display->single_text_response($client, $event, $text_response);
+											} elseif ($can_claim == 0) {
+												$text_response = sprintf("Somebody already claimed %s\nThey treated them well so you can't claim them yet", 
+													$name);
+												$display->single_text_response($client, $event, $text_response);
+											}
+
+										}										
+									}
+									break;
+
+								case '..gift':
+									$search_result = search_card_v2 (trim($criteria));
+									if ($search_result["found"] > 1 || $search_result["found"] == 0) {
+										$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
+									} else {
+
+										$name = trim($search_result['name']);
+										$is_claimed = $database->get_waifu_status($name, $db);
+										if ($is_claimed == 0) {
+											$text_response = sprintf("Nobody claimed %s yet !", $name);
+											$display->single_text_response($client, $event, $text_response);
+										} else {
+											$database->update_gift($db, $name);
+											$text_response = sprintf("Gifted %s", $name);
+											$display->single_text_response($client, $event, $text_response);
+										}
+
+									}
+									break;
+
+								case '..myclaims':
+									$text_response = $database->get_claim($event['source'], $db);
+									$display->single_text_response($client, $event, $text_response);
+									break;
 							}
 
 							//////////////////////////////	
@@ -353,23 +405,23 @@
 								// Urban Dictionary Function
 								case '..ud':
 									$gobu_logic->logic_controller_for_urbandictionary($command, $criteria);
-									if ($function_log == 1) {
-										$database->create_log_data_ud($event['source'], $command, $criteria, $db);
-									}
+									// if ($function_log == 1) {
+									// 	$database->create_log_data_ud($event['source'], $command, $criteria, $db);
+									// }
 									break;
 
 								case '..explain':
 									$gobu_logic->logic_controller_for_urbandictionary($command, $criteria);
-									if ($function_log == 1) {
-										$database->create_log_data_ud($event['source'], $command, $criteria, $db);
-									}
+									// if ($function_log == 1) {
+									// 	$database->create_log_data_ud($event['source'], $command, $criteria, $db);
+									// }
 									break;
 
 								case '..random':
 									$gobu_logic->logic_controller_for_urbandictionary($command, "");
-									if ($function_log == 1) {
-										$database->create_log_data_ud($event['source'], $command, "Random Stuff", $db);
-									}
+									// if ($function_log == 1) {
+									// 	$database->create_log_data_ud($event['source'], $command, "Random Stuff", $db);
+									// }
 									break;
 							}
 
@@ -403,7 +455,7 @@
 												$universal_log = $exploded_Message[2];
 												break;
 										}
-										$result = $database->update_log_setting (trim($function_log), trim($universal_log));
+										// $result = $database->update_log_setting (trim($function_log), trim($universal_log));
 										$display->single_text_response($client, $event, $result);
 									} else {
 										$display->show_no_permission($client, $event);
@@ -425,7 +477,11 @@
 
 								case '..database':
 									$search_result = search_card_v2 (trim($criteria));
-									$gobu_logic->logic_controller_for_database($search_result, "..debugdb", $database, $db);
+									// $gobu_logic->logic_controller_for_database($search_result, "..debugdb", $database, $db);
+									break;
+
+								case '..myid':
+									$display->single_text_response($client, $event, "Your ID is : " . $event['source']['userId']);
 									break;
 
 							}
