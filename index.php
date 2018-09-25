@@ -359,7 +359,7 @@
 												$text_response = sprintf("%s is now yours !\nNice steal there ~", $name);
 												$display->single_text_response($client, $event, $text_response);
 											} elseif ($current_points < 10000) {
-												$text_response = sprintf("You don't even have enough points to claim girl (10k needed)");
+												$text_response = sprintf("You don't even have enough points to claim anybody (10k needed)");
 												$display->single_text_response($client, $event, $text_response);
 											} elseif ($can_claim == 0) {
 												$text_response = sprintf("Somebody already claimed %s\nThey treated them well so you can't claim them yet", 
@@ -403,6 +403,30 @@
 									$text_response = $database->get_claim($event['source'], $db);
 									$display->single_text_response($client, $event, $text_response);
 									break;
+
+								case '..huntrate':
+									$item_rates = $database->get_area_mod($event['source'], $db);
+									$text_response = sprintf("== HUNT CHANCES IN THIS GROUP ==\n\nNormal \t: %d %%\nRare \t: %d %%\nSR \t: %d %%\nSSR \t: %d %%\nLegend \t: %d %%\n",
+										$item_rates['MOD_N'], $item_rates['MOD_R'], $item_rates['MOD_SR'],
+										$item_rates['MOD_SSR'], $item_rates['MOD_LEGEND']);
+									$display->single_text_response($client, $event, $text_response);
+									break;
+
+								case '..redeem':
+									$code = $exploded_Message[1];
+									$points_gained = $database->redeem_coupon ($event, $code, $db, $database);
+									$display->single_text_response($client, $event, "Redeemed " . $points_gained . " points");
+									break;
+							}
+
+							////////////////////////	
+							// Mini Games Router //
+							///////////////////////
+
+							switch ($command) {
+
+
+
 							}
 
 							//////////////////////////////	
@@ -465,6 +489,15 @@
 										}
 										// $result = $database->update_log_setting (trim($function_log), trim($universal_log));
 										$display->single_text_response($client, $event, $result);
+									} else {
+										$display->show_no_permission($client, $event);
+									}
+									break;
+
+								case '..gen':
+									if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0') {
+										$database->create_coupon($exploded_Message[1], $exploded_Message[2], $db);
+										$display->single_text_response($client, $event, "Coupon Created");
 									} else {
 										$display->show_no_permission($client, $event);
 									}

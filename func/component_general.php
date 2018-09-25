@@ -46,22 +46,30 @@
 		$current_datetime = date('Y-m-d H:i:s');
 		$last_hunt_time = $database->get_last_hunt($source, $db);
 		$difference = compare_datetime($current_datetime, $last_hunt_time);
+		$item_rates = $database->get_area_mod($source, $db);
 
 		if ($difference['minutes'] >= 5) {
 			$result = rand(1,100);
-			if ($result > 0 && $result <= 60) { 
+
+			$rates_n = $item_rates['MOD_N']; // 60
+			$rates_r = $rates_n + $item_rates['MOD_R']; // 85
+			$rates_sr = $rates_r + $item_rates['MOD_SR']; // 95
+			$rates_ssr = $rates_sr + $item_rates['MOD_SSR']; // 99
+			$rates_legend = $rates_ssr + $item_rates['MOD_LEGEND']; // 100
+
+			if ($result > 0 && $result <= $rates_n) { 
 				// Normal Item : 0 - 50 point (60% chances)
 				$rarity_code = 1 ;
-			} elseif ($result > 60 && $result <= 85) { 
+			} elseif ($result > $rates_n && $result <= $rates_r) { 
 				// Rare : 100 - 500 point (25% chances)
 				$rarity_code = 2 ;
-			} elseif ($result > 85 && $result <= 95) { 
+			} elseif ($result > $rates_r && $result <= $rates_sr) { 
 				// Super Rare : 1000 - 2000 point (10% chances)
 				$rarity_code = 3 ;
-			} elseif ($result > 95 && $result <= 99) {
+			} elseif ($result > $rates_sr && $result <= $rates_ssr) {
 				// Super Super Rare : 5000 point (4% chances)
 				$rarity_code = 4 ;
-			} elseif ($result == 100) { 
+			} elseif ($result > $rates_ssr && $result <= $rates_legend) { 
 				// Legendary : 10000 point (1% chances)
 				$rarity_code = 5 ;
 			}
@@ -101,8 +109,10 @@
 			
 			return $hunt_response ;
 		} else {
-			$seconds_left = 300 - $difference['seconds'];
-			return "Can hunt again in " . $seconds_left . " seconds" ;
+			$minutes_left = 4 - $difference['minutes'];
+			$seconds_left = 60 - $difference['seconds'];
+			return sprintf("Can hunt again in %d minutes and %d seconds",
+				$minutes_left, $seconds_left) ;
 		}
 
 

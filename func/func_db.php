@@ -492,7 +492,7 @@
 
 			if ($has_claim > 0) {
 				$counter = 0 ;
-				$result = "Your list of claim\n\n";
+				$result = "== YOUR WAIFU LIST ==\n\n";
 				
 				while ($current_row = mysqli_fetch_array($query_result)){
 
@@ -504,8 +504,52 @@
 			} else {
 				return "You don't have any claim yet, so lonely ....";
 			}
+		}
 
+		static function get_area_mod ($source, $db_conf){
 
+			if (isset($source['groupId'])) {
+				$id_group = $source['groupId'];
+				$query = sprintf("SELECT * FROM `AREA_LIST` WHERE `ID_GROUP` = '%s'",
+					$id_group);
+				$query_result = mysqli_query($db_conf, $query);
+				$query_fetch = mysqli_fetch_array($query_result);
+				return $query_fetch;
+			} else {
+				$default_rate = array(
+					'MOD_N' => 90, 
+					'MOD_R' => 10,
+					'MOD_SR' => 0,
+					'MOD_SSR' => 0,
+					'MOD_LEGEND' => 0
+				); 
+				return $default_rate;
+			}
+
+		}
+
+		static function create_coupon ($coupon_code, $coupon_value, $db_conf){
+			$query = sprintf("INSERT INTO `COUPON_LIST` 
+				(`CODE`, `VALUE`) 
+				VALUES ('%s', '%d')",
+				$coupon_code, $coupon_value);
+
+			mysqli_query($db_conf, $query);
+		}
+
+		static function redeem_coupon ($event, $coupon_code, $db_conf, $database){
+
+			$query = sprintf("SELECT * FROM `COUPON_LIST` WHERE `CODE` = '%s'",
+					$coupon_code);
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result);
+
+			$database->modify_points($event['source'], $db_conf, $query_fetch['VALUE'], 1);
+
+			$query = sprintf("DELETE FROM `COUPON_LIST` WHERE `CODE` = '%s'",
+				$coupon_code);
+			mysqli_query($db_conf, $query);
+			return $query_fetch['VALUE'];
 
 		}
 
