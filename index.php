@@ -383,8 +383,16 @@
 											$text_response = sprintf("Nobody claimed %s yet !", $name);
 											$display->single_text_response($client, $event, $text_response);
 										} else {
-											$database->update_gift($db, $name);
-											$text_response = sprintf("Gifted %s", $name);
+											$current_points = $database->get_points($event['source'], $db);
+
+											if ($current_points < 500) {
+												$text_response = sprintf("You don't have enough points to gift them (need 500 pt) !");
+											} else {
+												$database->modify_points($event['source'], $db, 500, 0);
+												$database->update_gift($db, $name);
+												$text_response = sprintf("Gifted %s\n-- Used 500 pt --", $name);
+											}
+											
 											$display->single_text_response($client, $event, $text_response);
 										}
 
