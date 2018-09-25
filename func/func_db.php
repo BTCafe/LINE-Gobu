@@ -405,5 +405,109 @@
 
 		}
 
+		static function get_waifu_status ($name_to_search, $db_conf) {
+
+			$query = sprintf("SELECT * FROM `WAIFU_LIST` WHERE `CARD_NAME` = '%s'", 
+				$name_to_search);
+			$query_result = mysqli_query($db_conf, $query);
+			$is_claimed = mysqli_num_rows($query_result); 
+			
+			return $is_claimed ;
+		}
+
+		static function get_last_claimer ($name_to_search, $db_conf) {
+
+			$query = sprintf("SELECT * FROM `WAIFU_LIST` WHERE `CARD_NAME` = '%s'", 
+				$name_to_search);
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result);
+			$current_claimer = $query_fetch['CURRENT_CLAIMER'];
+
+			return $current_claimer ;
+		}
+
+		static function register_claim ($source, $db_conf, $card_name){
+			$id_user = $source['userId'] ;
+			$query = sprintf("INSERT INTO `WAIFU_LIST` 
+				(`CARD_NAME`, `CURRENT_CLAIMER`) 
+				VALUES ('%s', '%s')",
+				$card_name, $id_user);
+
+			mysqli_query($db_conf, $query);
+		}
+
+		static function check_claim_status ($name_to_search, $db_conf){
+			$query = sprintf("SELECT * FROM `WAIFU_LIST` WHERE `CARD_NAME` = '%s'",
+				$name_to_search);
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result);
+
+			$current_time = date('Y-m-d H:i:s');
+			$last_gifted = $query_fetch['LAST_GIFTED'];
+
+			$difference = compare_datetime($current_time, $last_gifted);
+
+			if ($difference['days'] >= 1) {
+				return 1 ;
+			} else {
+				return 0 ;
+			}
+
+		}
+
+		static function update_claim ($source, $db_conf, $card_name, $database){
+			$id_user = $source['userId'] ;
+			$old_claimer = $database->get_last_claimer($card_name, $db_conf);
+			$current_time = date('Y-m-d H:i:s');
+
+			$query = sprintf("UPDATE `WAIFU_LIST` SET
+				`CURRENT_CLAIMER` = '%s' , 
+				`OLD_CLAIMER` = '%s' , 
+				`LAST_CLAIM` = '%s', 
+				`LAST_GIFTED` = '%s'
+				WHERE `CARD_NAME` = '%s'",
+				$id_user, $old_claimer, $current_time, $current_time, $card_name);
+
+			mysqli_query($db_conf, $query);
+		}
+
+		static function update_gift ($db_conf, $card_name){
+
+			$current_time = date('Y-m-d H:i:s');
+
+			$query = sprintf("UPDATE `WAIFU_LIST` SET
+				`LAST_GIFTED` = '%s'
+				WHERE `CARD_NAME` = '%s'",
+				$current_time, $card_name);
+
+			mysqli_query($db_conf, $query);
+		}
+
+		static function get_claim ($source, $db_conf){
+
+			$query = sprintf("SELECT * FROM `WAIFU_LIST` WHERE `CURRENT_CLAIMER` = '%s'",
+				$source['userId']);
+			$query_result = mysqli_query($db_conf, $query);
+			$has_claim = mysqli_num_rows($query_result); 
+
+			if ($has_claim > 0) {
+				$counter = 0 ;
+				$result = "Your list of claim\n\n";
+				
+				while ($current_row = mysqli_fetch_array($query_result)){
+
+					$name = $current_row['CARD_NAME'];
+					$result .= sprintf("%d. %s\n", ++$counter, $name);
+				}
+
+				return $result ;
+			} else {
+				return "You don't have any claim yet, so lonely ....";
+			}
+
+
+
+		}
+
 	}
 ?>
