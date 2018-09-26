@@ -349,7 +349,9 @@
 											$database->modify_points($event['source'], $db, 10000, 0);
 											
 											$text_response = sprintf("You have claimed %s !\nDon't forget to treat them ~", $name);
-											$display->single_text_response($client, $event, $text_response);
+											$image_data = get_specific_card_info_v2($name, '..imgevo');
+
+											$display->double_text_and_image_response($client, $event, $text_response, $image_data);
 										} else {
 											$can_claim = $database->check_claim_status($name, $db);
 
@@ -555,3 +557,5 @@
 	};
 	
 ?>
+
+<!-- UPDATE `AREA_LIST` SET `MOD_N` = '10', `MOD_R` = '60', `MOD_SR` = '25' WHERE `AREA_LIST`.`ID_GROUP` = 'Cbe11f05ca744703274a284626f9212ac'; -->
