@@ -220,6 +220,14 @@
 									$gobu_logic->logic_controller_for_bagoum($exploded_Message, $command, "sound");
 									// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									break;
+									
+							}
+
+							////////////////////////	
+							// Mini Games Router //
+							///////////////////////
+
+							switch ($command) {
 
 								case '..mywaifu':
 									$gobu_logic->logic_controller_for_bagoum_game('waifu_game');
@@ -419,15 +427,6 @@
 									$points_gained = $database->redeem_coupon ($event, $code, $db, $database);
 									$display->single_text_response($client, $event, "Redeemed " . $points_gained . " points");
 									break;
-							}
-
-							////////////////////////	
-							// Mini Games Router //
-							///////////////////////
-
-							switch ($command) {
-
-
 
 							}
 
