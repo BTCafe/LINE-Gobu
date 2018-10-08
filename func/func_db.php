@@ -506,6 +506,22 @@
 			}
 		}
 
+		static function delete_claim ($source, $db_conf, $card_name, $database){
+			$id_user = $source['userId'] ;
+			$old_claimer = $database->get_last_claimer($card_name, $db_conf);
+
+			if ($id_user == $old_claimer) {				
+				$query = sprintf("DELETE FROM `WAIFU_LIST` 
+					WHERE `CARD_NAME` = '%s'",
+					$card_name);
+				mysqli_query($db_conf, $query);
+				return "You broke up with " . $card_name ;
+			} else {
+				return $card_name . " doesn't even like you" ;
+			}
+
+		}
+
 		static function get_area_mod ($source, $db_conf){
 
 			if (isset($source['groupId'])) {
@@ -551,6 +567,28 @@
 			mysqli_query($db_conf, $query);
 			return $query_fetch['VALUE'];
 
+		}
+
+		static function modify_rate ($db_conf, $groupId, $type){
+
+			$query = "";
+			if ($type == 1) {
+				$query = sprintf("UPDATE `AREA_LIST` SET
+					`MOD_N` = '20', 
+					`MOD_R` = '50', 
+					`MOD_SR` = '25' 
+					WHERE `AREA_LIST`.`ID_GROUP` = '%s' ",
+					$groupId);
+			} elseif($type == 0) {
+				$query = sprintf("UPDATE `AREA_LIST` SET
+					`MOD_N` = '50', 
+					`MOD_R` = '30', 
+					`MOD_SR` = '15' 
+					WHERE `AREA_LIST`.`ID_GROUP` = '%s' ",
+					$groupId);
+			}
+
+			mysqli_query($db_conf, $query);
 		}
 
 	}

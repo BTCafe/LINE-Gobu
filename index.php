@@ -428,6 +428,26 @@
 									$display->single_text_response($client, $event, "Redeemed " . $points_gained . " points");
 									break;
 
+								case '..unclaims':
+									$search_result = search_card_v2 (trim($criteria));
+									if ($search_result["found"] > 1 || $search_result["found"] == 0) {
+										$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
+									} else {
+										$name = trim($search_result['name']);
+										$is_claimed = $database->get_waifu_status($name, $db);
+										if ($is_claimed == 1) {
+											$text_response = $database->delete_claim($event['source'], $db, $name, $database);
+											// $database->modify_points($event['source'], $db, 5000, 1);
+											
+											// $display->single_text_response($client, $event, $text_response . "\n-- 5000 Given Back --");
+											$display->single_text_response($client, $event, $text_response);
+										} else {
+											$text_response = sprintf("Nobody claimed %s yet !", $name);
+											$display->single_text_response($client, $event, $text_response);
+										}
+									}
+									break;
+
 							}
 
 							//////////////////////////////	
@@ -525,6 +545,24 @@
 								case '..myid':
 									$display->single_text_response($client, $event, "Your ID is : " . $event['source']['userId']);
 									break;
+
+								case '..rup':
+									if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0') {
+										$database->modify_rate($db, $event['source']['groupId'], 1);
+										$display->single_text_response($client, $event, "Item Rate UP !");
+									} else {
+										$display->show_no_permission($client, $event);
+									}
+									break;							
+
+								case '..rdown':
+									if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0') {
+										$database->modify_rate($db, $event['source']['groupId'], 0);
+										$display->single_text_response($client, $event, "Item rate DOWN !");
+									} else {
+										$display->show_no_permission($client, $event);
+									}
+									break;							
 
 							}
 
