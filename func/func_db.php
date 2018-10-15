@@ -524,11 +524,12 @@
 
 		static function get_area_mod ($source, $db_conf){
 
-			if (isset($source['groupId'])) {
-				$id_group = $source['groupId'];
-				$query = sprintf("SELECT * FROM `AREA_LIST` WHERE `ID_GROUP` = '%s'",
-					$id_group);
-				$query_result = mysqli_query($db_conf, $query);
+			$id_group = $source['groupId'];
+			$query = sprintf("SELECT * FROM `AREA_LIST` WHERE `ID_GROUP` = '%s'",
+				$id_group);
+			$query_result = mysqli_query($db_conf, $query);
+
+			if (mysqli_num_rows($query_result) == 1 ) {
 				$query_fetch = mysqli_fetch_array($query_result);
 				return $query_fetch;
 			} else {
