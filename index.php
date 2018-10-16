@@ -534,7 +534,14 @@
 									break;
 
 								case '..debug':
-									$display->single_sticker_response($client, $event);
+									// Testing Sticker
+									// $display->single_sticker_response($client, $event);
+
+									// Fixing the Moon
+									$search_result = search_card_v2 (trim($criteria));
+									$name = trim($search_result['name']);
+									$result = $database->get_waifu_status($name, $db);
+									$display->single_text_response($client, $event, $result);
 									break;
 
 								case '..database':

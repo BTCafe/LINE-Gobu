@@ -406,7 +406,7 @@
 		}
 
 		static function get_waifu_status ($name_to_search, $db_conf) {
-
+			$name_to_search = str_ireplace('\'', '', $name_to_search) ;
 			$query = sprintf("SELECT * FROM `WAIFU_LIST` WHERE `CARD_NAME` = '%s'", 
 				$name_to_search);
 			$query_result = mysqli_query($db_conf, $query);
@@ -416,7 +416,7 @@
 		}
 
 		static function get_last_claimer ($name_to_search, $db_conf) {
-
+			$name_to_search = str_ireplace('\'', '', $name_to_search) ;
 			$query = sprintf("SELECT * FROM `WAIFU_LIST` WHERE `CARD_NAME` = '%s'", 
 				$name_to_search);
 			$query_result = mysqli_query($db_conf, $query);
@@ -427,6 +427,7 @@
 		}
 
 		static function register_claim ($source, $db_conf, $card_name){
+			$card_name = str_ireplace('\'', '', $card_name) ;
 			$id_user = $source['userId'] ;
 			$query = sprintf("INSERT INTO `WAIFU_LIST` 
 				(`CARD_NAME`, `CURRENT_CLAIMER`) 
@@ -437,6 +438,8 @@
 		}
 
 		static function check_claim_status ($name_to_search, $db_conf){
+
+			$name_to_search = str_ireplace('\'', '', $name_to_search) ;
 			$query = sprintf("SELECT * FROM `WAIFU_LIST` WHERE `CARD_NAME` = '%s'",
 				$name_to_search);
 			$query_result = mysqli_query($db_conf, $query);
@@ -507,6 +510,7 @@
 		}
 
 		static function delete_claim ($source, $db_conf, $card_name, $database){
+			$card_name = str_ireplace('\'', '', $card_name) ;
 			$id_user = $source['userId'] ;
 			$old_claimer = $database->get_last_claimer($card_name, $db_conf);
 
