@@ -117,7 +117,7 @@
 	}
 
 	function get_raw_image ($card_data, $evo, $alt){
-		$to_replace = array(',', ' ', '\'', '.', '-');
+		$to_replace = array(',', ' ', '\'', '.', '-', '&');
 		$card_name = str_ireplace($to_replace, '', $card_data['_name']) ;
 		$image_url = "http://sv.bagoum.com/getRawImage/$evo/$alt/$card_name" ;
 		$temp_file = file_get_contents($image_url);
