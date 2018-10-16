@@ -160,9 +160,13 @@
 		static function do_daily ($source, $db_conf) {
 			$id_user = $source['userId'] ;
 
+			$query = "SELECT * FROM `WAIFU_LIST` WHERE CURRENT_CLAIMER = '" . $source['userId'] . "'";
+			$query_result = mysqli_query($db_conf, $query);
+			$waifu_count = mysqli_num_rows($query_result); 
+
 			$query = "SELECT * FROM `USER_ECONOMY` WHERE ID_USER = '" . $id_user . "'";
 			$query_result = mysqli_query($db_conf, $query);
-			$base_daily_rewards = 2500 ;
+			$base_daily_rewards = 2500 * (1 + $waifu_count);
 
 			if ( mysqli_num_rows($query_result) == 0 ) {
 
@@ -205,6 +209,15 @@
 			$query_fetch = mysqli_fetch_array($query_result);
 			$current_points = $query_fetch['POINTS'] ;
 			return $current_points ;
+			
+		}
+
+		static function get_waifu_count ($source, $db_conf) {
+
+			$query = "SELECT * FROM `WAIFU_LIST` WHERE CURRENT_CLAIMER = '" . $source['userId'] . "'";
+			$query_result = mysqli_query($db_conf, $query);
+			$waifu_count = mysqli_num_rows($query_result); 
+			return $waifu_count ;
 			
 		}
 

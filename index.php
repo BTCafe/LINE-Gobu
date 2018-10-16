@@ -394,19 +394,37 @@
 											$display->single_text_response($client, $event, $text_response);
 										} else {
 											$current_points = $database->get_points($event['source'], $db);
-
-											if ($current_points < 500) {
-												$text_response = sprintf("You don't have enough points to gift them (need 500 pt) !");
+											$current_waifu = $database->get_waifu_count($event['source'], $db);
+											$gift_price = 150 * (1 + $current_waifu);
+											if ($gift_price > $current_points) {
+												$text_response = sprintf("You don't have enough points to gift them (need %s pt) !", $gift_price);
 											} else {
-												$database->modify_points($event['source'], $db, 500, 0);
+												$database->modify_points($event['source'], $db, $gift_price, 0);
 												$database->update_gift($db, $name);
-												$text_response = sprintf("Gifted %s\n-- Used 500 pt --", $name);
+												$text_response = sprintf("Gifted %s\n-- Used %s pt --", $name, $gift_price);
 											}
 											
 											$display->single_text_response($client, $event, $text_response);
 										}
 
 									}
+									break;
+
+								case '..giftall':
+									
+									$current_waifu = $database->get_waifu_count($event['source'], $db);
+									$current_points = $database->get_points($event['source'], $db);
+									$gift_price = 150 * (1 + $current_waifu);
+
+									$total_cost = $gift_price * $current_waifu ;
+									if ($total_cost > $current_points) {
+										$text_response = sprintf("You don't have enough point to gift everyone\n%s Points Needed", $total_cost);
+										$display->single_text_response($client, $event, $text_response);
+									} else {
+										$text_response = sprintf("You have enough point to gift everyone\n%s Points Used", $total_cost);
+										$display->single_text_response($client, $event, $text_response);
+									}
+
 									break;
 
 								case '..myclaims':
