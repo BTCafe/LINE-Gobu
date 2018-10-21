@@ -303,20 +303,24 @@
 								case '..plant':
 									if (isset($exploded_Message[1])) {
 										$total_cost = (int)$exploded_Message[1] ;
-										$current_points = $database->get_points($event['source'], $db);
 
-										if ($current_points <= $total_cost) {
-											$difference = $total_cost - $current_points ;
-											$text_response = sprintf("You don't have enough points to plant that many flower\n(Need %d more)", $difference) ;
+										if ($total_cost < 0) {
+											$text_response = sprintf("You can't plant that many flower") ;
 											$display->single_text_response($client, $event, $text_response);
 										} else {
-											$database->modify_points($event['source'], $db, $total_cost, 0);
-											$database->modify_plants($event['source'], $db, $total_cost, 1);
-											$current_flower = $database->get_plant_counts($event['source'], $db);
-
-											$text_response = sprintf("Planted %d flower\n(Current Flower : %d)",
-												$total_cost, $current_flower);
-											$display->single_text_response($client, $event, $text_response);
+											$current_points = $database->get_points($event['source'], $db);
+											if ($current_points <= $total_cost) {
+												$difference = $total_cost - $current_points ;
+												$text_response = sprintf("You don't have enough points to plant that many flower\n(Need %d more)", $difference) ;
+												$display->single_text_response($client, $event, $text_response);
+											} else {
+												$database->modify_points($event['source'], $db, $total_cost, 0);
+												$database->modify_plants($event['source'], $db, $total_cost, 1);
+												$current_flower = $database->get_plant_counts($event['source'], $db);
+												$text_response = sprintf("Planted %d flower\n(Current Flower : %d)",
+													$total_cost, $current_flower);
+												$display->single_text_response($client, $event, $text_response);
+											}
 										}
 
 									} else {
