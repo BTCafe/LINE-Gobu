@@ -288,12 +288,16 @@
 											$text_response = sprintf("You don't have enough points to buy that many supplies\n(Need %d more)", $difference) ;
 											$display->single_text_response($client, $event, $text_response);
 										} else {
-											$database->modify_points($event['source'], $db, $total_cost, 0);
-											$database->modify_supply_points($event['source'], $db, $value, 1);
+											if ($value < 0) {
+												$text_response = sprintf("You must use positive number");
+											} else {
+												$database->modify_points($event['source'], $db, $total_cost, 0);
+												$database->modify_supply_points($event['source'], $db, $value, 1);
 
-											$current_supply = $database->get_supply_points($event['source'], $db);
-											$text_response = sprintf("Bought %d supplies\n(Current Supply : %d)",
-												$value, $current_supply);
+												$current_supply = $database->get_supply_points($event['source'], $db);
+												$text_response = sprintf("Bought %d supplies\n(Current Supply : %d)", $value, $current_supply);
+												
+											}
 											$display->single_text_response($client, $event, $text_response);
 										}
 
