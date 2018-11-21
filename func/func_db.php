@@ -683,7 +683,7 @@
 					$new_level, $new_wealth, $source['groupId']);
 
 				mysqli_query($db_conf, $query);
-				return "<Casino Upgraded To Level " . $new_level . " >\n\n- Daily wealth increases by 25k\n-Total Wealth is now " . ($new_level * 25000) + 100000 . "- Current cash refreshed";
+				return "<Casino Upgraded To Level " . $new_level . " >\n\n- Daily wealth increases by 25k\n-Total Wealth is now " . $new_wealth . "- Current cash refreshed";
 
 			} else {
 				$old_exp = $current_casino['EXP_CASINO'];
