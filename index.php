@@ -242,11 +242,25 @@
 									break;
 
 								case '..slots':
-									if (isset($exploded_Message[1])) {
-										$value = (int)$exploded_Message[1] ;
+									$database->update_casino($event['source'], $db);
+									$current_casino = $database->get_casino_info($event['source'], $db);
+									$used_points = (int)$exploded_Message[1];
+									if ($used_points < $current_casino['CURRENT_VALUE_CASINO']) {
 										$result = rand(1,2);
-										$gobu_logic->logic_controller_for_general_2($command, $database, $db, $event['source'], $value, $result);
+
+										$database->modify_casino_points($event['source'], $used_points, $current_casino, $result, $db);
+
+										$gobu_logic->logic_controller_for_general_2($command, $database, $db, $event['source'], $used_points, $result);
+									} else {
+										$text_response = "Casino doesn't have any more points\nYou can upgrade Casino for more daily points";
+										$display->single_text_response($client, $event, $text_response);
 									} 
+									break;
+
+								case '..casino':
+									$current_casino = $database->get_casino_info($event['source'], $db);
+									$text_response = "Cash Left on Casino " . $current_casino['CURRENT_VALUE_CASINO'];
+									$display->single_text_response($client, $event, $text_response);
 									break;
 
 								case '..hunt':
@@ -580,7 +594,8 @@
 									break;
 
 								case '..rup':
-									if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0') {
+									if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0' || 
+										$event['source']['userId'] == 'U8fc363c732604bcbb2ffd2fb256b3bd8') {
 										$database->modify_rate($db, $event['source']['groupId'], 1);
 										$display->single_text_response($client, $event, "Item Rate UP !");
 									} else {
@@ -589,7 +604,8 @@
 									break;							
 
 								case '..rdown':
-									if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0') {
+									if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0' || 
+										$event['source']['userId'] == 'U8fc363c732604bcbb2ffd2fb256b3bd8') {
 										$database->modify_rate($db, $event['source']['groupId'], 0);
 										$display->single_text_response($client, $event, "Item rate DOWN !");
 									} else {
