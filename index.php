@@ -266,7 +266,18 @@
 								case '..up':
 									$current_casino = $database->get_casino_info($event['source'], $db);
 									$used_points = (int)$exploded_Message[1];
-									$text_response = $database->upgrade_casino($event['source'], $used_points, $current_casino, $db);									
+									if ($used_points > 0) {
+										$current_points = $database->get_points($event['source'], $db);
+										if ($current_points < $used_points) {
+											$text_response = "You don't have enough points to upgrade";
+										} else {
+											$database->modify_points($event['source'], $db, $used_points, 0);
+											$text_response = $database->upgrade_casino($event['source'], $used_points, $current_casino, $db);	
+										}
+
+									} else {
+										$text_response = "You must use positive number";
+									}
 									$display->single_text_response($client, $event, $text_response);
 									break;
 
