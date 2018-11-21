@@ -609,5 +609,65 @@
 			mysqli_query($db_conf, $query);
 		}
 
+		static function get_casino_info ($source, $db_conf){
+
+			$query = "SELECT * FROM `BUILDING_LIST` WHERE ID_GROUP = '" . $source['groupId'] . "'";
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result); 
+			return $query_fetch ;
+
+		}
+
+		static function update_casino ($source, $db_conf){
+
+			$query = "SELECT * FROM `BUILDING_LIST` WHERE ID_GROUP = '" . $source['groupId'] . "'";
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result); 
+
+			$current_datetime = date('Y-m-d H:i:s');
+			$last_daily_time = $query_fetch['LAST_REFRESH_CASINO'] ;
+
+			$date1 = new DateTime($current_datetime);
+			$date2 = new DateTime($last_daily_time);
+			$interval = $date1->diff($date2);
+			$hours_difference = $interval->h ;
+			$days_difference = $interval->d ;
+
+			if ($days_difference >= 1) {
+				$new_points = ($query_fetch['LV_CASINO'] * 25000) + 100000 ;
+		    	$query = sprintf("UPDATE `BUILDING_LIST` 
+					SET CURRENT_VALUE_CASINO = '%d'
+					WHERE ID_GROUP = '%s'",
+					$new_points, $source['groupId']);
+
+				mysqli_query($db_conf, $query);
+			} 
+
+		}
+
+		static function modify_casino_points ($source, $used_points, $current_casino, $type, $db_conf){
+
+			switch ($type) {
+				case 1:
+					$new_points = $current_casino['CURRENT_VALUE_CASINO'] - $used_points ;
+					break;
+				
+				case 2:
+					$new_points = $current_casino['CURRENT_VALUE_CASINO'] + $used_points ;
+					$value_max = ($current_casino['LV_CASINO'] * 25000) + 100000 ;
+					if ($value_max < $new_points) {
+						$new_points = $value_max;
+					}					
+					break;
+			}
+
+			$query = sprintf("UPDATE `BUILDING_LIST` 
+				SET CURRENT_VALUE_CASINO = '%d'
+				WHERE ID_GROUP = '%s'",
+				$new_points, $source['groupId']);
+
+			mysqli_query($db_conf, $query);
+		}
+
 	}
 ?>
