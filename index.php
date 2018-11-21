@@ -259,7 +259,14 @@
 
 								case '..casino':
 									$current_casino = $database->get_casino_info($event['source'], $db);
-									$text_response = "Cash Left on Casino " . $current_casino['CURRENT_VALUE_CASINO'];
+									$text_response = sprintf("<CASINO STATUS>\n(%d / %d)\nLevel : %d\nCash left : %d\n", $current_casino['EXP_CASINO'], ($current_casino['LV_CASINO'] * 1000000), $current_casino['LV_CASINO'], $current_casino['CURRENT_VALUE_CASINO']);
+									$display->single_text_response($client, $event, $text_response);
+									break;
+
+								case '..up':
+									$current_casino = $database->get_casino_info($event['source'], $db);
+									$used_points = (int)$exploded_Message[1];
+									$text_response = $database->upgrade_casino($event['source'], $used_points, $current_casino, $db);									
 									$display->single_text_response($client, $event, $text_response);
 									break;
 

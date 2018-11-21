@@ -669,5 +669,38 @@
 			mysqli_query($db_conf, $query);
 		}
 
+		static function upgrade_casino ($source, $points_used, $current_casino, $db_conf){
+
+			$level_up_needed = $current_casino['LV_CASINO'] * 1000000 ;
+			$total_exp = $points_used + $current_casino['EXP_CASINO'];
+
+			if ($total_exp >= $level_up_needed) {
+				$new_level = $current_casino['LV_CASINO'] + 1;
+				$new_wealth = ($new_level * 25000) + 100000 ;
+				$query = sprintf("UPDATE `BUILDING_LIST` 
+					SET LV_CASINO = '%d', CURRENT_VALUE_CASINO = '%d'
+					WHERE ID_GROUP = '%s'",
+					$new_level, $new_wealth, $source['groupId']);
+
+				mysqli_query($db_conf, $query);
+				return "<Casino Upgraded To Level " . $new_level . " >\n\n- Daily wealth increases by 25k\n-Total Wealth is now " . ($new_level * 25000) + 100000 . "- Current cash refreshed";
+
+			} else {
+				$old_exp = $current_casino['EXP_CASINO'];
+				$new_exp = $old_exp + $points_used;
+				$query = sprintf("UPDATE `BUILDING_LIST` 
+					SET EXP_CASINO = '%d'
+					WHERE ID_GROUP = '%s'",
+					$new_exp, $source['groupId']);
+
+				mysqli_query($db_conf, $query);
+				$text_response = sprintf("Casino EXP Increases by %d\nNeed %d more to level up",
+					$points_used, ($level_up_needed - $new_exp) );
+
+				return $text_response;
+			}
+
+		}
+
 	}
 ?>
