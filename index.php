@@ -602,6 +602,10 @@
 									$display->single_text_response($client, $event, $result);
 									break;
 
+								case '..welcome':
+									$display->welcome_sticker_response($client, $event);
+									break;
+
 								case '..database':
 									$search_result = search_card_v2 (trim($criteria));
 									// $gobu_logic->logic_controller_for_database($search_result, "..debugdb", $database, $db);

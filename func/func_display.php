@@ -38,6 +38,30 @@
 
 		}
 
+		static function welcome_sticker_response ($client, $event){
+
+			$client->replyMessage(array(
+
+		        'replyToken' => $event['replyToken'],
+
+		        'messages' => array(
+
+		            array(
+
+		                'type' => 'sticker',
+
+		                'packageId' => 11538, 
+
+		                'stickerId' => 51626494
+
+		            )
+
+		        )
+
+	        ));
+
+		}
+
 
 
 		static function single_text_response ($client, $event, $response){
