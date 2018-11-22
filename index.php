@@ -468,7 +468,9 @@
 										$text_response = sprintf("You don't have enough point to gift everyone\n%s Points Needed", $total_cost);
 										$display->single_text_response($client, $event, $text_response);
 									} else {
-										$text_response = sprintf("You have enough point to gift everyone\n%s Points Used", $total_cost);
+										$database->modify_points($event['source'], $db, $total_cost, 0);
+										$database->update_gift_all($event['source'], $db);
+										$text_response = sprintf("Gifted all your waifus!\n%s Points Used", $total_cost);
 										$display->single_text_response($client, $event, $text_response);
 									}
 

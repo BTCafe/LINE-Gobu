@@ -510,6 +510,18 @@
 			mysqli_query($db_conf, $query);
 		}
 
+		static function update_gift_all ($source, $db_conf){
+
+			$current_time = date('Y-m-d H:i:s');
+
+			$query = sprintf("UPDATE `WAIFU_LIST` SET
+				`LAST_GIFTED` = '%s'
+				WHERE `CURRENT_CLAIMER` = '%s'",
+				$current_time, $source['userId']);
+
+			mysqli_query($db_conf, $query);
+		}
+
 		static function get_claim ($source, $db_conf){
 
 			$query = sprintf("SELECT * FROM `WAIFU_LIST` WHERE `CURRENT_CLAIMER` = '%s'",
