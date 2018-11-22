@@ -471,6 +471,17 @@
 
 		}
 
+		static function get_claimer_id ($name_to_search, $db_conf){
+
+			$name_to_search = str_ireplace('\'', '', $name_to_search) ;
+			$query = sprintf("SELECT * FROM `WAIFU_LIST` WHERE `CARD_NAME` = '%s'",
+				$name_to_search);
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result);
+
+			return $query_fetch['CURRENT_CLAIMER'];
+		}
+
 		static function update_claim ($source, $db_conf, $card_name, $database){
 			$id_user = $source['userId'] ;
 			$old_claimer = $database->get_last_claimer($card_name, $db_conf);
@@ -654,10 +665,10 @@
 				
 				case 2:
 					$new_points = $current_casino['CURRENT_VALUE_CASINO'] + $used_points ;
-					$value_max = ($current_casino['LV_CASINO'] * 25000) + 100000 ;
-					if ($value_max < $new_points) {
-						$new_points = $value_max;
-					}					
+					// $value_max = ($current_casino['LV_CASINO'] * 25000) + 100000 ;
+					// if ($value_max < $new_points) {
+					// 	$new_points = $value_max;
+					// }					
 					break;
 			}
 
@@ -683,7 +694,7 @@
 					$new_level, $new_wealth, $source['groupId']);
 
 				mysqli_query($db_conf, $query);
-				return "<Casino Upgraded To Level " . $new_level . " >\n\n- Daily wealth increases by 25k\n-Total Wealth is now " . $new_wealth . "- Current cash refreshed";
+				return "<Casino Upgraded To Level " . $new_level . " >\n\n- Daily wealth increases by 25k\n-Total Wealth is now " . $new_wealth . "\n- Current cash refreshed";
 
 			} else {
 				$old_exp = $current_casino['EXP_CASINO'];

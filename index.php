@@ -252,14 +252,15 @@
 
 										$gobu_logic->logic_controller_for_general_2($command, $database, $db, $event['source'], $used_points, $result);
 									} else {
-										$text_response = "Casino doesn't have any more points\nYou can upgrade Casino for more daily points";
+										$text_response = "Casino doesn't have enough points\nYou can upgrade Casino for more daily points";
 										$display->single_text_response($client, $event, $text_response);
 									} 
 									break;
 
 								case '..casino':
 									$current_casino = $database->get_casino_info($event['source'], $db);
-									$text_response = sprintf("<CASINO STATUS>\n(%d / %d)\nLevel : %d\nCash left : %d\n", $current_casino['EXP_CASINO'], ($current_casino['LV_CASINO'] * 1000000), $current_casino['LV_CASINO'], $current_casino['CURRENT_VALUE_CASINO']);
+									$max_cash = ($current_casino['LV_CASINO'] * 25000) + 100000 ;
+									$text_response = sprintf("<CASINO STATUS>\n(%d / %d)\nLevel : %d\nCash left : %d\nMax Cash : %d", $current_casino['EXP_CASINO'], ($current_casino['LV_CASINO'] * 1000000), $current_casino['LV_CASINO'], $current_casino['CURRENT_VALUE_CASINO'], $max_cash);
 									$display->single_text_response($client, $event, $text_response);
 									break;
 
@@ -412,8 +413,14 @@
 												$text_response = sprintf("You don't even have enough points to claim anybody (10k needed)");
 												$display->single_text_response($client, $event, $text_response);
 											} elseif ($can_claim == 0) {
-												$text_response = sprintf("Somebody already claimed %s\nThey treated them well so you can't claim them yet", 
-													$name);
+												
+												$claimer_id = $database->get_claimer_id($name, $db);
+												$result = $client->getProfile($claimer_id);
+												$result = json_decode($result, true);
+												$user_display_name = $result['displayName'] ;
+
+												$text_response = sprintf("Somebody already claimed %s\nThey treated them well so you can't claim them yet\n(Current Claimer : %s)", 
+													$name, $user_display_name);
 												$display->single_text_response($client, $event, $text_response);
 											}
 
