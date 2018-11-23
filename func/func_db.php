@@ -482,6 +482,17 @@
 			return $query_fetch['CURRENT_CLAIMER'];
 		}
 
+		static function get_old_claimer_id ($name_to_search, $db_conf){
+
+			$name_to_search = str_ireplace('\'', '', $name_to_search) ;
+			$query = sprintf("SELECT * FROM `WAIFU_LIST` WHERE `CARD_NAME` = '%s'",
+				$name_to_search);
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result);
+
+			return $query_fetch['OLD_CLAIMER'];
+		}
+
 		static function update_claim ($source, $db_conf, $card_name, $database){
 			$id_user = $source['userId'] ;
 			$old_claimer = $database->get_last_claimer($card_name, $db_conf);
@@ -659,9 +670,9 @@
 			if ($days_difference >= 1) {
 				$new_points = ($query_fetch['LV_CASINO'] * 25000) + 100000 ;
 		    	$query = sprintf("UPDATE `BUILDING_LIST` 
-					SET CURRENT_VALUE_CASINO = '%d'
+					SET CURRENT_VALUE_CASINO = '%d', LAST_REFRESH_CASINO = '%s'
 					WHERE ID_GROUP = '%s'",
-					$new_points, $source['groupId']);
+					$new_points, $current_datetime , $source['groupId']);
 
 				mysqli_query($db_conf, $query);
 			} 

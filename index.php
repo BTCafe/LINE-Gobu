@@ -407,7 +407,18 @@
 											if ($can_claim == 1 && $current_points >= 10000) {
 												$database->update_claim($event['source'], $db, $name, $database);
 												$database->modify_points($event['source'], $db, 10000, 0);
-												$text_response = sprintf("%s is now yours !\nNice steal there ~", $name);
+
+												$claimer_id = $database->get_claimer_id($name, $db);
+												$result = $client->getProfile($claimer_id);
+												$result = json_decode($result, true);
+												$current_claimer = $result['displayName'] ;
+
+												$old_claimer_id = $database->get_old_claimer_id($name, $db);
+												$result = $client->getProfile($old_claimer_id);
+												$result = json_decode($result, true);
+												$old_claimer = $result['displayName'] ;
+
+												$text_response = sprintf("%s is now yours !\nNice steal there ~\n[Old Claimer : %s]\n[New Claimer : %s]", $name, $current_claimer, $old_claimer);
 												$display->single_text_response($client, $event, $text_response);
 											} elseif ($current_points < 10000) {
 												$text_response = sprintf("You don't even have enough points to claim anybody (10k needed)");
