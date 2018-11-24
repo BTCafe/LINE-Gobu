@@ -383,6 +383,29 @@
 									$display->single_text_response($client, $event, $text_response);
 									break;
 
+								case '..who':
+									$search_result = search_card_v2 (trim($criteria));
+									if ($search_result["found"] > 1 || $search_result["found"] == 0) {
+										$gobu_logic->logic_controller_for_bagoum($search_result, $command, "text");
+									} else {
+										$name = trim($search_result['name']);
+										$is_claimed = $database->get_waifu_status($name, $db);
+										switch ($is_claimed) {
+											case 0:
+												$text_response = sprintf("Nobody claimed %s yet...", $name);
+												break;											
+											case 1:
+												$claimer_id = $database->get_claimer_id($name, $db);
+												$result = $client->getProfile($claimer_id);
+												$result = json_decode($result, true);
+												$current_claimer = $result['displayName'] ;
+												$text_response = sprintf("[%s] is already claimed by [%s] !", $name, $current_claimer);
+												break;
+										}
+										$display->single_text_response($client, $event, $text_response);
+									}
+									break;
+
 								case '..claims':
 									$current_points = $database->get_points($event['source'], $db);
 									$search_result = search_card_v2 (trim($criteria));
