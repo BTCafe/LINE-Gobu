@@ -441,7 +441,7 @@
 												$result = json_decode($result, true);
 												$old_claimer = $result['displayName'] ;
 
-												$text_response = sprintf("%s is now yours !\nNice steal there ~\n[Old Claimer : %s]\n[New Claimer : %s]", $name, $current_claimer, $old_claimer);
+												$text_response = sprintf("%s is now yours !\nNice steal there ~\n[New Claimer : %s]\n[Old Claimer : %s]", $name, $current_claimer, $old_claimer);
 												$display->single_text_response($client, $event, $text_response);
 											} elseif ($current_points < 10000) {
 												$text_response = sprintf("You don't even have enough points to claim anybody (10k needed)");
