@@ -597,6 +597,20 @@
 									$gobu_logic->logic_controller_for_info($command);
 									break;
 
+								case '..simg':
+									switch ($exploded_Message[1]) {
+										case 'laksek':
+											$ori = 'https://i.imgur.com/YlUDgWh.jpg' ;
+											$ori_preview = 'https://i.imgur.com/YlUDgWht.jpg' ;
+											$response = array($ori, $ori_preview); 
+											break;
+									}
+
+									if (isset($response)) {
+										$display->single_image_response($client, $event, $response);
+									}
+									break;
+
 								// Admin Function //
 								case '..set':
 									if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0') {
