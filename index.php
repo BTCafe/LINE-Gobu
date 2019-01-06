@@ -264,6 +264,11 @@
 									$display->single_text_response($client, $event, $text_response);
 									break;
 
+								case '..reset':
+									$reset_timer = $database->timer_casino($event['source'], $db);
+									$display->single_text_response($client, $event, $reset_timer);
+									break;
+
 								case '..up':
 									$current_casino = $database->get_casino_info($event['source'], $db);
 									$used_points = (int)$exploded_Message[1];
@@ -604,6 +609,30 @@
 											$ori_preview = 'https://i.imgur.com/YlUDgWht.jpg' ;
 											$response = array($ori, $ori_preview); 
 											break;
+
+										case 'hello':
+											$ori = 'https://i.imgur.com/Rn2lTHv.jpg' ;
+											$ori_preview = 'https://i.imgur.com/Rn2lTHvt.jpg' ;
+											$response = array($ori, $ori_preview); 
+											break;
+
+										case 'lewd':
+											$ori = 'https://i.imgur.com/2FTO87k.jpg' ;
+											$ori_preview = 'https://i.imgur.com/2FTO87kt.jpg' ;
+											$response = array($ori, $ori_preview); 
+											break;
+
+										case 'bs':
+											$ori = 'https://i.imgur.com/tYeOyT6.jpg' ;
+											$ori_preview = 'https://i.imgur.com/tYeOyT6t.jpg' ;
+											$response = array($ori, $ori_preview); 
+											break;
+
+										case 'smile':
+											$ori = 'https://i.imgur.com/WsgEqGx.jpg' ;
+											$ori_preview = 'https://i.imgur.com/WsgEqGxt.jpg' ;
+											$response = array($ori, $ori_preview); 
+											break;
 									}
 
 									if (isset($response)) {
@@ -646,6 +675,12 @@
 								// Debug
 								case 'test':
 									$gobu_logic->logic_controller_for_bagoum_game('guess_flair');
+									break;
+
+								case '..server':
+									$current_datetime = date('Y-m-d H:i:s');
+									$text_response = "[CURRENT SERVER TIME : " . $current_datetime . " ]";
+									$display->single_text_response($client, $event, $text_response);
 									break;
 
 								case '..debug':

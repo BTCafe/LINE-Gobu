@@ -679,6 +679,25 @@
 
 		}
 
+		static function timer_casino ($source, $db_conf){
+
+			$query = "SELECT * FROM `BUILDING_LIST` WHERE ID_GROUP = '" . $source['groupId'] . "'";
+			$query_result = mysqli_query($db_conf, $query);
+			$query_fetch = mysqli_fetch_array($query_result); 
+
+			$current_datetime = date('Y-m-d H:i:s');
+			$last_daily_time = $query_fetch['LAST_REFRESH_CASINO'] ;
+
+			$date1 = new DateTime($current_datetime);
+			$date2 = new DateTime($last_daily_time);
+			$interval = $date1->diff($date2);
+			$hours_difference = $interval->h ;
+			$reset_in = 24 - $hours_difference ;
+
+			return "Casino will reset in " . $reset_in . " hours"; 
+
+		}
+
 		static function modify_casino_points ($source, $used_points, $current_casino, $type, $db_conf){
 
 			switch ($type) {
