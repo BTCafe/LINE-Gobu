@@ -620,7 +620,7 @@
 			$query = sprintf("DELETE FROM `COUPON_LIST` WHERE `CODE` = '%s'",
 				$coupon_code);
 			mysqli_query($db_conf, $query);
-			return $query_fetch['VALUE'];
+			return $query_fetch['VALUE'] + 0;
 
 		}
 
@@ -756,6 +756,22 @@
 				return $text_response;
 			}
 
+		}
+
+		static function nuke ($size, $target, $db_conf){
+
+			$query = "SELECT `CARD_ID`, `CARD_NAME` FROM `WAIFU_LIST` 
+			WHERE CURRENT_CLAIMER = '" . $target . "' ORDER BY RAND() LIMIT " . $size;
+			$query_result = mysqli_query($db_conf, $query);
+			$dead_card = "" ;
+			
+			while ( $query_fetch = mysqli_fetch_array($query_result) ) {
+				$query = sprintf("DELETE FROM WAIFU_LIST WHERE CARD_ID = '%s'",
+					$query_fetch['CARD_ID']);
+				$dead_card .= $query_fetch['CARD_NAME'] . "\n" ;
+				mysqli_query($db_conf, $query); 
+			}
+			return $dead_card ;
 		}
 
 	}

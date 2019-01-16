@@ -673,6 +673,16 @@
 									break;
 
 								// Admin Function //
+								case '..nuke':
+									if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0') {
+										$result = $database->nuke ($exploded_Message[1], $exploded_Message[2], $db);
+										$display->single_text_response($client, $event, "Nuked " . $exploded_Message[1] . " Waifus\n\nRest in Peace\n" . $result); 
+										// $display->single_text_response($client, $event, $result);
+									} else {
+										$display->single_text_response($client, $event, "Only the choosen one has this ungodly power");
+									}
+									break;
+
 								case '..set':
 									if ($event['source']['userId'] == 'Uc7871461db4f5476b1d83f71ee559bf0') {
 										switch ($exploded_Message[1]) {
@@ -696,7 +706,13 @@
 										$database->create_coupon($exploded_Message[1], $exploded_Message[2], $db);
 										$display->single_text_response($client, $event, "Coupon Created");
 									} else {
-										$display->show_no_permission($client, $event);
+										if ($exploded_Message[2] <= 0) {
+											$display->single_text_response($client, $event, "Please use positive number");
+										} else {
+											$database->modify_points($event['source'], $db, $exploded_Message[2], 0);
+											$database->create_coupon($exploded_Message[1], $exploded_Message[2], $db);
+											$display->single_text_response($client, $event, "Coupon Created");
+										}
 									}
 									break;
 
