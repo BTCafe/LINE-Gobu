@@ -167,6 +167,9 @@
 			$query = "SELECT * FROM `USER_ECONOMY` WHERE ID_USER = '" . $id_user . "'";
 			$query_result = mysqli_query($db_conf, $query);
 			$base_daily_rewards = 2500 * (1 + $waifu_count);
+			if ($base_daily_rewards > 250000) {
+				$base_daily_rewards = 250000 ;
+			}
 
 			if ( mysqli_num_rows($query_result) == 0 ) {
 
@@ -190,9 +193,7 @@
 
 				if ($days_difference >= 1) {
 					$new_points = $query_fetch['POINTS'] + $base_daily_rewards;
-					if ($new_points > 250000) {
-						$new_points = 250000 ;
-					}
+					
 			    	$query = "UPDATE `USER_ECONOMY` SET `POINTS`=" . $new_points . ", `LAST_DAILY`='" . $current_datetime . "' WHERE ID_USER='" . $id_user . "'" ;
 
 					mysqli_query($db_conf, $query);
