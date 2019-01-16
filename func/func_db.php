@@ -190,6 +190,9 @@
 
 				if ($days_difference >= 1) {
 					$new_points = $query_fetch['POINTS'] + $base_daily_rewards;
+					if ($new_points > 250000) {
+						$new_points = 250000 ;
+					}
 			    	$query = "UPDATE `USER_ECONOMY` SET `POINTS`=" . $new_points . ", `LAST_DAILY`='" . $current_datetime . "' WHERE ID_USER='" . $id_user . "'" ;
 
 					mysqli_query($db_conf, $query);

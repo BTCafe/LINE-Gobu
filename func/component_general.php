@@ -152,4 +152,25 @@
 
 	}
 
+	function get_top_waifu_owner ($client, $source, $db_conf){
+
+		$query = "SELECT `CURRENT_CLAIMER`, COUNT(CARD_NAME) AS `WAIFU_COUNT` FROM `WAIFU_LIST` GROUP BY CURRENT_CLAIMER ORDER BY `WAIFU_COUNT` DESC LIMIT 6";
+		$query_result = mysqli_query($db_conf, $query);
+
+		$result = "TOP 6 HAREM\n\n" ;
+		$counter = 0 ;
+
+		while ($current_row = mysqli_fetch_array($query_result)){
+			$user_info = $client->getProfile($current_row['CURRENT_CLAIMER']);
+			$user_info_decoded = json_decode($user_info, true);
+			
+			$name = $user_info_decoded['displayName'];
+			$points = $current_row['WAIFU_COUNT'];
+			$result .= sprintf("%d. %s - %s slaves\n", ++$counter, $name, $points);
+		}
+
+		return $result ;
+
+	}
+
 ?>

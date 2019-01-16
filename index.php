@@ -107,8 +107,8 @@
 								// Return Text Based Only To User //
 								case '..find':
 									if (trim($criteria) === "waifu") {
-										$search_result = search_card_v2 (trim("Silva")); 
-										$gobu_logic->logic_controller_for_bagoum($search_result, '..raw', "image");
+										$search_result = search_card_v2 (trim("Orchis, Puppet Girl")); 
+										$gobu_logic->logic_controller_for_bagoum($search_result, '..rawaltevo', "image");
 										// if ($function_log == 1){ log_wrapper($event, $command, $criteria, $db, $search_result, $database); }
 									} else {
 										$search_result = find_card (explode(" ", trim($criteria))); // Explode the criteria to make it into array
@@ -303,6 +303,11 @@
 
 								case '..rank':
 									$text_response = get_top_points($client, $event['source'], $db);
+									$display->single_text_response($client, $event, $text_response);
+									break;
+
+								case '..harem':
+									$text_response = get_top_waifu_owner($client, $event['source'], $db);
 									$display->single_text_response($client, $event, $text_response);
 									break;
 
@@ -554,6 +559,33 @@
 									}
 									break;
 
+								case '..donate':
+									if (isset($exploded_Message[1])) {
+										$total_cost = (int)$exploded_Message[1] ;
+
+										if ($total_cost < 0) {
+											$text_response = sprintf("You can't donate that many point") ;
+											$display->single_text_response($client, $event, $text_response);
+										} else {
+											$current_points = $database->get_points($event['source'], $db);
+											if ($current_points <= $total_cost) {
+												$difference = $total_cost - $current_points ;
+												$text_response = sprintf("You don't have enough points to donate that many point\n(Need %d more)", $difference) ;
+												$display->single_text_response($client, $event, $text_response);
+											} else {
+												$database->update_casino($event['source'], $db);
+												$current_casino = $database->get_casino_info($event['source'], $db);
+												$database->modify_points($event['source'], $db, $total_cost, 0);
+												$database->modify_casino_points($event['source'], $total_cost, $current_casino, 2, $db);
+												$text_response = sprintf("Donated %d to Casino",
+													$total_cost);
+												$display->single_text_response($client, $event, $text_response);
+											}
+										}
+
+									}
+									break;
+
 							}
 
 							//////////////////////////////	
@@ -606,31 +638,31 @@
 									switch ($exploded_Message[1]) {
 										case 'laksek':
 											$ori = 'https://i.imgur.com/YlUDgWh.jpg' ;
-											$ori_preview = 'https://i.imgur.com/YlUDgWht.jpg' ;
+											$ori_preview = 'https://i.imgur.com/YlUDgWhm.jpg' ;
 											$response = array($ori, $ori_preview); 
 											break;
 
 										case 'hello':
 											$ori = 'https://i.imgur.com/Rn2lTHv.jpg' ;
-											$ori_preview = 'https://i.imgur.com/Rn2lTHvt.jpg' ;
+											$ori_preview = 'https://i.imgur.com/Rn2lTHvm.jpg' ;
 											$response = array($ori, $ori_preview); 
 											break;
 
 										case 'lewd':
-											$ori = 'https://i.imgur.com/2FTO87k.jpg' ;
-											$ori_preview = 'https://i.imgur.com/2FTO87kt.jpg' ;
+											$ori = 'https://i.imgur.com/WGIDR7e.jpg' ;
+											$ori_preview = 'https://i.imgur.com/WGIDR7em.jpg' ;
 											$response = array($ori, $ori_preview); 
 											break;
 
 										case 'bs':
 											$ori = 'https://i.imgur.com/tYeOyT6.jpg' ;
-											$ori_preview = 'https://i.imgur.com/tYeOyT6t.jpg' ;
+											$ori_preview = 'https://i.imgur.com/tYeOyT6m.jpg' ;
 											$response = array($ori, $ori_preview); 
 											break;
 
 										case 'smile':
 											$ori = 'https://i.imgur.com/WsgEqGx.jpg' ;
-											$ori_preview = 'https://i.imgur.com/WsgEqGxt.jpg' ;
+											$ori_preview = 'https://i.imgur.com/WsgEqGxm.jpg' ;
 											$response = array($ori, $ori_preview); 
 											break;
 									}
