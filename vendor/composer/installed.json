@@ -1,157 +1,5 @@
 [
     {
-        "name": "linecorp/line-bot-sdk",
-        "version": "2.2.0",
-        "version_normalized": "2.2.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/line/line-bot-sdk-php.git",
-            "reference": "20367e1dcef5640bcc5e31cf09d59db0ed824169"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/line/line-bot-sdk-php/zipball/20367e1dcef5640bcc5e31cf09d59db0ed824169",
-            "reference": "20367e1dcef5640bcc5e31cf09d59db0ed824169",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.4"
-        },
-        "require-dev": {
-            "apigen/apigen": "~4.1",
-            "indigophp/hash-compat": "~1.1.0",
-            "phpmd/phpmd": "~2.4",
-            "phpunit/phpunit": "^4.8.24",
-            "squizlabs/php_codesniffer": "~2.6"
-        },
-        "time": "2017-08-03T10:32:57+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "LINE\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "Apache License Version 2.0"
-        ],
-        "authors": [
-            {
-                "name": "moznion",
-                "email": "moznion@gmail.com"
-            },
-            {
-                "name": "Satoru Yoshihara",
-                "email": "vaduz0@gmail.com"
-            }
-        ],
-        "description": "SDK of the LINE BOT API for PHP",
-        "homepage": "https://github.com/line/line-bot-sdk-php",
-        "keywords": [
-            "bot",
-            "line",
-            "sdk"
-        ]
-    },
-    {
-        "name": "madcoda/php-youtube-api",
-        "version": "1.2",
-        "version_normalized": "1.2.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/madcoda/php-youtube-api.git",
-            "reference": "f0e44d68d953155462b51cd01caca48496d99188"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/madcoda/php-youtube-api/zipball/f0e44d68d953155462b51cd01caca48496d99188",
-            "reference": "f0e44d68d953155462b51cd01caca48496d99188",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">5.3"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "3.7.*@stable"
-        },
-        "time": "2015-09-04T10:42:30+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Madcoda": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Madcoda",
-                "email": "jason@madcoda.com"
-            }
-        ],
-        "description": "PHP wrapper for the Youtube Data API v3",
-        "keywords": [
-            "api",
-            "madcoda",
-            "video",
-            "youtube"
-        ]
-    },
-    {
-        "name": "paragonie/random_compat",
-        "version": "v2.0.11",
-        "version_normalized": "2.0.11.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/paragonie/random_compat.git",
-            "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5da4d3c796c275c55f057af5a643ae297d96b4d8",
-            "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.2.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "4.*|5.*"
-        },
-        "suggest": {
-            "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
-        },
-        "time": "2017-09-27T21:40:39+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "lib/random.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Paragon Initiative Enterprises",
-                "email": "security@paragonie.com",
-                "homepage": "https://paragonie.com"
-            }
-        ],
-        "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
-        "keywords": [
-            "csprng",
-            "pseudorandom",
-            "random"
-        ]
-    },
-    {
         "name": "illuminate/contracts",
         "version": "v5.4.36",
         "version_normalized": "5.4.36.0",
@@ -324,25 +172,141 @@
         "homepage": "https://laravel.com"
     },
     {
-        "name": "consoletvs/profanity",
-        "version": "1.0.1",
-        "version_normalized": "1.0.1.0",
+        "name": "linecorp/line-bot-sdk",
+        "version": "2.3.0",
+        "version_normalized": "2.3.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/ConsoleTVs/Profanity.git",
-            "reference": "e80bdae06369a3722429afc400dec95a574a15c3"
+            "url": "https://github.com/line/line-bot-sdk-php.git",
+            "reference": "38528aaa3a1abc2809974ab65cdcb7579f9eb927"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/ConsoleTVs/Profanity/zipball/e80bdae06369a3722429afc400dec95a574a15c3",
-            "reference": "e80bdae06369a3722429afc400dec95a574a15c3",
+            "url": "https://api.github.com/repos/line/line-bot-sdk-php/zipball/38528aaa3a1abc2809974ab65cdcb7579f9eb927",
+            "reference": "38528aaa3a1abc2809974ab65cdcb7579f9eb927",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4"
+        },
+        "require-dev": {
+            "apigen/apigen": "~4.1",
+            "indigophp/hash-compat": "~1.1.0",
+            "phpmd/phpmd": "~2.4",
+            "phpunit/phpunit": "^4.8.24",
+            "squizlabs/php_codesniffer": "~2.6"
+        },
+        "time": "2017-09-20T10:22:04+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "LINE\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache License Version 2.0"
+        ],
+        "authors": [
+            {
+                "name": "moznion",
+                "email": "moznion@gmail.com"
+            },
+            {
+                "name": "Satoru Yoshihara",
+                "email": "vaduz0@gmail.com"
+            }
+        ],
+        "description": "SDK of the LINE BOT API for PHP",
+        "homepage": "https://github.com/line/line-bot-sdk-php",
+        "keywords": [
+            "bot",
+            "line",
+            "sdk"
+        ]
+    },
+    {
+        "name": "paragonie/random_compat",
+        "version": "v2.0.18",
+        "version_normalized": "2.0.18.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/paragonie/random_compat.git",
+            "reference": "0a58ef6e3146256cc3dc7cc393927bcc7d1b72db"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/paragonie/random_compat/zipball/0a58ef6e3146256cc3dc7cc393927bcc7d1b72db",
+            "reference": "0a58ef6e3146256cc3dc7cc393927bcc7d1b72db",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.2.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.*|5.*"
+        },
+        "suggest": {
+            "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
+        },
+        "time": "2019-01-03T20:59:08+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "lib/random.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Paragon Initiative Enterprises",
+                "email": "security@paragonie.com",
+                "homepage": "https://paragonie.com"
+            }
+        ],
+        "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
+        "keywords": [
+            "csprng",
+            "polyfill",
+            "pseudorandom",
+            "random"
+        ]
+    },
+    {
+        "name": "consoletvs/profanity",
+        "version": "1.0.2",
+        "version_normalized": "1.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ConsoleTVs/Profanity.git",
+            "reference": "fefa251f8784dcf4cde00e9cd4a1e090eff148cc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ConsoleTVs/Profanity/zipball/fefa251f8784dcf4cde00e9cd4a1e090eff148cc",
+            "reference": "fefa251f8784dcf4cde00e9cd4a1e090eff148cc",
             "shasum": ""
         },
         "require": {
             "illuminate/support": "^5.4"
         },
-        "time": "2017-05-29T00:02:00+00:00",
+        "time": "2017-11-30T14:26:46+00:00",
         "type": "library",
+        "extra": {
+            "laravel": {
+                "providers": [
+                    "ConsoleTVs\\Profanity\\ProfanityServiceProvider"
+                ],
+                "aliases": {
+                    "Profanity": "ConsoleTVs\\Profanity\\Facades\\Profanity"
+                }
+            }
+        },
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
@@ -360,5 +324,52 @@
             }
         ],
         "description": "PHP library to block bad words in a string"
+    },
+    {
+        "name": "madcoda/php-youtube-api",
+        "version": "1.2",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/madcoda/php-youtube-api.git",
+            "reference": "f0e44d68d953155462b51cd01caca48496d99188"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/madcoda/php-youtube-api/zipball/f0e44d68d953155462b51cd01caca48496d99188",
+            "reference": "f0e44d68d953155462b51cd01caca48496d99188",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">5.3"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "3.7.*@stable"
+        },
+        "time": "2015-09-04T10:42:30+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Madcoda": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Madcoda",
+                "email": "jason@madcoda.com"
+            }
+        ],
+        "description": "PHP wrapper for the Youtube Data API v3",
+        "keywords": [
+            "api",
+            "madcoda",
+            "video",
+            "youtube"
+        ]
     }
 ]

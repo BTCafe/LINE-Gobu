@@ -1,0 +1,23 @@
+{
+	"name": "joostfaassen/vndb-client-php",
+    "description": "API client for vndb.org",
+    "homepage": "https://github.com/joostfaassen/vndb-client-php",
+    "keywords": ["vndb", "api", "client"],
+    "type": "library",
+    "authors": [
+        {
+            "name": "Joost Faassen",
+            "email": "joost@joost.cx",
+            "role": "Development"
+        }
+    ],
+    "require": {
+        "symfony/console": "~2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "VndbClient\\": "src/"
+        }
+    },
+    "license": "MIT"
+}

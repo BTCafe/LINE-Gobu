@@ -51,3 +51,4 @@ vendor/
 conf/twitter_setup.php
 test.php
 update_trim.php
+package.json

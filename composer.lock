@@ -8,22 +8,32 @@
     "packages": [
         {
             "name": "consoletvs/profanity",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ConsoleTVs/Profanity.git",
-                "reference": "e80bdae06369a3722429afc400dec95a574a15c3"
+                "reference": "fefa251f8784dcf4cde00e9cd4a1e090eff148cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ConsoleTVs/Profanity/zipball/e80bdae06369a3722429afc400dec95a574a15c3",
-                "reference": "e80bdae06369a3722429afc400dec95a574a15c3",
+                "url": "https://api.github.com/repos/ConsoleTVs/Profanity/zipball/fefa251f8784dcf4cde00e9cd4a1e090eff148cc",
+                "reference": "fefa251f8784dcf4cde00e9cd4a1e090eff148cc",
                 "shasum": ""
             },
             "require": {
                 "illuminate/support": "^5.4"
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ConsoleTVs\\Profanity\\ProfanityServiceProvider"
+                    ],
+                    "aliases": {
+                        "Profanity": "ConsoleTVs\\Profanity\\Facades\\Profanity"
+                    }
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "ConsoleTVs\\Profanity\\": "."
@@ -40,7 +50,7 @@
                 }
             ],
             "description": "PHP library to block bad words in a string",
-            "time": "2017-05-29T00:02:00+00:00"
+            "time": "2017-11-30T14:26:46+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -210,16 +220,16 @@
         },
         {
             "name": "linecorp/line-bot-sdk",
-            "version": "2.2.0",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/line/line-bot-sdk-php.git",
-                "reference": "20367e1dcef5640bcc5e31cf09d59db0ed824169"
+                "reference": "38528aaa3a1abc2809974ab65cdcb7579f9eb927"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/line/line-bot-sdk-php/zipball/20367e1dcef5640bcc5e31cf09d59db0ed824169",
-                "reference": "20367e1dcef5640bcc5e31cf09d59db0ed824169",
+                "url": "https://api.github.com/repos/line/line-bot-sdk-php/zipball/38528aaa3a1abc2809974ab65cdcb7579f9eb927",
+                "reference": "38528aaa3a1abc2809974ab65cdcb7579f9eb927",
                 "shasum": ""
             },
             "require": {
@@ -259,7 +269,7 @@
                 "line",
                 "sdk"
             ],
-            "time": "2017-08-03T10:32:57+00:00"
+            "time": "2017-09-20T10:22:04+00:00"
         },
         {
             "name": "madcoda/php-youtube-api",
@@ -308,16 +318,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.11",
+            "version": "v2.0.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8"
+                "reference": "0a58ef6e3146256cc3dc7cc393927bcc7d1b72db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5da4d3c796c275c55f057af5a643ae297d96b4d8",
-                "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/0a58ef6e3146256cc3dc7cc393927bcc7d1b72db",
+                "reference": "0a58ef6e3146256cc3dc7cc393927bcc7d1b72db",
                 "shasum": ""
             },
             "require": {
@@ -349,10 +359,11 @@
             "description": "PHP 5.x polyfill for random_bytes() and random_int() from PHP 7",
             "keywords": [
                 "csprng",
+                "polyfill",
                 "pseudorandom",
                 "random"
             ],
-            "time": "2017-09-27T21:40:39+00:00"
+            "time": "2019-01-03T20:59:08+00:00"
         }
     ],
     "packages-dev": [],
