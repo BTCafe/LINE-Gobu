@@ -47,6 +47,13 @@ class ComposerStaticInit54ed5438bbea83ce012db4855cc6c55e
     );
 
     public static $prefixesPsr0 = array (
+        'M' => 
+        array (
+            'Madcoda' => 
+            array (
+                0 => __DIR__ . '/..' . '/madcoda/php-youtube-api/src',
+            ),
+        ),
         'D' => 
         array (
             'Doctrine\\Common\\Inflector\\' => 

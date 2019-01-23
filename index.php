@@ -1,4 +1,6 @@
 <?php
+	require_once( __DIR__ . '/vendor/autoload.php');
+
 	require_once( __DIR__ . '/src/LINEBotTiny.php');
 	require_once( __DIR__ . '/src/twitter-api-php-master/TwitterAPIExchange.php');
 

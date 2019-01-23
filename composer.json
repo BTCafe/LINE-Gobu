@@ -1,6 +1,7 @@
 {
     "require": {
         "linecorp/line-bot-sdk": "^2.2",
-        "consoletvs/profanity": "^1.0"
+        "consoletvs/profanity": "^1.0",
+        "madcoda/php-youtube-api": "1.2"
     }
 }

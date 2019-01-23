@@ -48,7 +48,9 @@ This is the function that's used to access Urban Dictionary via Gobu
 * `..explain [words]` - Same as `..ud`
 * `..random` - Returns a random explanation 
 
+***
 ### Game Modules
+***
 
 Besides functioning as data fetcher for Shadowverse and Urban Dictionary, LINE Gobu also includes some mini-games.
 These mini games includes :
