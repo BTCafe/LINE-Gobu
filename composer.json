@@ -1,7 +1,1 @@
-{
-    "require": {
-        "linecorp/line-bot-sdk": "^2.2",
-        "consoletvs/profanity": "^1.0",
-        "madcoda/php-youtube-api": "1.2"
-    }
-}
+{"name":"dummy app","description":"This app is only a dummy for downloading with the option require.","homepage":"https://php-download.com/","type":"project","require":{"kokororin/pixiv-api-php":"^1.1.0.0"}}

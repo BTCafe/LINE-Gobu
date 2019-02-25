@@ -6,8 +6,4 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'LINE\\' => array($vendorDir . '/linecorp/line-bot-sdk/src'),
-    'Illuminate\\Support\\' => array($vendorDir . '/illuminate/support'),
-    'Illuminate\\Contracts\\' => array($vendorDir . '/illuminate/contracts'),
-    'ConsoleTVs\\Profanity\\' => array($vendorDir . '/consoletvs/profanity'),
 );
